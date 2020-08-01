@@ -5,6 +5,6 @@ import (
 )
 
 func main() {
-	v2ex.Run()
+	v2ex.RunWebServer()
 
 }

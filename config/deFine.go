@@ -17,8 +17,9 @@ type run struct {
 
 //数据量配置
 type db struct {
-	IP       string `toml:"IP地址"`
-	Port     string `toml:"端口"`
-	UserName string `toml:"账号"`
-	PassWord string `toml:"密码"`
+	IP         string `toml:"IP地址"`
+	Port       int    `toml:"端口"`
+	AuthSource string `toml:"安全验证"`
+	UserName   string `toml:"账号"`
+	PassWord   string `toml:"密码"`
 }

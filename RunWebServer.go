@@ -13,7 +13,7 @@ import (
 	"v2ex/view_func"
 )
 
-func Run() {
+func RunWebServer() {
 	cg, err := config.LoadingConfigSourceFile()
 	if err != nil {
 		log.Fatal("加载配置文件失败", err)
