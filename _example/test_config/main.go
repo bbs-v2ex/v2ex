@@ -8,5 +8,5 @@ import (
 func main() {
 	config.CreateConfigFile()
 	file, err := config.LoadingConfigSourceFile()
-	fmt.Println(err, file)
+	fmt.Println(err, file.Dump())
 }

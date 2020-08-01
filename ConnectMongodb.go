@@ -32,4 +32,6 @@ func ConnectMongodb() {
 		log.Fatal(err.Error(), "Mongodb 链接失败")
 	}
 	mc.SetDB(mgo_client)
+	//设置数据库
+	mc.SetDBName(cg.DB.DbName)
 }

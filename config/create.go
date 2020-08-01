@@ -37,6 +37,7 @@ func CreateConfigFile() {
 		DB: db{
 			IP:       "127.0.0.1",
 			Port:     27017,
+			DbName:   "this_one_v2ex",
 			UserName: "",
 			PassWord: "",
 		},
