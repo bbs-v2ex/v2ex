@@ -9,6 +9,8 @@ const AutoIDQA = 2
 //讨论 需要登录才可以回答
 const AutoIDDiscuss = 3
 
+const AutoIDMember = 4
+
 type AutoID struct {
 	TableID int   `bson:"t_id"`
 	ValID   int64 `bson:"val"`
