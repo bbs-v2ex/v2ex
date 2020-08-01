@@ -2,13 +2,30 @@ package config
 
 import (
 	"bytes"
+	"encoding/json"
+	"fmt"
 	"github.com/BurntSushi/toml"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 )
 
 var config_file_name = "000_config.toml"
+
 var config SConfig
+
+func (conf SConfig) Dump() string {
+	b, err := json.Marshal(conf)
+	if err != nil {
+		return fmt.Sprintf("%+v", conf)
+	}
+	var out bytes.Buffer
+	err = json.Indent(&out, b, "", "    ")
+	if err != nil {
+		return fmt.Sprintf("%+v", conf)
+	}
+	return out.String()
+}
 
 func CreateConfigFile() {
 	ctoml := SConfig{
@@ -19,6 +36,7 @@ func CreateConfigFile() {
 		},
 		DB: db{
 			IP:       "127.0.0.1",
+			Port:     27017,
 			UserName: "",
 			PassWord: "",
 		},
@@ -29,12 +47,24 @@ func CreateConfigFile() {
 	ioutil.WriteFile(config_file_name, buf.Bytes(), os.ModePerm)
 }
 
-func LoadingConfigSourceFile() (config SConfig, err error) {
-	_tmp := SConfig{}
-	_, err = toml.DecodeFile(config_file_name, &_tmp)
-	if err != nil {
-		return
+func LoadingConfigSourceFile() (_tmp SConfig, err error) {
+	for _, f := range []string{"./", "./../../"} {
+		//_tmp := SConfig{}
+		_, err = toml.DecodeFile(f+config_file_name, &_tmp)
+		if err == nil {
+			abs, e2 := filepath.Abs(f + config_file_name)
+			if e2 != nil {
+				return
+			}
+			_tmp.ExecPath = filepath.Dir(abs)
+			config = _tmp
+			err = nil
+			break
+		}
 	}
-	config = _tmp
 	return
+}
+
+func GetConfig() SConfig {
+	return config
 }

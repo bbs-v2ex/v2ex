@@ -2,6 +2,10 @@ package config
 
 //定义 系统基础设置
 type SConfig struct {
+
+	//当前系统得执行路径
+	ExecPath string `toml:"-"`
+
 	Run run `toml:"运行配置"`
 	DB  db  `toml:"数据库配置"`
 }
@@ -19,6 +23,7 @@ type run struct {
 type db struct {
 	IP         string `toml:"IP地址"`
 	Port       int    `toml:"端口"`
+	DbName     string `toml:"数据库"`
 	AuthSource string `toml:"安全验证"`
 	UserName   string `toml:"账号"`
 	PassWord   string `toml:"密码"`

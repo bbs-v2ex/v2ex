@@ -19,6 +19,7 @@ func RunWebServer() {
 		log.Fatal("加载配置文件失败", err)
 		return
 	}
+
 	r := &gin.Engine{}
 
 	debug := cg.Run.Debug
