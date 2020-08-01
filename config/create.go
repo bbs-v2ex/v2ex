@@ -12,6 +12,11 @@ var config SConfig
 
 func CreateConfigFile() {
 	ctoml := SConfig{
+		Run: run{
+			Debug:  true,
+			LocaIP: "127.0.0.1",
+			Port:   8777,
+		},
 		DB: db{
 			IP:       "127.0.0.1",
 			UserName: "",
