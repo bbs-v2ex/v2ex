@@ -1,10 +1,50 @@
-<!DOCTYPE html>
-<html lang="zh-cmn-Hans-CN">
+
+<!doctype html>
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <title>你凭什么和我斗</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>Fixed top navbar example · Bootstrap v5.0 中文文档</title>
+    <link href="{{st "/btv5/bootstrap.min.css" }}" rel="stylesheet" crossorigin="anonymous">
+    <link href="{{st "/btv5/navbar-top-fixed.css" }}" rel="stylesheet">
+    {{template "head" .}}
 </head>
 <body>
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark ">
+    <div class="container">
+        <a class="navbar-brand" href="{{u "/"}}">Fixed</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto mb-2 mb-md-0">
+                <li class="nav-item active">
+                    <a class="nav-link" aria-current="page" href="#">Home</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav mb-2 mb-md-0 navbar-right">
+                <li class="nav-item">
+                 <a class="nav-link" href="{{u "/login"}}">登录</a>
+                </li>
+                <li class="nav-item">
+                 <a class="nav-link" href="{{u "/registered"}}">注册</a>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <input class="form-control mr-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
 
+<div class="container" id="vue-app">
+    {{template "body" .}}
+</div>
+<script src="{{st "/btv5/bootstrap.bundle.min.js" }}"  crossorigin="anonymous" type="application/javascript"></script>
+<script src="{{st "/btv5/axios.min.js"}}" type="application/javascript"></script>
+<script>const API = "{{._______API}}";</script>
 </body>
 </html>
+{{template "js" .}}

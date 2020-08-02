@@ -7,4 +7,6 @@ import (
 
 func RegisterRoute(r *gin.Engine) {
 	r.GET("/", controller.Home)
+
+	r.GET("/registered", controller.Registered)
 }

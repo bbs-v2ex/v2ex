@@ -5,9 +5,9 @@ import (
 	"github.com/globalsign/mgo/bson"
 )
 
-func (t AutoID) MemberID() (id MIDTYPE, e error) {
+func (t AutoID) QAID() (id int64, e error) {
 	_a := &AutoID{}
-	mc.Table(t.Table()).Where(bson.M{"t_id": AutoIDMember}).FindOne(_a)
+	mc.Table(t.Table()).Where(bson.M{"t_id": AutoIDQA}).FindOne(_a)
 	//如果数据没有
 
 	//if _a.TableID == 0 {
@@ -16,15 +16,15 @@ func (t AutoID) MemberID() (id MIDTYPE, e error) {
 	//}
 	if _a.ValID <= 1 {
 		mc.Table(t.Table()).Insert(&AutoID{
-			TableID: AutoIDMember,
+			TableID: AutoIDQA,
 			ValID:   1,
 		})
 		id = 1
 		return
 	}
-	id = MIDTYPE(_a.ValID)
+	id = _a.ValID
 	return
 }
-func (t AutoID) MemberAdd() (e error) {
-	return mc.Table(t.Table()).Where(bson.M{"t_id": AutoIDMember}).FieldAddOrDel("val", +1)
+func (t AutoID) QAAdd() (e error) {
+	return mc.Table(t.Table()).Where(bson.M{"t_id": AutoIDQA}).FieldAddOrDel("val", +1)
 }

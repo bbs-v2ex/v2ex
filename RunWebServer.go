@@ -35,7 +35,7 @@ func RunWebServer() {
 
 	//处理静态文件
 	if debug {
-		r.Static("/static", "./server/z_static")
+		r.Static("/static", "./app/view/view_static/")
 	} else {
 		box := rice.MustFindBox("z_static")
 		cssFileServer := http.StripPrefix("/static", http.FileServer(box.HTTPBox()))
