@@ -9,6 +9,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
+	api_router "v2ex/app/api/router"
+	view_router "v2ex/app/view/router"
 	"v2ex/config"
 	"v2ex/view_func"
 )
@@ -46,7 +48,7 @@ func RunWebServer() {
 	//模板文件是否 打包
 	if debug {
 		_view_config := goview.DefaultConfig
-		_view_config.Root = "server/z_view"
+		_view_config.Root = cg.ExecPath + "/app/view/view_template"
 		_view_config.Funcs = tempFunc
 		_view_config.DisableCache = true
 		r.HTMLRender = ginview.New(_view_config)
@@ -62,6 +64,12 @@ func RunWebServer() {
 		r.HTMLRender = ginview.Wrap(basic)
 	}
 	//监听端口启动
+
+	//注册接口路由
+	api_router.RegisterRoute(r)
+
+	//注册普通路由一般用于页面展示
+	view_router.RegisterRoute(r)
 
 	err = r.Run(fmt.Sprintf("%s:%d", cg.Run.LocaIP, cg.Run.Port))
 	if err != nil {
