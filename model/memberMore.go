@@ -3,9 +3,9 @@ package model
 import "go.mongodb.org/mongo-driver/bson/primitive"
 
 type MemberMore struct {
-	ID       primitive.ObjectID `bson:"id"`
-	MID      MIDTYPE
-	PassWord string `bson:"pass_word"`
+	ID       primitive.ObjectID `json:"_id" bson:"_id"`
+	MID      MIDTYPE            `json:"mid" bson:"mid"`
+	PassWord string             `json:"pass_word" bson:"pass_word"`
 }
 
 func (t MemberMore) Table() string {

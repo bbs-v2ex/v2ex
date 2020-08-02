@@ -49,5 +49,6 @@ func AddMember(c *gin.Context) {
 		return
 	}
 	result_json := c_code.V1GinSuccess("", "注册成功,前去登录", "/login")
+	model.AutoID{}.MemberAdd()
 	c.JSON(200, result_json)
 }

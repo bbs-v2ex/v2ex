@@ -1,3 +1,3 @@
 package model
 
-type MIDTYPE int
+type MIDTYPE int64

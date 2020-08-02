@@ -1,0 +1,76 @@
+{{define "head"}}{{end}}
+{{define "body"}}
+<div class="card  bg-white rounded">
+    <h5 class="card-header">账号注册</h5>
+    <div class="card-body col-md-6 col-lg-4 align-self-center">
+        <form class="row g-3 needs-validation was-validated" id="f1" novalidate>
+            <div class="col-md-12">
+                <label for="validationServer01" class="form-label">用户</label>
+                <input type="text" class="form-control is-valid" id="validationServer01" v-model="username" required>
+
+            </div>
+            <div class="col-md-12">
+                <label for="validationServer02" class="form-label">密码</label>
+                <input type="password" class="form-control is-valid" id="validationServer02" v-model="password" required>
+            </div>
+
+            <div v-if="ajax_message != ''">${ajax_message}</div>
+            <div class="col-12">
+                <button class="btn btn-primary" type="button" disabled v-if="wait_loading">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Loading...
+                </button>
+                <button class="btn btn-primary" type="submit"  v-else  @click.prevent="submit($event)">登录</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+{{end}}
+{{define "js"}}
+    {{include "layouts/vue-form"}}
+    <script>
+        var app = new Vue({
+            el: '#vue-app',
+            delimiters:['${','}'],
+            data() {
+                return {
+                    username: '',
+                    password: '',
+                    wait_loading:false,
+                    ajax_message:'',
+                }
+            },
+            methods: {
+                submit(e) {
+                    var l = document.querySelector('#f1').checkValidity();
+                    if (!l) {
+                        document.querySelector('#f1').classList.add("was-validated");
+                        this.ajax_message = '验证未通过';
+                        return false
+                    } else {
+                        document.querySelector('#f1').classList.remove("was-validated")
+                    }
+                    //开始提交
+                    //禁用提交按钮
+                    this.wait_loading = true;
+                    this.ajax_message = '开始提交';
+                    post('/login',{username:this.username,password:this.password}).then(res => {
+                        this.ajax_message = res.data.message;
+                        if (res.data.u !== "" && res.data.u !== undefined) {
+                            setTimeout(function () {
+                                window.location.href = res.data.u
+                            },1500);
+
+                        }
+                        this.wait_loading = false
+                    }).catch(err => {
+                        debugger
+                        this.ajax_message = '接口错误';
+                        this.wait_loading = false
+                    })
+                }
+            }
+        })
+    </script>
+{{end}}
