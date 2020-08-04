@@ -23,7 +23,7 @@
                     <a class="nav-link" aria-current="page" href="#">Home</a>
                 </li>
             </ul>
-            <ul class="navbar-nav mb-2 mb-md-0 navbar-right">
+            <ul class="navbar-nav mb-2 mb-md-0 navbar-right" id="vue-user-show">
                 <li class="nav-item">
                  <a class="nav-link" href="{{u "/login"}}">登录</a>
                 </li>
@@ -42,9 +42,13 @@
 <div class="container" id="vue-app">
     {{template "body" .}}
 </div>
-<script src="{{st "/btv5/bootstrap.bundle.min.js" }}"  crossorigin="anonymous" type="application/javascript"></script>
-<script src="{{st "/btv5/axios.min.js"}}" type="application/javascript"></script>
-<script>const API = "{{._______API}}";</script>
 </body>
 </html>
+<script src="{{st "/btv5/bootstrap.bundle.min.js" }}"  crossorigin="anonymous" type="application/javascript"></script>
+<script src="{{st "/btv5/axios.min.js"}}" type="application/javascript"></script>
+<script>const API = "{{._______API}}";const APITOKEN = '____token'</script>
+<script>
+
+
+</script>
 {{template "js" .}}

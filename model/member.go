@@ -6,7 +6,7 @@ import (
 )
 
 type Member struct {
-	ID       primitive.ObjectID `json:"id" bson:"_id"`
+	ID       primitive.ObjectID `json:"_id" bson:"_id"`
 	MID      MIDTYPE            `json:"mid" bson:"mid"`
 	UserName string             `json:"user_name" bson:"user_name"`
 	Avatar   string             `json:"avatar" bson:"avatar"`
