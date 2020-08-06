@@ -68,7 +68,8 @@
                                     name:'张三',
                                 }
                             }));
-                            setUserInfo()
+                            setUserInfo();
+                            window.location.href = "/"
                         }
 
                         if (res.data.u !== "" && res.data.u !== undefined) {
@@ -78,7 +79,6 @@
                         }
                         this.wait_loading = false;
                         //发送请求并保存信息到本地
-
 
                     }).catch(err => {
                         debugger

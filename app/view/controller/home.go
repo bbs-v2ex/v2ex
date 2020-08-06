@@ -1,7 +1,11 @@
 package controller
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"v2ex/app/view"
+)
 
 func Home(c *gin.Context) {
-	c.HTML(200, "index", gin.H{})
+	_ht := defaultData(c)
+	view.Render(c, "index", _ht)
 }

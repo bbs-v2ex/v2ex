@@ -12,6 +12,7 @@ func RegisterRoute(r *gin.Engine) {
 	ro := r.Group("/api/manage")
 	ro.POST("/add_member", manage.AddMember)
 	ro.POST("/login", manage.Login)
+	ro.POST("/loginout", manage.LoginOut)
 
 	ro.Use(checkLogin)
 	ro.POST("/get_user_info", manage.GetUserInfo)

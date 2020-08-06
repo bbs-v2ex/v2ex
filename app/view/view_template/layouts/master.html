@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="zh-CN">
 <head>
@@ -9,6 +8,15 @@
     <link href="{{st "/btv5/bootstrap.min.css" }}" rel="stylesheet" crossorigin="anonymous">
     <link href="{{st "/btv5/navbar-top-fixed.css" }}" rel="stylesheet">
     {{template "head" .}}
+    <style>
+        .login-true span{
+            cursor: pointer;
+            color: white;
+        }
+        .login-true{
+            margin-right: 25px;
+        }
+    </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark ">
@@ -17,20 +25,30 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="collapse navbar-collapse vue-user-show" id="navbarCollapse" >
             <ul class="navbar-nav mr-auto mb-2 mb-md-0">
                 <li class="nav-item active">
                     <a class="nav-link" aria-current="page" href="#">Home</a>
                 </li>
             </ul>
-            <ul class="navbar-nav mb-2 mb-md-0 navbar-right" id="vue-user-show">
-                <li class="nav-item">
-                 <a class="nav-link" href="{{u "/login"}}">登录</a>
-                </li>
-                <li class="nav-item">
-                 <a class="nav-link" href="{{u "/registered"}}">注册</a>
-                </li>
-            </ul>
+            <div  v-if="user_info.mid == 0" >
+                <ul class="navbar-nav mb-2 mb-md-0 navbar-right" >
+                    <li class="nav-item" >
+                        <a class="nav-link" href="{{u "/login"}}">登录</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{u "/registered"}}">注册</a>
+                    </li>
+                </ul>
+            </div>
+            <div v-else >
+                <ul class="navbar-nav mb-2 mb-md-0 navbar-right login-true" >
+                    <li class="nav-item" >
+                        <span>${user_info.name}</span>
+                        <span @click="loginout">退出</span>
+                    </li>
+                </ul>
+            </div>
             <form class="d-flex">
                 <input class="form-control mr-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Search</button>
@@ -44,11 +62,35 @@
 </div>
 </body>
 </html>
+<script>const API = "{{._______API}}";const APITOKEN = '____token'</script>
 <script src="{{st "/btv5/bootstrap.bundle.min.js" }}"  crossorigin="anonymous" type="application/javascript"></script>
 <script src="{{st "/btv5/axios.min.js"}}" type="application/javascript"></script>
-<script>const API = "{{._______API}}";const APITOKEN = '____token'</script>
+<script type="application/javascript" src="{{st "/btv5/vue-dev.js"}}"></script>
 <script>
-
+var login_app = new Vue({
+    el: '.vue-user-show',
+    delimiters:['${','}'],
+    data() {
+        return {
+            user_info:{}
+        }
+    },
+    created(){
+        this.user_info = getUserInfo();
+        if (this.user_info.mid == undefined){
+            this.user_info.mid = 0
+        }
+        console.log(this.user_info)
+    },
+    methods:{
+        loginout(){
+            post('/loginout').then(res =>{
+                sessionStorage.removeItem(APITOKEN);
+                window.location.href = "?"
+            })
+        }
+    }
+})
 
 </script>
 {{template "js" .}}
