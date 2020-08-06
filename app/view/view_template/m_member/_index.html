@@ -1,0 +1,28 @@
+{{define "head"}}{{end}}
+{{define "body"}}
+    <ul class="nav nav-tabs">
+        <li class="nav-item" v-for="item in view_nav">
+            <a class="nav-link" :class="{active:item.active}" aria-current="page" :href="item.u" v-if="item.active">${item.t}</a>
+            <a class="nav-link"  :href="item.u" v-else >${item.t}</a>
+        </li>
+    </ul>
+    <div class="p-2">
+
+        <a type="button" class="btn btn-primary m-2"  v-for=" item in  view_data"  :href="item.u">${item.t}</a>
+    </div>
+
+{{end}}
+{{define "js"}}
+<script>
+var app = new Vue({
+    el: '#vue-app',
+    delimiters:['${','}'],
+    data() {
+        return {
+            view_data:JSON.parse("{{.send_list|json}}"),
+            view_nav:JSON.parse("{{._member_mav|json}}"),
+        }
+    },
+})
+</script>
+{{end}}

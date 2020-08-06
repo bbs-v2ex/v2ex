@@ -44,7 +44,7 @@
             <div v-else >
                 <ul class="navbar-nav mb-2 mb-md-0 navbar-right login-true" >
                     <li class="nav-item" >
-                        <span>${user_info.name}</span>
+                        <span @click="goMemberCentre">${user_info.name}</span>
                         <span @click="loginout">退出</span>
                     </li>
                 </ul>
@@ -88,6 +88,9 @@ var login_app = new Vue({
                 sessionStorage.removeItem(APITOKEN);
                 window.location.href = "?"
             })
+        },
+        goMemberCentre(){
+            window.location.href = "/_/member/";
         }
     }
 })
