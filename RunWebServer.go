@@ -9,6 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
+	"v2ex/app/api/manage"
 	api_router "v2ex/app/api/router"
 	view_router "v2ex/app/view/router"
 	"v2ex/config"
@@ -21,7 +22,7 @@ func RunWebServer() {
 		log.Fatal("加载配置文件失败", err)
 		return
 	}
-
+	manage.Init()
 	r := &gin.Engine{}
 
 	debug := cg.Run.Debug

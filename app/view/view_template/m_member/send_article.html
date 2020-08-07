@@ -28,8 +28,10 @@
     </div>
 {{end}}
 {{define "js"}}
+
 <script type="application/javascript" src="{{st "/wangEditor-3.1.1/jquery.min.js"}}"></script>
 <script type="application/javascript" src="{{st "/wangEditor-3.1.1/wangEditor.min.js"}}"></script>
+<script type="application/javascript" src="{{st "/js/base.js"}}"></script>
 <script>
     var app = new Vue({
         el: '#vue-app',
@@ -47,34 +49,13 @@
         created(){
 
         },
+        methods: {
+
+        }
     })
 </script>
 <script type="text/javascript">
     const UploadServer = "{{.___upload_server}}";
-    function getBase64Loca(img) {
-        try {
-            img.crossOrigin = "*";
-            var c = document.createElement('canvas');
-
-            c.height = img.naturalHeight;
-            c.width = img.naturalWidth;
-            var ctx = c.getContext('2d');
-            ctx.drawImage(img, 0, 0, c.width, c.height);
-            return  c.toDataURL();
-        }catch (e) {
-            return ""
-        }
-    }
-
-    function imgToBase64() {
-        document.querySelectorAll('img').forEach(function (v,k) {
-           var now_src =  v.currentSrc;
-           if(!now_src.startsWith(UploadServer)){
-              // v.remove()
-           }
-        })
-    }
-
     var E = window.wangEditor;
     var editor = new E('#f1-content');
     editor.customConfig.menus =
@@ -107,13 +88,11 @@
     editor.customConfig.uploadImgServer = UploadServer +'/upload_img_123';
     editor.customConfig.uploadImgMaxLength = 1;
     editor.customConfig.uploadFileName = 'file';
-    editor.customConfig.onchange = function (html) {
-        // html 即变化之后的内容
-        setTimeout(function () {
-            imgToBase64()
-        },20)
 
+    editor.customConfig.linkImgCallback = function (url) {
+        console.log('copy',url) // url 即插入图片的地址
     };
+
     editor.customConfig.uploadImgHooks = {
         customInsert: function (insertImg, result, editor) {
             if (result.code !== 1){
@@ -125,5 +104,71 @@
         }
     };
     editor.create();
+    var jiance = false;
+    setInterval(function () {
+        check()
+    },500);
+    async function check() {
+        if (jiance){
+            return
+        }
+        jiance = true;
+
+        let list = document.querySelectorAll('#f1-content img');
+
+        for (item of  list){
+            let src = item.currentSrc;
+            if (src === ""){
+                item.remove();
+                continue
+            }
+            if (src.startsWith(UploadServer) ){
+                continue;
+            }
+            if (src.indexOf("/static/tmp/") === -1 || src.startsWith('data:image/')){
+                try {
+                    let { data }  =  await post('/download_temp_img',{u:src});
+                    if (data.code === 1){
+                        item.src = data.data;
+                    }else {
+                        item.remove();
+                    }
+                }catch (e) {
+                    item.remove();
+                }
+                continue
+            }
+            if (src.indexOf('/static/tmp/') > -1  ){
+                //上传到服务器
+                try {
+
+                    let base64_img =  await getBase64(src);
+
+                    var forms = new FormData();
+                    var configs = {
+                        headers:{'Content-Type':'multipart/form-data'}
+                    };
+                    let blob= dataURLtoFile(base64_img,'image/jpeg');
+                    let fileOfBlob = new File([blob], new Date()+'.jpg'); // 重命名了
+                    forms.append("file", fileOfBlob);
+
+                    let dddd = await axios.post(UploadServer+"/upload_img_123",forms ,configs);
+                    let data = dddd.data;
+                      if (data.code === 1){
+                          item.outerHTML = `<img src="${UploadServer}/${data.url}"/>`
+                      }else{
+                          item.remove();
+                      }
+                }catch (e) {
+                    console.log(e);
+                    item.remove();
+                    debugger
+                }
+            }
+        }
+        jiance = false;
+        console.log(jiance)
+    }
+
 </script>
 {{end}}

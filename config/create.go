@@ -12,7 +12,7 @@ import (
 
 var config_file_name = "000_config.toml"
 
-var config SConfig
+var config *SConfig
 
 func (conf SConfig) Dump() string {
 	b, err := json.Marshal(conf)
@@ -59,7 +59,7 @@ func LoadingConfigSourceFile() (_tmp SConfig, err error) {
 				return
 			}
 			_tmp.ExecPath = filepath.Dir(abs)
-			config = _tmp
+			config = &_tmp
 			err = nil
 			break
 		}
@@ -67,6 +67,6 @@ func LoadingConfigSourceFile() (_tmp SConfig, err error) {
 	return
 }
 
-func GetConfig() SConfig {
+func GetConfig() *SConfig {
 	return config
 }
