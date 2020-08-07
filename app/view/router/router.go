@@ -19,7 +19,10 @@ func RegisterRoute(r *gin.Engine) {
 	member := r.Group("/_/member")
 
 	//会员首页
-	member.GET("/", member2.Index)
-	member.GET("/:_type/:_cz", member2.Index)
-	member.GET("/:_type", member2.Index)
+	member.GET("/z/", member2.Index)
+	member.GET("/z/:_type/:_cz", member2.Index)
+	member.GET("/z/:_type", member2.Index)
+
+	//文章发布
+	member.GET("/send_article", member2.SendArticle)
 }

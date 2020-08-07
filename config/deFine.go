@@ -17,6 +17,8 @@ type run struct {
 	//如果设置 127.0.0.1 则需要设置方向代理才可方法
 	LocaIP string `toml:"监听地址"`
 	Port   int    `toml:"程序启动端口"`
+
+	UploadServer string `toml:"图片服务器接口"`
 }
 
 //数据量配置

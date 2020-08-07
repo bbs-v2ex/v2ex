@@ -3,12 +3,13 @@ package m_member
 import (
 	"github.com/gin-gonic/gin"
 	"path/filepath"
+	"strings"
 	"v2ex/app/view"
 )
 
 func Index(c *gin.Context) {
 
-	u := "/_/member"
+	u := "/_/member/z"
 	_ht := defaultData(c)
 	_member_mav := []gin.H{
 		{
@@ -48,15 +49,15 @@ func Index(c *gin.Context) {
 		view.Render(c, "m_member/_index_list", _ht)
 		break
 	default:
-
+		u2 := strings.ReplaceAll(u, "/z", "")
 		_ht["send_list"] = []gin.H{
 			{
 				"t": "发文章",
-				"u": u + "/send_article",
+				"u": u2 + "/send_article",
 			},
 			{
 				"t": "发提问",
-				"u": u + "/send_question",
+				"u": u2 + "/send_question",
 			},
 		}
 
