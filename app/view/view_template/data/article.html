@@ -28,23 +28,22 @@
                 {{if eq $comment_len 0}}
                     <p>暂无评论，快来做第一个评论的小伙伴吧!!!!</p>
                 {{else}}
-
                     <div id="comment-list">
-                        {{range .comment}}
+                        {{range $k,$v := .comment}}
                         <div class="comment-block mt-4 mb-2">
-                            <div class="author-avatar row g-0" @click="j('{{call $.mu .member_info}}')">
+                            <div class="author-avatar row g-0" @click="j('{{call $.mumid .user_info.mid}}')">
                                 <div class="col-auto mr-3">
                                     <img src="{{.user_info.avatar}}?w=35"  alt="会员-{{.user_info.name}}-头像">
                                 </div>
                                 <div class="col-auto align-self-center">
                                     <span class="author-name"> {{.user_info.name}} </span><br>
-                                    <span>火云邪神，超脱 6 界之外</span>
+                                    <span> 火云邪神，超脱 6 界之外</span>
                                 </div>
                             </div>
                             <div class="tip mt-2 mb-2"><span class="mt-2">发布于： {{.user_info.time}}</span> {{if ne .zan 0}}<span> {{.zen}} 人赞同</span>{{end}}</div>
                             <div>{{.txt}}</div>
                             <div class="tools mt-2 mb-2">
-                                <span class="zan mr-3 " data-zan-user="{{.zan_user|json}}"> 赞 {{.zan}} </span>
+                                <span class="zan mr-3" :class="{'zan-active':is_user('{{.zan_user}}')}" @click="zan('{{._id.Hex}}')"> 赞 {{.zan}} </span>
                                 <span class="discuss mr-3"> {{if eq .rc 0}} 添加评论 {{else}} {{.rc}} 条评论 {{end}}</span>
                                 <span class="report mr-3"> 举报 </span>
                             </div>
@@ -73,6 +72,7 @@
 </div>
 {{end}}
 {{define "js"}}
+<script>let comment = JSON.parse('{{.comment|json}}')</script>
 <script src="{{st "/js/article.js"}}"></script>
-<script> app.edit_root.did ={{.art.DID}} </script>
+<script> app.edit_root.did ={{.art.DID}};</script>
 {{end}}

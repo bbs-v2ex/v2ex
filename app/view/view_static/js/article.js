@@ -1,23 +1,24 @@
-function fuzhi() {
-    try {
-        document.querySelectorAll('span[data-zan-user]').forEach(function (z,i) {
-            let v =  JSON.parse(z.getAttribute('data-zan-user'));
-            if (v.length > 0){
-                console.log(v)
-            }
-        })
-    }catch (e) {
-
-    }
-
-}
-
-fuzhi();
+// function fuzhi() {
+//     try {
+//         document.querySelectorAll('span[data-zan-user]').forEach(function (z,i) {
+//             let v =  JSON.parse(z.getAttribute('data-zan-user'));
+//             if (v.length > 0){
+//                 console.log(v)
+//             }
+//         })
+//     }catch (e) {
+//
+//     }
+//
+// }
+//
+// fuzhi();
 var app = new Vue({
     el: '#vue-app',
     delimiters:['${','}'],
     data() {
         return {
+            comment:comment,
             user_info:'',
             edit_root:{
                 txt:'',
@@ -37,6 +38,12 @@ var app = new Vue({
         console.log(userInfo)
     },
     methods: {
+        zan(_id){
+            console.log(_id)
+        },
+        is_user(user_list =[]){
+           return user_list.includes(this.user_info.mid)
+        },
         j(u){
             window.location.href = u
         },
