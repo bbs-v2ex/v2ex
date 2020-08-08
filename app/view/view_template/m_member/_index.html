@@ -23,6 +23,13 @@ var app = new Vue({
             view_nav:JSON.parse("{{._member_mav|json}}"),
         }
     },
+    created(){
+        post("/member_nav").then(res => {
+            if (res.code === 1){
+                this.view_data.push(...res.data)
+            }
+        })
+    }
 })
 </script>
 {{end}}

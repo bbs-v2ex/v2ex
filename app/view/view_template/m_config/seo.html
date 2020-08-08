@@ -1,0 +1,53 @@
+{{define "head"}}{{end}}
+{{define "body"}}
+<div v-if="html_err != ''">${html_err}</div>
+<div v-else>
+    <div class="card  bg-white rounded">
+        <h5 class="card-header">SEO设置</h5>
+        <div class="card-body col-md-8 align-self-center">
+            <form id="f1" novalidate="novalidate" class="row g-3 needs-validation was-validated">
+                <div class="col-md-12"><label for="validationServer01" class="form-label">Title</label>
+                    <textarea class="form-control  is-invalid" rows="3" v-model="seo.T" required></textarea>
+                </div>
+
+                <div class="col-md-12"><label for="validationServer02" class="form-label">KeyWords</label>
+                    <textarea class="form-control  is-invalid" rows="3" v-model="seo.K" required></textarea>
+                </div>
+                <div class="col-md-12"><label for="validationServer02" class="form-label">Description</label>
+                    <textarea class="form-control  is-invalid" rows="3" v-model="seo.D" required></textarea>
+                </div>
+                <div class="col-12"><button type="submit" class="btn btn-primary"  @click.prevent="submit($event)">提交修改</button></div></form></div>
+    </div>
+</div>
+{{end}}
+{{define "js"}}
+<script>
+    var app = new Vue({
+        el: '#vue-app',
+        delimiters:['${','}'],
+        data() {
+            return {
+                view_data:JSON.parse("{{.send_list|json}}"),
+                seo:{},
+                html_err:'',
+            }
+        },
+        created(){
+            get("/config/seo").then(res => {
+                if (res.code === 1){
+                    this.seo  = res.data
+                }else{
+                    this.html_err = '刷新重新加载数据'
+                }
+            })
+        },
+        methods: {
+            submit(e) {
+                post('/config/seo',this.seo).then(res =>{
+                    console.log(res)
+                })
+            }
+        }
+    })
+</script>
+{{end}}

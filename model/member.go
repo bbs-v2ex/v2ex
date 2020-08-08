@@ -6,11 +6,12 @@ import (
 )
 
 type Member struct {
-	ID       primitive.ObjectID `json:"_id" bson:"_id"`
-	MID      MIDTYPE            `json:"mid" bson:"mid"`
-	UserName string             `json:"user_name" bson:"user_name"`
-	Avatar   string             `json:"avatar" bson:"avatar"`
-	More     MemberMore         `json:"-" bson:"-"`
+	ID         primitive.ObjectID `json:"_id" bson:"_id"`
+	MID        MIDTYPE            `json:"mid" bson:"mid"`
+	MemberType int                `json:"member_type" bson:"member_type"`
+	UserName   string             `json:"user_name" bson:"user_name"`
+	Avatar     string             `json:"avatar" bson:"avatar"`
+	More       MemberMore         `json:"-" bson:"-"`
 }
 
 func (t Member) Table() string {

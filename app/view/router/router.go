@@ -3,6 +3,7 @@ package router
 import (
 	"github.com/gin-gonic/gin"
 	"v2ex/app/view/controller"
+	"v2ex/app/view/controller/m_config"
 	member2 "v2ex/app/view/controller/m_member"
 	"v2ex/app/view/controller/view_data"
 )
@@ -26,6 +27,10 @@ func RegisterRoute(r *gin.Engine) {
 
 	//文章发布
 	member.GET("/send_article", member2.SendArticle)
+
+	//超级管理员权限页面
+	r_config := r.Group("/_/config")
+	r_config.GET("/seo", m_config.Seo)
 
 	//文章页
 	r.GET("/a/:did", view_data.Article)
