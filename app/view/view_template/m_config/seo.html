@@ -19,10 +19,15 @@
                     <label  class="form-label">Description</label>
                     <textarea class="form-control  is-invalid" rows="3" v-model="seo.D" required></textarea>
                 </div>
+
                 <div>
                     <label class="form-label">短标题</label>
                     <input type="text" class="form-control is-valid" v-model="seo.T_" required>
+                </div>
 
+                <div>
+                    <label class="form-label">标题分隔符</label>
+                    <input type="text" class="form-control is-valid" v-model="seo.TitleDelimiter" required>
                 </div>
 
                 <div v-if="ajax_message != ''">${ajax_message}</div>

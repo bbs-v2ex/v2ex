@@ -10,6 +10,7 @@ type DataIndex struct {
 	DID          DIDTYPE            `json:"did" bson:"did"`
 	DTYPE        int                `json:"d_type" bson:"d_type"`
 	MID          MIDTYPE            `json:"mid" bson:"mid"`
+	Show         int                `json:"show" bson:"show"`
 	T            string             `json:"t" bson:"t"`
 	RC           int                `json:"rc" bson:"rc"`
 	InfoQuestion DataQuestion       `json:"-" bson:"-"`

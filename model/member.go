@@ -2,6 +2,8 @@ package model
 
 import (
 	"github.com/123456/c_code"
+	"github.com/123456/c_code/mc"
+	"github.com/globalsign/mgo/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -20,4 +22,13 @@ func (t Member) Table() string {
 
 func (t Member) EncryptionPassWord(password string) string {
 	return c_code.Md516(c_code.Md532(password))
+}
+
+//获取用户的信息
+func (t Member) GetUserInfo(mid MIDTYPE, find_more bool) (m Member) {
+	mc.Table(t.Table()).Where(bson.M{"mid": mid}).FindOne(&m)
+	if find_more {
+		mc.Table(m.More.Table()).Where(bson.M{"_id": m.ID}).FindOne(&m.More)
+	}
+	return
 }

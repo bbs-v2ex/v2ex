@@ -17,10 +17,11 @@ func (t SiteConfig) Table() string {
 }
 
 type SiteConfigSeo struct {
-	T  string
-	D  string
-	K  string
-	T_ string
+	T              string
+	D              string
+	K              string
+	T_             string
+	TitleDelimiter string
 }
 
 const _site_d_seo = 1

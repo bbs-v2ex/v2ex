@@ -5,13 +5,14 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/globalsign/mgo/bson"
 	"strconv"
+	"strings"
 	"v2ex/app/view"
 	"v2ex/model"
 )
 
 func Article(c *gin.Context) {
 	did, _ := strconv.Atoi(c.Param("did"))
-
+	t_list := []string{}
 	if did == 0 {
 		view.R404(c, view.ViewError{Message: "文章不存在"})
 		return
@@ -38,5 +39,13 @@ func Article(c *gin.Context) {
 	//渲染数据
 	_ht := defaultData(c)
 	_ht["art"] = index
+	t_list = append(t_list, index.T)
+	t_list = append(t_list, _ht["t_"].(string))
+	_ht["t"] = strings.Join(t_list, _ht["title_fgf"].(string))
+
+	mt := model.Member{}
+	member_info := mt.GetUserInfo(index.MID, true)
+	_ht["member_info"] = member_info
+
 	view.Render(c, "data/article", _ht)
 }
