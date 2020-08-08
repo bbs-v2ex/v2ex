@@ -47,5 +47,10 @@ func Article(c *gin.Context) {
 	member_info := mt.GetUserInfo(index.MID, true)
 	_ht["member_info"] = member_info
 
+	//查询评论
+	comment_list := []model.CommentRoot{}
+	mc.Table(model.CommentRoot{}.Table()).Where(bson.M{"did": index.DID}).Limit(10).Find(&comment_list)
+	_ht["comment"] = comment_list
+
 	view.Render(c, "data/article", _ht)
 }

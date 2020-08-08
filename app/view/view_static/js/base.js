@@ -60,3 +60,34 @@ function getBase64(img){
         }
     })
 }
+
+
+
+
+var login_app = new Vue({
+    el: '.vue-user-show',
+    delimiters:['${','}'],
+    data() {
+        return {
+            user_info:{}
+        }
+    },
+    created(){
+        this.user_info = getUserInfo();
+        if (this.user_info.mid == undefined){
+            this.user_info.mid = 0
+        }
+        console.log(this.user_info)
+    },
+    methods:{
+        loginout(){
+            post('/loginout').then(res =>{
+                sessionStorage.removeItem(APITOKEN);
+                window.location.href = "?"
+            })
+        },
+        goMemberCentre(){
+            window.location.href = "/_/member/z/";
+        }
+    }
+});

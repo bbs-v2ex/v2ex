@@ -7,7 +7,6 @@
     <meta name="keywords" content="{{.k}}">
     <meta name="description" content="{{.d}}">
     <link href="{{st "/btv5/bootstrap.min.css" }}" rel="stylesheet" crossorigin="anonymous">
-    <link href="{{st "/btv5/navbar-top-fixed.css" }}" rel="stylesheet">
     <link href="{{st "/css/base.css"}}" rel="stylesheet">
     {{template "head" .}}
     <style>
@@ -58,7 +57,6 @@
         </div>
     </div>
 </nav>
-
 <div class="container" id="vue-app">
     {{template "body" .}}
 </div>
@@ -68,33 +66,5 @@
 <script src="{{st "/btv5/bootstrap.bundle.min.js" }}"  crossorigin="anonymous" type="application/javascript"></script>
 <script src="{{st "/btv5/axios.min.js"}}" type="application/javascript"></script>
 <script type="application/javascript" src="{{st "/btv5/vue-dev.js"}}"></script>
-<script>
-var login_app = new Vue({
-    el: '.vue-user-show',
-    delimiters:['${','}'],
-    data() {
-        return {
-            user_info:{}
-        }
-    },
-    created(){
-        this.user_info = getUserInfo();
-        if (this.user_info.mid == undefined){
-            this.user_info.mid = 0
-        }
-        console.log(this.user_info)
-    },
-    methods:{
-        loginout(){
-            post('/loginout').then(res =>{
-                sessionStorage.removeItem(APITOKEN);
-                window.location.href = "?"
-            })
-        },
-        goMemberCentre(){
-            window.location.href = "/_/member/z/";
-        }
-    }
-})
-</script>
+<script type="application/javascript" src="{{st "/js/base.js"}}"></script>
 {{template "js" .}}

@@ -9,8 +9,9 @@ type CommentRoot struct {
 	//下级评论多少页
 	ReplyCount int `json:"reply_count" bson:"reply_count"`
 	//问题ID
-	QID primitive.ObjectID `json:"qid" bson:"qid"`
-	//楼层编号
+	DID DIDTYPE `json:"did" bson:"did"`
+
+	//多少人点赞
 	ZanLen int `json:"zan_len" bson:"zan_len"`
 	//其他信息
 }
