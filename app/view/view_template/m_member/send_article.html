@@ -69,7 +69,7 @@
                 //禁用提交按钮
                 this.wait_loading = true;
                 this.ajax_message = '开始提交';
-                post('/send_article',this.f1).then(res => {
+                post('/article/add',this.f1).then(res => {
                     this.ajax_message = res.message;
                     debugger
 

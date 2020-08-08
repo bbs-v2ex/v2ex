@@ -1,4 +1,4 @@
-package manage
+package article
 
 import (
 	"fmt"
@@ -11,14 +11,14 @@ import (
 	"v2ex/model"
 )
 
-type _send_article struct {
+type _add struct {
 	Title   string `json:"title"   validate:"required"`
 	Content string `json:"content"  validate:"required"`
 	Html    string `json:"-"`
 }
 
-func SendArticle(c *gin.Context) {
-	_f := _send_article{}
+func add(c *gin.Context) {
+	_f := _add{}
 	c.BindJSON(&_f)
 	_f.Title = api.FilterTitle(_f.Title)
 

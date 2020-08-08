@@ -15,3 +15,11 @@ func GetNowUserInfo(c *gin.Context) (member model.Member) {
 	mc.Table(member.Table()).Where(bson.M{"mid": _mid}).FindOne(&member)
 	return
 }
+
+func GetMID(c *gin.Context) model.MIDTYPE {
+	_mid, exists := c.Get("mid")
+	if !exists {
+		return 0
+	}
+	return _mid.(model.MIDTYPE)
+}

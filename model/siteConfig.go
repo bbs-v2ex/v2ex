@@ -13,7 +13,7 @@ type SiteConfig struct {
 }
 
 func (t SiteConfig) Table() string {
-	return "member"
+	return "site_config"
 }
 
 type SiteConfigSeo struct {
