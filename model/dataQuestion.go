@@ -8,7 +8,6 @@ import (
 //数据索引
 type DataQuestion struct {
 	ID      primitive.ObjectID `json:"_id" bson:"_id"`
-	DID     DIDTYPE            `json:"did" bson:"did"`
 	Content string             `json:"content" bson:"content"`
 	//发布时间
 	ReleaseTime time.Time `json:"release_time" bson:"release_time"`

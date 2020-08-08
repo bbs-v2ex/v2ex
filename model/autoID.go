@@ -3,7 +3,7 @@ package model
 import "go.mongodb.org/mongo-driver/bson/primitive"
 
 //文章自增ID
-const AutoIDArticle = 1
+const AutoIDData = 1
 
 //问答自增ID 需要登录才可以回答
 const AutoIDQA = 2
