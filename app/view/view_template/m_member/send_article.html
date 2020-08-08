@@ -1,4 +1,9 @@
 {{define "head"}}
+    <style>
+        .w-e-text-container, .w-e-toolbar,.w-e-menu{
+            z-index: 1!important;
+        }
+    </style>
 {{end}}
 {{define "body"}}
     <div class="card  bg-white rounded">
@@ -11,7 +16,7 @@
                 </div>
                 <div class="col-md-12">
                     <label for="validationServer01" class="form-label">内容</label>
-                    <div id="f1-content"  v-html="f1.content" spellcheck="false"></div>
+                    <div id="f1-content"  v-html="f1.content_view"  spellcheck="false"></div>
                 </div>
 
                 <div v-if="ajax_message != ''">${ajax_message}</div>
@@ -20,7 +25,7 @@
                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         Loading...
                     </button>
-                    <button class="btn btn-primary" type="submit"  v-else  @click.prevent="submit($event)">登录</button>
+                    <button class="btn btn-primary" type="submit"  v-else  @click.prevent="submit($event)"> 发布文章 </button>
                 </div>
 
             </form>
@@ -43,6 +48,7 @@
                 f1:{
                     'title':'',
                     'content':'',
+                    'content_view':'',
                 },
             }
         },
@@ -50,7 +56,28 @@
 
         },
         methods: {
+            submit(e) {
+                this.f1.content = editor.txt.html();
+                var l = document.querySelector('#f1').checkValidity();
+                if (!l) {
+                    document.querySelector('#f1').classList.add("was-validated");
+                    this.ajax_message = '验证未通过';
+                    return false
+                } else {
+                    document.querySelector('#f1').classList.remove("was-validated")
+                }
+                //禁用提交按钮
+                this.wait_loading = true;
+                this.ajax_message = '开始提交';
+                post('/send_article',this.f1).then(res => {
+                    this.ajax_message = res.data.message;
 
+                }).catch(err => {
+                    this.ajax_message = '接口错误';
+                }).finally(()=>{
+                    this.wait_loading = false
+                })
+            }
         }
     })
 </script>
@@ -167,7 +194,6 @@
             }
         }
         jiance = false;
-        console.log(jiance)
     }
 
 </script>
