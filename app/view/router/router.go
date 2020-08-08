@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"v2ex/app/view/controller"
 	member2 "v2ex/app/view/controller/m_member"
+	"v2ex/app/view/controller/view_data"
 )
 
 func RegisterRoute(r *gin.Engine) {
@@ -25,4 +26,7 @@ func RegisterRoute(r *gin.Engine) {
 
 	//文章发布
 	member.GET("/send_article", member2.SendArticle)
+
+	//文章页
+	r.GET("/a/:did", view_data.Article)
 }

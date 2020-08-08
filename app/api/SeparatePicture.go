@@ -3,6 +3,7 @@ package api
 import (
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
+	"net/url"
 	"strings"
 	"v2ex/config"
 )
@@ -28,8 +29,19 @@ func SeparatePicture(_html string) (html string, imgs []string, err error) {
 	//处理 a 标签
 	doc.Find("a").Each(func(i int, selection *goquery.Selection) {
 		href, _ := selection.Attr("href")
+
+		if strings.HasPrefix(href, "/jump-address") {
+			parse, err := url.Parse("http://127.0.0.1" + href)
+			if err != nil {
+				selection.ReplaceWithHtml(selection.Text())
+				return
+			}
+			u := parse.Query().Get("u")
+			href = u
+		}
+
 		if strings.HasPrefix(href, "http://") || strings.HasPrefix(href, "https://") {
-			selection.ReplaceWithHtml(fmt.Sprintf(`<a href="/hump-address-to?u=%s" rel="nofollow"  target="_blank" >%s</a>`, href, selection.Text()))
+			selection.ReplaceWithHtml(fmt.Sprintf(`<a href="/jump-address?u=%s" rel="nofollow"  target="_blank" >%s</a>`, href, selection.Text()))
 		} else {
 			selection.ReplaceWithHtml(selection.Text())
 		}
@@ -39,7 +51,7 @@ func SeparatePicture(_html string) (html string, imgs []string, err error) {
 		src, _ := selection.Attr("src")
 		if strings.HasPrefix(src, _con.Run.UploadServer) {
 			selection.ReplaceWithHtml(IMGHTML)
-			imgs = append(imgs, src)
+			imgs = append(imgs, strings.ReplaceAll(src, _con.Run.UploadServer, ""))
 		} else {
 			selection.Remove()
 		}
