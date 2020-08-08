@@ -6,17 +6,32 @@
         <h5 class="card-header">SEO设置</h5>
         <div class="card-body col-md-8 align-self-center">
             <form id="f1" novalidate="novalidate" class="row g-3 needs-validation was-validated">
-                <div class="col-md-12"><label for="validationServer01" class="form-label">Title</label>
+                <div class="col-md-12">
+                    <label class="form-label">Title</label>
                     <textarea class="form-control  is-invalid" rows="3" v-model="seo.T" required></textarea>
                 </div>
 
-                <div class="col-md-12"><label for="validationServer02" class="form-label">KeyWords</label>
+                <div class="col-md-12">
+                    <label  class="form-label">KeyWords</label>
                     <textarea class="form-control  is-invalid" rows="3" v-model="seo.K" required></textarea>
                 </div>
-                <div class="col-md-12"><label for="validationServer02" class="form-label">Description</label>
+                <div class="col-md-12">
+                    <label  class="form-label">Description</label>
                     <textarea class="form-control  is-invalid" rows="3" v-model="seo.D" required></textarea>
                 </div>
-                <div class="col-12"><button type="submit" class="btn btn-primary"  @click.prevent="submit($event)">提交修改</button></div></form></div>
+                <div>
+                    <label class="form-label">短标题</label>
+                    <input type="text" class="form-control is-valid" v-model="seo.T_" required>
+
+                </div>
+
+                <div v-if="ajax_message != ''">${ajax_message}</div>
+
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary"  @click.prevent="submit($event)">提交修改</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 {{end}}
@@ -30,6 +45,7 @@
                 view_data:JSON.parse("{{.send_list|json}}"),
                 seo:{},
                 html_err:'',
+                ajax_message:'',
             }
         },
         created(){
@@ -43,7 +59,9 @@
         },
         methods: {
             submit(e) {
+                this.ajax_message= '开始提交';
                 post('/config/seo',this.seo).then(res =>{
+                    this.ajax_message = res.message;
                     console.log(res)
                 })
             }

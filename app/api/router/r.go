@@ -11,13 +11,13 @@ func RegisterRoute(r *gin.Engine) {
 	//authMiddleware := init_jwt()
 
 	ro := r.Group("/api/manage")
-	site_config.R(ro)
+
 	ro.POST("/add_member", manage.AddMember)
 	ro.POST("/login", manage.Login)
 	ro.POST("/loginout", manage.LoginOut)
 
 	ro.Use(checkLogin)
-
+	site_config.R(ro)
 	//获取用户信息
 	ro.POST("/get_user_info", manage.GetUserInfo)
 	//发布文章
