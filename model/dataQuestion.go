@@ -9,6 +9,7 @@ import (
 type DataQuestion struct {
 	ID      primitive.ObjectID `json:"_id" bson:"_id"`
 	Content string             `json:"content" bson:"content"`
+	Imgs    []string           `json:"imgs" bson:"imgs"`
 	//发布时间
 	ReleaseTime time.Time `json:"release_time" bson:"release_time"`
 	//调整时间

@@ -56,13 +56,7 @@
                 this.wait_loading = true;
                 this.ajax_message = '开始提交';
                 post('/add_member',{username:this.username,password:this.password}).then(res => {
-                    this.ajax_message = res.data.message;
-                    if (res.data.u !== "") {
-                        setTimeout(function () {
-                            window.location.href = res.data.u
-                        },1500);
-
-                    }
+                    this.ajax_message = res.message;
                     this.wait_loading = false
                 }).catch(err => {
                    this.ajax_message = '接口错误';

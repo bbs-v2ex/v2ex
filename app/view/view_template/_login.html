@@ -1,16 +1,16 @@
 {{define "head"}}{{end}}
 {{define "body"}}
 <div class="card  bg-white rounded">
-    <h5 class="card-header">账号注册</h5>
+    <h5 class="card-header">账号登录</h5>
     <div class="card-body col-md-6 col-lg-4 align-self-center">
         <form class="row g-3 needs-validation was-validated" id="f1" novalidate>
             <div class="col-md-12">
-                <label for="validationServer01" class="form-label">用户</label>
+                <label for="validationServer01" class="form-label">登录账号</label>
                 <input type="text" class="form-control is-valid" id="validationServer01" v-model="username" required>
 
             </div>
             <div class="col-md-12">
-                <label for="validationServer02" class="form-label">密码</label>
+                <label for="validationServer02" class="form-label">登录密码</label>
                 <input type="password" class="form-control is-valid" id="validationServer02" v-model="password" required>
             </div>
 
@@ -56,27 +56,19 @@
                     this.wait_loading = true;
                     this.ajax_message = '开始提交';
                     post('/login',{username:this.username,password:this.password}).then(res => {
-                        this.ajax_message = res.data.message;
-
+                        this.ajax_message = res.message;
                         //判断是否登录
-                        if (res.data.token != undefined ){
+                        if (res.token != undefined ){
                             this.ajax_message = '登录成功';
                             //获取 user-info
                             sessionStorage.setItem(APITOKEN, JSON.stringify({
-                                token:res.data.token,
+                                token:res.token,
                                 user_info:{
                                     name:'张三',
                                 }
                             }));
-
                             setUserInfo();
                             window.location.href = "/"
-                        }
-
-                        if (res.data.u !== "" && res.data.u !== undefined) {
-                            setTimeout(function () {
-                                window.location.href = res.data.u
-                            },1500);
                         }
                         this.wait_loading = false;
                         //发送请求并保存信息到本地

@@ -155,7 +155,7 @@
             }
             if (src.indexOf("/static/tmp/") === -1 || src.startsWith('data:image/')){
                 try {
-                    let { data }  =  await post('/download_temp_img',{u:src});
+                    let  data  =  await post('/download_temp_img',{u:src});
                     if (data.code === 1){
                         item.src = data.data;
                     }else {

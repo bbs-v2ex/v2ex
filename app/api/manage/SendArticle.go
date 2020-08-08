@@ -39,6 +39,16 @@ func SendArticle(c *gin.Context) {
 		c.JSON(200, result_json)
 		return
 	}
+
+	//分离图片
+	html, imgs, err := api.SeparatePicture(_f.Html)
+	_f.Html = html
+	if err != nil {
+		result_json := c_code.V1GinError(102, "处理html错误")
+		c.JSON(200, result_json)
+		return
+	}
+
 	user := api.GetNowUserInfo(c)
 
 	//定义索引数据
@@ -61,6 +71,7 @@ func SendArticle(c *gin.Context) {
 	d_article := model.DataArticle{
 		ID:            index.ID,
 		Content:       _f.Html,
+		Imgs:          imgs,
 		ReleaseTime:   time.Now(),
 		ModifyTime:    time.Now(),
 		LastReplyTime: time.Time{},
