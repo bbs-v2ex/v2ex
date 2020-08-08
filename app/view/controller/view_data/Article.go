@@ -34,7 +34,9 @@ func Article(c *gin.Context) {
 		view.R404(c, view.ViewError{Message: "文章不存在333"})
 		return
 	}
+	index.InfoArticle = article
 	//渲染数据
 	_ht := defaultData(c)
+	_ht["art"] = index
 	view.Render(c, "data/article", _ht)
 }

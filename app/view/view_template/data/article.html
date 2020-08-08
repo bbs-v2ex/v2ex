@@ -1,3 +1,28 @@
-{{define "head"}}{{end}}
-{{define "body"}}{{end}}
+{{define "head"}}
+<style>
+      #article{
+          background: #FFF;
+          border-radius: 2px;
+          min-height: 150px;
+          box-shadow: 0 1px 3px rgba(0,0,0,.03);
+      }
+</style>
+{{end}}
+{{define "body"}}
+<div class="row">
+    <div class="col-md-8" id="article">
+        <div></div>
+        <div >
+            <div class="top">
+                <div class="title">
+                    {{.art.T}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        right
+    </div>
+</div>
+{{end}}
 {{define "js"}}{{end}}
