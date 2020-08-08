@@ -14,6 +14,7 @@ type CommentRoot struct {
 	//多少人点赞
 	ZanLen int `json:"zan_len" bson:"zan_len"`
 	//其他信息
+	Text CommentText `json:"-" bson:"-"`
 }
 
 func (t CommentRoot) Table() string {

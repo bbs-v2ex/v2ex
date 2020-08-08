@@ -1,11 +1,13 @@
 package view_data
 
 import (
+	"github.com/123456/c_code"
 	"github.com/123456/c_code/mc"
 	"github.com/gin-gonic/gin"
 	"github.com/globalsign/mgo/bson"
 	"strconv"
 	"strings"
+	"v2ex/app/common"
 	"v2ex/app/view"
 	"v2ex/model"
 )
@@ -50,7 +52,26 @@ func Article(c *gin.Context) {
 	//查询评论
 	comment_list := []model.CommentRoot{}
 	mc.Table(model.CommentRoot{}.Table()).Where(bson.M{"did": index.DID}).Limit(10).Find(&comment_list)
-	_ht["comment"] = comment_list
+	//提取文本
+	new_comment_list := []gin.H{}
+	for k, _ := range comment_list {
+		mc.Table(comment_list[k].Text.Table()).Where(bson.M{"_id": comment_list[k].ID}).FindOne(&comment_list[k].Text)
+		if comment_list[k].Text.Text == "" {
+			continue
+		}
+		//获取会员数据
+		user_info := model.Member{}.GetUserInfo(comment_list[k].MID, false)
+		new_comment_list = append(new_comment_list, gin.H{
+			"user_info": gin.H{
+				"name":   user_info.UserName,
+				"avatar": common.Avatar(user_info.Avatar),
+				"time":   c_code.StrTime(comment_list[k].Text.ReleaseTime),
+			},
+			"txt": comment_list[k].Text.Text,
+			"zen": comment_list[k].ZanLen,
+		})
+	}
+	_ht["comment"] = new_comment_list
 
 	view.Render(c, "data/article", _ht)
 }

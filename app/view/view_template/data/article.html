@@ -27,18 +27,6 @@
             <div class="content mt-3">{{$comment_len := len .comment}}
                 {{if eq $comment_len 0}}
                     <p>暂无评论，快来做第一个评论的小伙伴吧!!!!</p>
-                    <div  v-if="user_info.mid">
-                        <textarea class="form-control" rows="4" v-model="edit_root.txt"></textarea>
-                        <div v-if="ajax_message != ''" v-html="ajax_message"></div>
-                        <button class="btn btn-primary  mb-2 mt-2 float-right"  type="button" disabled v-if="wait_loading">
-                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                            Loading...
-                        </button>
-                        <button class="btn btn-primary  mb-2 mt-2 float-right" type="submit"  @click.prevent="submit_comment_root($event)">提交评论</button>
-                    </div>
-                    <div v-else>
-                        <p> 需要 <span class="link-info " @click="just_login">登录</span> 才可以进行评论 </p>
-                    </div>
                 {{else}}
                     <div>{{.art.RC}} 条评论</div>
                     <div id="comment-list">
@@ -49,6 +37,18 @@
                         {{end}}
                     </div>
                 {{end}}
+                <div  v-if="user_info.mid">
+                    <textarea class="form-control" rows="4" v-model="edit_root.txt"></textarea>
+                    <div v-if="ajax_message != ''" v-html="ajax_message"></div>
+                    <button class="btn btn-primary  mb-2 mt-2 float-right"  type="button" disabled v-if="wait_loading">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Loading...
+                    </button>
+                    <button class="btn btn-primary  mb-2 mt-2 float-right" type="submit"  @click.prevent="submit_comment_root($event)">提交评论</button>
+                </div>
+                <div v-else>
+                    <p> 需要 <span class="link-info " @click="just_login">登录</span> 才可以进行评论 </p>
+                </div>
             </div>
         </div>
     </div>
