@@ -1,3 +1,18 @@
+function fuzhi() {
+    try {
+        document.querySelectorAll('span[data-zan-user]').forEach(function (z,i) {
+            let v =  JSON.parse(z.getAttribute('data-zan-user'));
+            if (v.length > 0){
+                console.log(v)
+            }
+        })
+    }catch (e) {
+
+    }
+
+}
+
+fuzhi();
 var app = new Vue({
     el: '#vue-app',
     delimiters:['${','}'],
@@ -22,14 +37,13 @@ var app = new Vue({
         console.log(userInfo)
     },
     methods: {
+        j(u){
+            window.location.href = u
+        },
         just_login(){
             document.querySelector('#navbarCollapse > div > ul > li:nth-child(1) > a').click()
         },
         submit_comment_root(){
-            // if (this.edit_root.length < 10){
-            //     this.ajax_message = '不要灌水';
-            //     return
-            // }
             this.wait_loading = true;
             post('/article/comment_root_add',this.edit_root).then(res => {
                 this.ajax_message = res.message;

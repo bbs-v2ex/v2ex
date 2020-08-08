@@ -33,6 +33,9 @@
 #article  .author img{
     border-radius: 50%;
     border:1px solid #b7b7b7;
+    height: 20px;
+    width: 20px;
+    display: inline-block;
 }
 #article .author{
     margin-right: 15px;
@@ -51,4 +54,39 @@
 }
 #comment .title{
     border-bottom: 1px solid #f0f0f0;
+}
+.comment-size-tip{
+    font-size: 0.86666rem;
+}
+.comment-block{
+    border-bottom:1px solid  #b7b7b7;
+}
+.comment-block .author-name{
+    font-size: 15px;
+    font-weight: 600;
+}
+.comment-block .author-avatar img{
+    border-radius: 5px;
+    border: 1px solid #b7b7b7;
+    height: 43px;
+    width: 43px;
+}
+.comment-block .author-avatar{
+    cursor: pointer;
+}
+.comment-block .tip{
+    color: #8590a6;
+
+}
+.tools .zan{
+    padding: 5px 10px;
+    color: #0084ff;
+    background: rgba(0,132,255,.1);
+    border-color: transparent;
+    cursor: pointer;
+    border-radius: 3px;
+}
+.tools .zan-active{
+    color: #fff;
+    background: #0084ff;
 }

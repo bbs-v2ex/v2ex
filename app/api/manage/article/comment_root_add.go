@@ -43,11 +43,11 @@ func comment_root_add(c *gin.Context) {
 	}
 	//通过 插入数据库
 	comment_root := model.CommentRoot{
-		ID:         primitive.NewObjectID(),
-		MID:        user_info.MID,
-		ReplyCount: 0,
-		DID:        index.DID,
-		ZanLen:     0,
+		ID:     primitive.NewObjectID(),
+		MID:    user_info.MID,
+		RC:     0,
+		DID:    index.DID,
+		ZanLen: 0,
 	}
 	err := mc.Table(comment_root.Table()).Insert(comment_root)
 	if err != nil {

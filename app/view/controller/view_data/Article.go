@@ -67,8 +67,11 @@ func Article(c *gin.Context) {
 				"avatar": common.Avatar(user_info.Avatar),
 				"time":   c_code.StrTime(comment_list[k].Text.ReleaseTime),
 			},
-			"txt": comment_list[k].Text.Text,
-			"zen": comment_list[k].ZanLen,
+			"member_info": user_info,
+			"txt":         comment_list[k].Text.Text,
+			"zan":         comment_list[k].ZanLen,
+			"zan_user":    comment_list[k].Text.Zan,
+			"rc":          comment_list[k].RC,
 		})
 	}
 	_ht["comment"] = new_comment_list

@@ -7,7 +7,7 @@ type CommentRoot struct {
 	//发布人ID
 	MID MIDTYPE `json:"mid" bson:"mid"`
 	//下级评论多少页
-	ReplyCount int `json:"reply_count" bson:"reply_count"`
+	RC int `json:"rc" bson:"rc"`
 	//问题ID
 	DID DIDTYPE `json:"did" bson:"did"`
 
