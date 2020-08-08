@@ -38,11 +38,32 @@ var app = new Vue({
         console.log(userInfo)
     },
     methods: {
-        zan(_id){
-            console.log(_id)
+        zan(index,_id){
+           let add_zan = false;
+           try {
+               add_zan = this.comment[index].zan_user.includes(this.user_info.mid);
+           }catch (e) {
+               add_zan = false
+           }
+           let zan_url = '/article/zan_add';
+           if (add_zan){
+               zan_url = '/article/zan_del'
+           }
+
+           post(zan_url,{'_id':this.comment[index]._id}).then(res  => {
+                if (res.code === 1){
+                    this.comment[index].zan_user = res.data;
+                    this.comment[index].zan = res.data.length;
+                }
+           })
         },
         is_user(user_list =[]){
-           return user_list.includes(this.user_info.mid)
+            try {
+                return user_list.includes(this.user_info.mid)
+            }catch (e) {
+                return  false
+            }
+
         },
         j(u){
             window.location.href = u

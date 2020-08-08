@@ -43,8 +43,10 @@
                             <div class="tip mt-2 mb-2"><span class="mt-2">发布于： {{.user_info.time}}</span> {{if ne .zan 0}}<span> {{.zen}} 人赞同</span>{{end}}</div>
                             <div>{{.txt}}</div>
                             <div class="tools mt-2 mb-2">
-                                <span class="zan mr-3" :class="{'zan-active':is_user('{{.zan_user}}')}" @click="zan('{{._id.Hex}}')"> 赞 {{.zan}} </span>
-                                <span class="discuss mr-3"> {{if eq .rc 0}} 添加评论 {{else}} {{.rc}} 条评论 {{end}}</span>
+                                <span class="zan mr-3" :class="{'zan-active':is_user(comment[{{$k}}].zan_user)}" @click="zan({{$k}},'{{._id.Hex}}')">
+                                    赞 <span v-html="comment[{{$k}}].zan">{{.zan}} </span>
+                                </span>
+                                <span class="discuss mr-3"> {{if eq .rc 0}} 添加评论 {{else}} <span >{{.rc}}</span> 条评论 {{end}}</span>
                                 <span class="report mr-3"> 举报 </span>
                             </div>
                         </div>
