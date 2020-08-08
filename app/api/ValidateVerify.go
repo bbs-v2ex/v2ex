@@ -5,6 +5,7 @@ import (
 	ut "github.com/go-playground/universal-translator"
 	"github.com/go-playground/validator/v10"
 	zh_translations "github.com/go-playground/validator/v10/translations/zh"
+	"reflect"
 )
 
 var (
@@ -24,6 +25,9 @@ func init() {
 
 	validate = validator.New()
 	zh_translations.RegisterDefaultTranslations(validate, trans)
+	validate.RegisterTagNameFunc(func(fld reflect.StructField) string {
+		return fld.Tag.Get("comment")
+	})
 }
 func VerifyValidator(d interface{}) (s string) {
 	err := validate.Struct(d)

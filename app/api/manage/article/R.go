@@ -10,6 +10,7 @@ func R(r *gin.RouterGroup) {
 	r1 := r.Group("/article")
 	r1.POST("/add", add)
 	r1.POST("/list", list)
+	r1.POST("/comment_root_add", comment_root_add)
 }
 
 func isok(c *gin.Context) {
