@@ -7,7 +7,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"strconv"
 	"strings"
-	api_article "v2ex/app/api/manage/article"
+	api_question "v2ex/app/api/manage/question"
 	"v2ex/app/view"
 	"v2ex/model"
 )
@@ -52,6 +52,6 @@ func Question(c *gin.Context) {
 	_rid := c.Param("rid")
 	rid, err := primitive.ObjectIDFromHex(_rid)
 
-	_ht["comment"] = api_article.CommentRootList(model.DIDTYPE(did), rid, true)
+	_ht["comment"] = api_question.CommentRootList(model.DIDTYPE(did), rid, true)
 	view.Render(c, "data/question", _ht)
 }

@@ -14,7 +14,7 @@ type CommentQuestionChild struct {
 
 	ZanLen int `json:"zan_len" bson:"zan_len"`
 	//其他信息
-	Text CommentText `json:"-" bson:"-"`
+	Text CommentQuestionText `json:"-" bson:"-"`
 }
 
 func (t CommentQuestionChild) Table() string {

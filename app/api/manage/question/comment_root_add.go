@@ -13,8 +13,9 @@ import (
 )
 
 type _comment_root_add struct {
-	DID model.DIDTYPE `json:"did" validate:"gt=0" comment:"文章ID"`
-	Txt string        `json:"txt" validate:"min=10,max=1000" comment:"数据"`
+	DID  model.DIDTYPE `json:"did" validate:"gt=0" comment:"文章ID"`
+	Txt  string        `json:"txt" validate:"min=10,max=1000" comment:"数据"`
+	Text string        `validate:"min=10,max=1000" comment:"数据"`
 }
 
 func comment_root_add(c *gin.Context) {
@@ -27,20 +28,32 @@ func comment_root_add(c *gin.Context) {
 	}
 	_f := _comment_root_add{}
 	c.BindJSON(&_f)
+	_f.Text = c_code.RemoveHtmlTag(_f.Txt)
 	validator := api.VerifyValidator(_f)
 	if validator != "" {
 		result_json := c_code.V1GinError(102, validator)
 		c.JSON(200, result_json)
 		return
 	}
-
 	//验证是否回答过此问题
+	is_reply := model.CommentQuestionRoot{}
+	err := mc.Table(is_reply.Table()).Where(bson.M{"mid": user_info.MID}).FindOne(&is_reply)
+	if err != nil {
+		result_json := c_code.V1GinError(103, "查询失败")
+		c.JSON(200, result_json)
+		return
+	}
 
-	//全部验证通过，入库
+	if is_reply.ID.Hex() != mc.Empty {
+		result_json := c_code.V1GinError(104, "不允许重复回答")
+		c.JSON(200, result_json)
+		return
+	}
+
 	//分离数据
 	_html, _imgs, err2 := api.SeparatePicture(_f.Txt)
 	if err2 != nil {
-		result_json := c_code.V1GinError(103, "html解析错误")
+		result_json := c_code.V1GinError(105, "html解析错误")
 		c.JSON(200, result_json)
 		return
 	}
@@ -49,27 +62,27 @@ func comment_root_add(c *gin.Context) {
 	index := model.DataIndex{}
 	mc.Table(index.Table()).Where(bson.M{"did": _f.DID}).FindOne(&index)
 	if index.DID == 0 {
-		result_json := c_code.V1GinError(103, "系统中并没有这个文章")
+		result_json := c_code.V1GinError(106, "未找到该问题")
 		c.JSON(200, result_json)
 		return
 	}
 	//通过 插入数据库
-	comment_root := model.CommentRoot{
+	comment_root := model.CommentQuestionRoot{
 		ID:     primitive.NewObjectID(),
 		MID:    user_info.MID,
 		RC:     0,
 		DID:    index.DID,
 		ZanLen: 0,
 	}
-	err := mc.Table(comment_root.Table()).Insert(comment_root)
+	err = mc.Table(comment_root.Table()).Insert(comment_root)
 	if err != nil {
-		result_json := c_code.V1GinError(104, "写入失败")
+		result_json := c_code.V1GinError(107, "写入失败")
 		c.JSON(200, result_json)
 		return
 	}
 
 	//写入数据存储表
-	comment_text := model.CommentText{
+	comment_text := model.CommentQuestionText{
 		ID:          comment_root.ID,
 		Text:        _html,
 		Zan:         nil,
@@ -80,14 +93,14 @@ func comment_root_add(c *gin.Context) {
 	err = mc.Table(comment_text.Table()).Insert(comment_text)
 
 	if err != nil {
-		result_json := c_code.V1GinError(105, "写入失败")
+		result_json := c_code.V1GinError(108, "写入失败")
 		mc.Table(comment_root.Table()).Where(bson.M{"_id": comment_root.ID}).DelOne()
 		c.JSON(200, result_json)
 		return
 	}
 	ref := c.GetHeader("Referer")
 	_u := regexp.MustCompile(`/r/[\w|\s]{24}`).ReplaceAllString(ref, "")
-	_u += "/r/" + comment_root.ID.Hex()
+	_u += "/answer/" + comment_root.ID.Hex()
 	result_json := c_code.V1GinSuccess(comment_root.ID, "添加成功", _u)
 	//评论字段加 1
 	mc.Table(index.Table()).Where(bson.M{"did": index.DID}).FieldAddOrDel("rc", +1)

@@ -23,9 +23,9 @@
 
             <div class="answer-edit mt-3 p-3">
                 <div> 我要回答 </div>
+                <div id="f1-content"></div>
+                <div v-if="ajax_message != ''" v-html="ajax_message"></div>
                 <div  v-if="user_info.mid">
-                    <div id="f1-content" v-html="edit_root.txt"></div>
-                    <div v-if="ajax_message != ''" v-html="ajax_message"></div>
                     <button class="btn btn-primary  mb-2 mt-2 float-right"  type="button" disabled v-if="wait_loading">
                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         Loading...
