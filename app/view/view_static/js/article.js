@@ -1,6 +1,3 @@
-// var myModal =, {
-//     keyboard: false
-// })
 var app = new Vue({
     el: '#vue-app',
     delimiters: ['${', '}'],
@@ -21,7 +18,7 @@ var app = new Vue({
                     pid: '000000000000000000000000',
                     txt: '',
                 },
-                ajax_message:'',
+                ajax_message: '',
                 wait_loading: false,
                 message: '',
                 list: [],
@@ -44,15 +41,21 @@ var app = new Vue({
             discuss_modal.show();
             this.discuss_reload()
         },
-        discuss_reload(){
-          post('/article/comment_child_list',{rid:this.discuss.rid}).then(res => {
-              if (res.data.length === 0){
-                  this.discuss.message = '无评论，快去添加你的神评吧'
-              }
-              this.discuss.list = res.data
-          }).catch(err =>{
-              this.discuss.message = '接口错误,拉取失败'
-          })
+        discuss_reload() {
+            post('/article/comment_child_list', {rid: this.discuss.edit_child.rid}).then(res => {
+                if (res.code === 1) {
+                    this.discuss.message = '';
+                    if (res.data.length === 0)
+                        this.discuss.message = '无评论，快去添加你的神评吧'
+
+                } else {
+                    this.discuss.message = res.message
+                }
+
+                this.discuss.list = res.data
+            }).catch(err => {
+                this.discuss.message = '接口错误,拉取失败'
+            })
         },
         zan(index, _id) {
             let add_zan = false;
@@ -110,7 +113,7 @@ var app = new Vue({
                 this.discuss.ajax_message = res.message;
                 if (res.code === 1) {
                     //清空输入框
-                    this.discuss.txt = '';
+                    this.discuss.edit_child.txt = '';
                     //重新拉取数据
                     this.discuss_reload()
                 }

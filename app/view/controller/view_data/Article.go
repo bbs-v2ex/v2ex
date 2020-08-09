@@ -61,7 +61,7 @@ func Article(c *gin.Context) {
 		where["_id"] = bson.M{"$gte": rid}
 	}
 
-	mc.Table(model.CommentRoot{}.Table()).Where(where).Limit(10).Find(&comment_list)
+	mc.Table(model.CommentRoot{}.Table()).Where(where).Order(bson.M{"zan_len": -1, "_id": -1}).Limit(10).Find(&comment_list)
 	//提取文本
 	new_comment_list := []gin.H{}
 	for k, _ := range comment_list {
