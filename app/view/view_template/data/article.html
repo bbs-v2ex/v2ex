@@ -83,10 +83,18 @@
                 </button>
             </div>
             <div class="modal-body">
-
+                <p v-if="discuss.message != ''">${discuss.message}</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <textarea class="form-control" v-model="discuss.edit_child.txt"></textarea><br>
+
+                <div v-if="discuss.ajax_message != ''" v-html="discuss.ajax_message"></div>
+                <button class="btn btn-primary  mb-2 mt-2 float-right"  type="button" disabled v-if="discuss.wait_loading">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Loading...
+                </button>
+                <button type="button" class="btn btn-primary" @click.prevent="submit_comment_child($event)" v-else>提交评论</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭浏览</button>
             </div>
         </div>
     </div>
