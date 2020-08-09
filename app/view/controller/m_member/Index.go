@@ -46,6 +46,8 @@ func Index(c *gin.Context) {
 	_ht["_member_mav"] = _member_mav
 	switch _type {
 	case "article", "question":
+		_ht["index_type"] = _type
+		_ht["it"] = _type[:1]
 		view.Render(c, "m_member/_index_list", _ht)
 		break
 	default:

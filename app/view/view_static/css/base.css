@@ -12,3 +12,12 @@ body {
 .login-true{
     margin-right: 25px;
 }
+.w-e-text-container{
+    z-index: 1!important;
+}
+.w-e-toolbar,.w-e-menu{
+    z-index: 100!important;
+}
+.w-e-toolbar {
+    flex-wrap: wrap;
+}

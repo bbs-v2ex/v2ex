@@ -20,7 +20,25 @@
                     {{.index.InfoQuestion.Content|html}}
                 </div>
             </div>
-            <div class="mt-4 p-3" id="comment">
+
+            <div class="answer-edit mt-3 p-3">
+                <div> 我要回答 </div>
+                <div  v-if="user_info.mid">
+                    <div id="f1-content" v-html="edit_root.txt"></div>
+                    <div v-if="ajax_message != ''" v-html="ajax_message"></div>
+                    <button class="btn btn-primary  mb-2 mt-2 float-right"  type="button" disabled v-if="wait_loading">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Loading...
+                    </button>
+                    <button class="btn btn-primary  mb-2 mt-2 float-right" type="submit"  @click.prevent="submit_comment_root($event)">提交评论</button>
+                </div>
+                <div v-else>
+                    <p> 需要 <span class="link-info " @click="just_login">登录</span> 才可以进行评论 </p>
+                </div>
+            </div>
+
+            <div class="mt-3 p-3" id="comment">
+
                 <div class="title pt-3">
                     <h3>网友回答</h3> <span class="ml-3 comment-size-tip">{{.index.RC}} 条回答</span>
                 </div>
@@ -75,18 +93,6 @@
                         </div>
                         <div class="load-more-data w-100 text-center p-2 mb-3 mt-2" v-if="comment.length >= 10 " v-html="load_data.message" @click="load_more()"> 点击,加载更多... </div>
                     {{end}}
-                    <div  v-if="user_info.mid">
-                        <textarea class="form-control" rows="4" v-model="edit_root.txt"></textarea>
-                        <div v-if="ajax_message != ''" v-html="ajax_message"></div>
-                        <button class="btn btn-primary  mb-2 mt-2 float-right"  type="button" disabled v-if="wait_loading">
-                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                            Loading...
-                        </button>
-                        <button class="btn btn-primary  mb-2 mt-2 float-right" type="submit"  @click.prevent="submit_comment_root($event)">提交评论</button>
-                    </div>
-                    <div v-else>
-                        <p> 需要 <span class="link-info " @click="just_login">登录</span> 才可以进行评论 </p>
-                    </div>
                 </div>
             </div>
         </div>
@@ -128,7 +134,6 @@
                         </div>
                     </div>
                     <textarea class="form-control" v-model="discuss.edit_child.txt"></textarea><br>
-
                     <div v-if="discuss.ajax_message != ''" v-html="discuss.ajax_message"></div>
                     <button class="btn btn-primary  mb-2 mt-2 float-right"  type="button" disabled v-if="discuss.wait_loading">
                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -146,4 +151,110 @@
     <script>let comment = JSON.parse('{{.comment|json}}')</script>
     <script src="{{st "/js/article.js"}}"></script>
     <script> app.edit_root.did ={{.index.DID}};var discuss_modal  =  new bootstrap.Modal(document.querySelector('#puper-view'),{ keyboard: false});</script>
+    <script type="application/javascript" src="{{st "/wangEditor-3.1.1/jquery.min.js"}}"></script>
+    <script type="application/javascript" src="{{st "/wangEditor-3.1.1/wangEditor.min.js"}}"></script>
+    <script type="text/javascript">
+        const UploadServer = "{{.___upload_server}}";
+        var E = window.wangEditor;
+        var editor = new E('#f1-content');
+        editor.customConfig.menus =
+            [
+                'head',  // 标题
+                'bold',  // 粗体
+                'strikeThrough',  // 删除线
+                'foreColor',  // 文字颜色
+                'backColor',  // 背景颜色
+                'link',  // 插入链接
+                'list',  // 列表
+                'justify',  // 对齐方式
+                'quote',  // 引用
+                'image',  // 插入图片
+                'code',  // 插入代码
+                'undo',  // 撤销
+                'redo'  // 重复
+            ];
+        editor.customConfig.uploadImgServer = UploadServer +'/upload_img_123';
+        editor.customConfig.uploadImgMaxLength = 1;
+        editor.customConfig.uploadFileName = 'file';
+
+        editor.customConfig.linkImgCallback = function (url) {
+            console.log('copy',url) // url 即插入图片的地址
+        };
+
+        editor.customConfig.uploadImgHooks = {
+            customInsert: function (insertImg, result, editor) {
+                if (result.code !== 1){
+                    alert(result.message);
+                    return
+                }
+                var url = UploadServer + '/'+result.url;
+                insertImg(url)
+            }
+        };
+        editor.create();
+        var jiance = false;
+        setInterval(function () {
+            check()
+        },500);
+        async function check() {
+            if (jiance){
+                return
+            }
+            jiance = true;
+
+            let list = document.querySelectorAll('#f1-content img');
+
+            for (item of  list){
+                let src = item.currentSrc;
+                if (src === ""){
+                    item.remove();
+                    continue
+                }
+                if (src.startsWith(UploadServer) ){
+                    continue;
+                }
+                if (src.indexOf("/static/tmp/") === -1 || src.startsWith('data:image/')){
+                    try {
+                        let  data  =  await post('/download_temp_img',{u:src});
+                        if (data.code === 1){
+                            item.src = data.data;
+                        }else {
+                            item.remove();
+                        }
+                    }catch (e) {
+                        item.remove();
+                    }
+                    continue
+                }
+                if (src.indexOf('/static/tmp/') > -1  ){
+                    //上传到服务器
+                    try {
+
+                        let base64_img =  await getBase64(src);
+
+                        var forms = new FormData();
+                        var configs = {
+                            headers:{'Content-Type':'multipart/form-data'}
+                        };
+                        let blob= dataURLtoFile(base64_img,'image/jpeg');
+                        let fileOfBlob = new File([blob], new Date()+'.jpg'); // 重命名了
+                        forms.append("file", fileOfBlob);
+
+                        let dddd = await axios.post(UploadServer+"/upload_img_123",forms ,configs);
+                        let data = dddd.data;
+                        if (data.code === 1){
+                            item.outerHTML = `<img src="${UploadServer}/${data.url}"/>`
+                        }else{
+                            item.remove();
+                        }
+                    }catch (e) {
+                        console.log(e);
+                        item.remove();
+                        debugger
+                    }
+                }
+            }
+            jiance = false;
+        }
+    </script>
 {{end}}

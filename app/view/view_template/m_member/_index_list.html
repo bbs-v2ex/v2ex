@@ -11,7 +11,7 @@
     </div>
     <div>
         <ul>
-            <li v-for="item in list"><a href="/a/" :href="a(item.did)">${item.t}</a></li>
+            <li v-for="item in list"><a  :href="{{.it}}(item.did)">${item.t}</a></li>
         </ul>
     </div>
 {{end}}
@@ -28,15 +28,18 @@
                 }
             },
             created(){
-                post("/article/list").then(res => {
+                post("/{{.index_type}}/list").then(res => {
                     if (res.code === 1){
                         this.list = res.data;
                     }
                 })
             },
             methods:{
-                a(id){
-                    return "/a/"+id
+                a(id) {
+                    return "/a/" + id
+                },
+                q(id){
+                    return "/q/"+id
                 }
             }
         })
