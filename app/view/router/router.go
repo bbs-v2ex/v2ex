@@ -34,4 +34,5 @@ func RegisterRoute(r *gin.Engine) {
 
 	//文章页
 	r.GET("/a/:did", view_data.Article)
+	r.GET("/a/:did/r/:rid", view_data.Article)
 }

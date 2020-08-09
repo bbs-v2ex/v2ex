@@ -1,18 +1,6 @@
-// function fuzhi() {
-//     try {
-//         document.querySelectorAll('span[data-zan-user]').forEach(function (z,i) {
-//             let v =  JSON.parse(z.getAttribute('data-zan-user'));
-//             if (v.length > 0){
-//                 console.log(v)
-//             }
-//         })
-//     }catch (e) {
-//
-//     }
-//
-// }
-//
-// fuzhi();
+// var myModal =, {
+//     keyboard: false
+// })
 var app = new Vue({
     el: '#vue-app',
     delimiters:['${','}'],
@@ -26,6 +14,10 @@ var app = new Vue({
             },
             wait_loading:false,
             ajax_message:'',
+            //评论
+            discuss:{
+
+            }
         }
     },
     created(){
@@ -38,6 +30,9 @@ var app = new Vue({
         console.log(userInfo)
     },
     methods: {
+        discuss_show(_id){
+            discuss_modal.show()
+        },
         zan(index,_id){
            let add_zan = false;
            try {

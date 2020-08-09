@@ -5,6 +5,7 @@ import (
 	"github.com/123456/c_code/mc"
 	"github.com/gin-gonic/gin"
 	"github.com/globalsign/mgo/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"strconv"
 	"strings"
 	"v2ex/app/common"
@@ -51,7 +52,16 @@ func Article(c *gin.Context) {
 
 	//查询评论
 	comment_list := []model.CommentRoot{}
-	mc.Table(model.CommentRoot{}.Table()).Where(bson.M{"did": index.DID}).Limit(10).Find(&comment_list)
+
+	where := bson.M{"did": index.DID}
+
+	_rid := c.Param("rid")
+	rid, err := primitive.ObjectIDFromHex(_rid)
+	if err == nil {
+		where["_id"] = bson.M{"$gte": rid}
+	}
+
+	mc.Table(model.CommentRoot{}.Table()).Where(where).Limit(10).Find(&comment_list)
 	//提取文本
 	new_comment_list := []gin.H{}
 	for k, _ := range comment_list {

@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/globalsign/mgo/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"regexp"
 	"time"
 	"v2ex/app/api"
 	"v2ex/model"
@@ -73,8 +74,10 @@ func comment_root_add(c *gin.Context) {
 		c.JSON(200, result_json)
 		return
 	}
-
-	result_json := c_code.V1GinSuccess("", "添加成功")
+	ref := c.GetHeader("Referer")
+	_u := regexp.MustCompile(`/r/[\w|\s]{24}`).ReplaceAllString(ref, "")
+	_u += "/r/" + comment_root.ID.Hex()
+	result_json := c_code.V1GinSuccess(comment_root.ID, "添加成功", _u)
 	//评论字段加 1
 	mc.Table(index.Table()).Where(bson.M{"did": index.DID}).FieldAddOrDel("rc", +1)
 	c.JSON(200, result_json)
