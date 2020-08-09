@@ -1,8 +1,14 @@
 var app = new Vue({
     el: '#vue-app',
     delimiters: ['${', '}'],
+
     data() {
         return {
+            load_data:{
+                stop:false,
+                wait:false,
+                message:'点击,加载更多... ',
+            },
             comment: comment,
             user_info: '',
             edit_root: {
@@ -36,6 +42,48 @@ var app = new Vue({
         console.log(userInfo)
     },
     methods: {
+        //加载更多数据
+        load_more(){
+            if (this.load_data.stop || this.load_data.wait){
+                return
+            }
+
+          console.log("load 更多数据")
+        },
+
+        //无限滚动
+        loading_data(e){
+            let  el = e.target;
+            function getScrollTop() {
+                var scrollTop = 0;
+                scrollTop = el.scrollTop;
+                return scrollTop;
+            }
+            function getClientHeight() {
+                var clientHeight = 0;
+                clientHeight = el.clientHeight;
+                return clientHeight;
+            }
+
+            function getScrollHeight() {
+                return el.scrollHeight;
+            }
+            console.log(getScrollTop());
+            console.log(getClientHeight());
+            console.log(getScrollHeight());
+
+            if(getScrollTop() + getClientHeight() == getScrollHeight()) {
+
+
+                // if(pageNo <= totalPage) {
+                //     queryRemainRechargeList();//获取数据的方法
+                // } else {
+                //     toast("没有更多了")
+                // }
+            }
+
+        },
+
         active_reply(item) {
             this.discuss.active_reply_user = item;
         },
@@ -98,7 +146,7 @@ var app = new Vue({
             window.location.href = u
         },
         m(u) {
-            window.location.href = '/member/' + u
+            window.location.href = u_list.member + u
         },
         just_login() {
             document.querySelector('#navbarCollapse > div > ul > li:nth-child(1) > a').click()

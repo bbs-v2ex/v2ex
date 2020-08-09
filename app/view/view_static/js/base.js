@@ -77,8 +77,13 @@ var login_app = new Vue({
         if (this.user_info.mid == undefined){
             this.user_info.mid = 0
         }
-        console.log(this.user_info)
+        console.log(this.user_info);
+        document.querySelectorAll('.seo-html').forEach(function (z,i) {
+            // console.dir(z)
+            z.style.display="none";
+        })
     },
+
     methods:{
         loginout(){
             post('/loginout').then(res =>{
