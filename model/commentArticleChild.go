@@ -18,5 +18,5 @@ type CommentChild struct {
 }
 
 func (t CommentChild) Table() string {
-	return "comment_child"
+	return "comment_article_child"
 }

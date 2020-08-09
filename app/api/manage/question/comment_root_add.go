@@ -1,4 +1,4 @@
-package article
+package question
 
 import (
 	"github.com/123456/c_code"
@@ -33,10 +33,18 @@ func comment_root_add(c *gin.Context) {
 		c.JSON(200, result_json)
 		return
 	}
-	//删除html标签
-	_f.Txt = c_code.RemoveHtmlTag(_f.Txt)
+
+	//验证是否回答过此问题
 
 	//全部验证通过，入库
+	//分离数据
+	_html, _imgs, err2 := api.SeparatePicture(_f.Txt)
+	if err2 != nil {
+		result_json := c_code.V1GinError(103, "html解析错误")
+		c.JSON(200, result_json)
+		return
+	}
+
 	//检测did 是否存在
 	index := model.DataIndex{}
 	mc.Table(index.Table()).Where(bson.M{"did": _f.DID}).FindOne(&index)
@@ -63,9 +71,9 @@ func comment_root_add(c *gin.Context) {
 	//写入数据存储表
 	comment_text := model.CommentText{
 		ID:          comment_root.ID,
-		Text:        _f.Txt,
+		Text:        _html,
 		Zan:         nil,
-		Img:         nil,
+		Img:         _imgs,
 		ReleaseTime: time.Now(),
 	}
 	//写进数据表中

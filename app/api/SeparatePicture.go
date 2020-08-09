@@ -11,6 +11,19 @@ import (
 const IMGHTML = "{{--img--}}"
 const SelfLoadTag = "asdffertesdgdsgergdgs"
 
+func RestorePicture(s string, t string, img []string) string {
+	_con := config.GetConfig()
+	for k, v := range img {
+		v = _con.Run.UploadServer + v
+		if t != "" {
+			s = strings.Replace(s, IMGHTML, fmt.Sprintf(`<img src="%s" alt="%s 第%d张">`, v, t, k+1), 1)
+		} else {
+			s = strings.Replace(s, IMGHTML, fmt.Sprintf(`<img src="%s">`, v), 1)
+		}
+	}
+	return s
+}
+
 func SeparatePicture(_html string) (html string, imgs []string, err error) {
 	_html = fmt.Sprintf("<%s>%s</%s>", SelfLoadTag, _html, SelfLoadTag)
 	//_html = strings.ReplaceAll(_html,"<br>","</br>")

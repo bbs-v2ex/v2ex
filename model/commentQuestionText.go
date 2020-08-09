@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-type CommentText struct {
+type CommentQuestionText struct {
 	ID primitive.ObjectID `json:"_id" bson:"_id"`
 	//评论得文本
 	Text string `json:"text" bson:"text"`
@@ -16,6 +16,6 @@ type CommentText struct {
 	ReleaseTime time.Time `json:"release_time" bson:"release_time"`
 }
 
-func (t CommentText) Table() string {
-	return "comment_text"
+func (t CommentQuestionText) Table() string {
+	return "comment_question_text"
 }

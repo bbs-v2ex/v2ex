@@ -33,6 +33,8 @@ func comment_child_add(c *gin.Context) {
 		c.JSON(200, result_json)
 		return
 	}
+	//删除html标签
+	_f.Txt = c_code.RemoveHtmlTag(_f.Txt)
 
 	//检测评论数据是否存在
 	comment_root := model.CommentRoot{}

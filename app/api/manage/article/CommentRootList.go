@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/globalsign/mgo/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"v2ex/app/api"
 	"v2ex/app/common"
 	"v2ex/model"
 )
@@ -54,7 +55,7 @@ func CommentRootList(did model.DIDTYPE, rid primitive.ObjectID, keep_self bool) 
 				"mid":    comment_list[k].MID,
 				"des":    user_info.More.Des,
 			},
-			"txt":      comment_list[k].Text.Text,
+			"txt":      api.RestorePicture(comment_list[k].Text.Text, "", comment_list[k].Text.Img),
 			"zan":      comment_list[k].ZanLen,
 			"zan_user": comment_list[k].Text.Zan,
 			"rc":       comment_list[k].RC,

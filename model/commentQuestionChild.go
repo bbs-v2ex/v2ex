@@ -2,21 +2,21 @@ package model
 
 import "go.mongodb.org/mongo-driver/bson/primitive"
 
-type CommentRoot struct {
+type CommentQuestionChild struct {
 	ID primitive.ObjectID `json:"_id" bson:"_id"`
-	//发布人ID
-	MID MIDTYPE `json:"mid" bson:"mid"`
-	//下级评论多少页
-	RC int `json:"rc" bson:"rc"`
-	//问题ID
-	DID DIDTYPE `json:"did" bson:"did"`
 
-	//多少人点赞
+	MID MIDTYPE `json:"mid" bson:"mid"`
+	//评论 Root 主ID
+	RID primitive.ObjectID `json:"rid" bson:"rid"`
+
+	//父ID
+	PID primitive.ObjectID `json:"pid" bson:"pid"`
+
 	ZanLen int `json:"zan_len" bson:"zan_len"`
 	//其他信息
 	Text CommentText `json:"-" bson:"-"`
 }
 
-func (t CommentRoot) Table() string {
-	return "comment_root"
+func (t CommentQuestionChild) Table() string {
+	return "comment_question_child"
 }
