@@ -27,6 +27,7 @@ func RegisterRoute(r *gin.Engine) {
 
 	//文章发布
 	member.GET("/send_article", member2.SendArticle)
+	member.GET("/send_question", member2.SendQuestion)
 
 	//超级管理员权限页面
 	r_config := r.Group("/_/config")
@@ -35,4 +36,8 @@ func RegisterRoute(r *gin.Engine) {
 	//文章页
 	r.GET("/a/:did", view_data.Article)
 	r.GET("/a/:did/r/:rid", view_data.Article)
+
+	//问题页
+	r.GET("/q/:did", view_data.Question)
+	r.GET("/q/:did/answer/:rid", view_data.Question)
 }

@@ -1,0 +1,200 @@
+{{define "head"}}
+    <style>
+        .w-e-text-container, .w-e-toolbar,.w-e-menu{
+            z-index: 1!important;
+        }
+    </style>
+{{end}}
+{{define "body"}}
+    <div class="card  bg-white rounded">
+        <h5 class="card-header">发布提问</h5>
+        <div class="card-body col-md-12 align-self-center">
+            <form class="row g-3 needs-validation was-validated" id="f1" novalidate>
+                <div class="col-md-12">
+                    <label for="validationServer01" class="form-label">标题</label>
+                    <input type="text" class="form-control is-valid" id="validationServer01" v-model="f1.title" required>
+                </div>
+                <div class="col-md-12">
+                    <label for="validationServer01" class="form-label">内容</label>
+                    <div id="f1-content"  v-html="f1.content_view"  spellcheck="false"></div>
+                </div>
+
+                <div v-if="ajax_message != ''">${ajax_message}</div>
+                <div class="col-12">
+                    <button class="btn btn-primary" type="button" disabled v-if="wait_loading">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Loading...
+                    </button>
+                    <button class="btn btn-primary" type="submit"  v-else  @click.prevent="submit($event)"> 发布 </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+{{end}}
+{{define "js"}}
+
+    <script type="application/javascript" src="{{st "/wangEditor-3.1.1/jquery.min.js"}}"></script>
+    <script type="application/javascript" src="{{st "/wangEditor-3.1.1/wangEditor.min.js"}}"></script>
+    <script>
+        var app = new Vue({
+            el: '#vue-app',
+            delimiters:['${','}'],
+            data() {
+                return {
+                    ajax_message:'',
+                    wait_loading:false,
+                    f1:{
+                        'title':'',
+                        'content':'',
+                        'content_view':'',
+                    },
+                }
+            },
+            created(){
+
+            },
+            methods: {
+                submit(e) {
+                    this.f1.content = editor.txt.html();
+                    var l = document.querySelector('#f1').checkValidity();
+                    if (!l) {
+                        document.querySelector('#f1').classList.add("was-validated");
+                        this.ajax_message = '验证未通过';
+                        return false
+                    } else {
+                        document.querySelector('#f1').classList.remove("was-validated")
+                    }
+                    //禁用提交按钮
+                    this.wait_loading = true;
+                    this.ajax_message = '开始提交';
+                    post('/question/add',this.f1).then(res => {
+                        this.ajax_message = res.message;
+                        debugger
+
+                    }).catch(err => {
+                        this.ajax_message = '接口错误';
+                    }).finally(()=>{
+                        this.wait_loading = false
+                    })
+                }
+            }
+        })
+    </script>
+    <script type="text/javascript">
+        const UploadServer = "{{.___upload_server}}";
+        var E = window.wangEditor;
+        var editor = new E('#f1-content');
+        editor.customConfig.menus =
+            [
+                'head',  // 标题
+                'bold',  // 粗体
+                'fontSize',  // 字号
+                'fontName',  // 字体
+                // 'italic',  // 斜体
+                // 'underline',  // 下划线
+                'strikeThrough',  // 删除线
+                'foreColor',  // 文字颜色
+                'backColor',  // 背景颜色
+                'link',  // 插入链接
+                'list',  // 列表
+                'justify',  // 对齐方式
+                'quote',  // 引用
+                // 'emoticon',  // 表情
+                'image',  // 插入图片
+                // 'table',  // 表格
+                // 'video',  // 插入视频
+                'code',  // 插入代码
+                'undo',  // 撤销
+                'redo'  // 重复
+            ];
+
+        // 使用 base64 保存图片
+        // editor.customConfig.uploadImgShowBase64 = true;
+
+        editor.customConfig.uploadImgServer = UploadServer +'/upload_img_123';
+        editor.customConfig.uploadImgMaxLength = 1;
+        editor.customConfig.uploadFileName = 'file';
+
+        editor.customConfig.linkImgCallback = function (url) {
+            console.log('copy',url) // url 即插入图片的地址
+        };
+
+        editor.customConfig.uploadImgHooks = {
+            customInsert: function (insertImg, result, editor) {
+                if (result.code !== 1){
+                    alert(result.message);
+                    return
+                }
+                var url = UploadServer + '/'+result.url;
+                insertImg(url)
+            }
+        };
+        editor.create();
+        var jiance = false;
+        setInterval(function () {
+            check()
+        },500);
+        async function check() {
+            if (jiance){
+                return
+            }
+            jiance = true;
+
+            let list = document.querySelectorAll('#f1-content img');
+
+            for (item of  list){
+                let src = item.currentSrc;
+                if (src === ""){
+                    item.remove();
+                    continue
+                }
+                if (src.startsWith(UploadServer) ){
+                    continue;
+                }
+                if (src.indexOf("/static/tmp/") === -1 || src.startsWith('data:image/')){
+                    try {
+                        let  data  =  await post('/download_temp_img',{u:src});
+                        if (data.code === 1){
+                            item.src = data.data;
+                        }else {
+                            item.remove();
+                        }
+                    }catch (e) {
+                        item.remove();
+                    }
+                    continue
+                }
+                if (src.indexOf('/static/tmp/') > -1  ){
+                    //上传到服务器
+                    try {
+
+                        let base64_img =  await getBase64(src);
+
+                        var forms = new FormData();
+                        var configs = {
+                            headers:{'Content-Type':'multipart/form-data'}
+                        };
+                        let blob= dataURLtoFile(base64_img,'image/jpeg');
+                        let fileOfBlob = new File([blob], new Date()+'.jpg'); // 重命名了
+                        forms.append("file", fileOfBlob);
+
+                        let dddd = await axios.post(UploadServer+"/upload_img_123",forms ,configs);
+                        let data = dddd.data;
+                        if (data.code === 1){
+                            item.outerHTML = `<img src="${UploadServer}/${data.url}"/>`
+                        }else{
+                            item.remove();
+                        }
+                    }catch (e) {
+                        console.log(e);
+                        item.remove();
+                        debugger
+                    }
+                }
+            }
+            jiance = false;
+        }
+
+    </script>
+{{end}}

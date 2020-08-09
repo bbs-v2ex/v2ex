@@ -11,7 +11,10 @@ import (
 	"v2ex/model"
 )
 
-func CommentRootList(did model.DIDTYPE, rid primitive.ObjectID) []gin.H {
+/**
+keep_self 保留自己
+*/
+func CommentRootList(did model.DIDTYPE, rid primitive.ObjectID, keep_self bool) []gin.H {
 	//查询评论
 	comment_list := []model.CommentRoot{}
 
@@ -20,9 +23,14 @@ func CommentRootList(did model.DIDTYPE, rid primitive.ObjectID) []gin.H {
 	if rid.Hex() != mc.Empty {
 		//首先查询一条数据出来
 		_tmp_root := model.CommentRoot{}
-		where["_id"] = bson.M{"$lt": rid}
-		mc.Table(_tmp_root.Table()).Where(where).Order(bson.M{"zan_len": -1, "_id": -1}).FindOne(&_tmp_root)
+		lt := "$lt"
+		if keep_self {
+			lt = "$lte"
+		}
+		where["_id"] = bson.M{lt: rid}
+		mc.Table(_tmp_root.Table()).Where(bson.M{"_id": rid}).FindOne(&_tmp_root)
 		if _tmp_root.ID.Hex() != mc.Empty {
+			//fmt.Println(rid.Hex(),_tmp_root.ID.Hex())
 			where["zan_len"] = bson.M{"$lte": _tmp_root.ZanLen}
 		}
 	}

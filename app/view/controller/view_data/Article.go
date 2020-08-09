@@ -48,8 +48,10 @@ func Article(c *gin.Context) {
 	mt := model.Member{}
 	member_info := mt.GetUserInfo(index.MID, true)
 	_ht["member_info"] = member_info
+
 	_rid := c.Param("rid")
 	rid, err := primitive.ObjectIDFromHex(_rid)
-	_ht["comment"] = api_article.CommentRootList(model.DIDTYPE(did), rid)
+
+	_ht["comment"] = api_article.CommentRootList(model.DIDTYPE(did), rid, true)
 	view.Render(c, "data/article", _ht)
 }

@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"v2ex/app/api/manage"
 	"v2ex/app/api/manage/article"
+	"v2ex/app/api/manage/question"
 	"v2ex/app/api/site_config"
 )
 
@@ -30,5 +31,7 @@ func RegisterRoute(r *gin.Engine) {
 
 	//注册文章
 	article.R(ro)
+	//注册提问
+	question.R(ro)
 
 }

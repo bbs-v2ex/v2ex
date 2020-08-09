@@ -22,7 +22,7 @@ func comment_root_list(c *gin.Context) {
 		c.JSON(200, result_json)
 		return
 	}
-	comment := CommentRootList(_f.DID, _f.RID)
+	comment := CommentRootList(_f.DID, _f.RID, false)
 	result_json := c_code.V1GinSuccess(comment)
 	c.JSON(200, result_json)
 }
