@@ -13,6 +13,7 @@ var app = new Vue({
             ajax_message: '',
             //评论
             discuss: {
+                active_reply_user: {},
                 edit_child: {
                     rid: '000000000000000000000000',
                     pid: '000000000000000000000000',
@@ -35,6 +36,15 @@ var app = new Vue({
         console.log(userInfo)
     },
     methods: {
+        active_reply(item) {
+            this.discuss.active_reply_user = item;
+        },
+        active_reply_close() {
+            this.discuss.active_reply_user = {};
+        },
+        discuss_avatar(src, w) {
+            return src + "?&w=" + w
+        },
         discuss_show(_id) {
             this.discuss.message = '加载中';
             this.discuss.edit_child.rid = _id;
@@ -87,6 +97,9 @@ var app = new Vue({
         j(u) {
             window.location.href = u
         },
+        m(u) {
+            window.location.href = '/member/' + u
+        },
         just_login() {
             document.querySelector('#navbarCollapse > div > ul > li:nth-child(1) > a').click()
         },
@@ -109,6 +122,15 @@ var app = new Vue({
 
         submit_comment_child() {
             this.discuss.wait_loading = true;
+
+            try {
+                if (this.discuss.active_reply_user._id.length === 24) {
+                    this.discuss.edit_child.pid = this.discuss.active_reply_user._id
+                }
+            } catch (e) {
+
+            }
+
             post('/article/comment_child_add', this.discuss.edit_child).then(res => {
                 this.discuss.ajax_message = res.message;
                 if (res.code === 1) {

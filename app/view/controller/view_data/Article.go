@@ -70,13 +70,14 @@ func Article(c *gin.Context) {
 			continue
 		}
 		//获取会员数据
-		user_info := model.Member{}.GetUserInfo(comment_list[k].MID, false)
+		user_info := model.Member{}.GetUserInfo(comment_list[k].MID, true)
 		new_comment_list = append(new_comment_list, gin.H{
 			"user_info": gin.H{
 				"name":   user_info.UserName,
 				"avatar": common.Avatar(user_info.Avatar),
 				"time":   c_code.StrTime(comment_list[k].Text.ReleaseTime),
 				"mid":    comment_list[k].MID,
+				"des":    user_info.More.Des,
 			},
 			"txt":      comment_list[k].Text.Text,
 			"zan":      comment_list[k].ZanLen,

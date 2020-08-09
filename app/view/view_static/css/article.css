@@ -61,18 +61,20 @@
 .comment-block{
     border-bottom:1px solid  #b7b7b7;
 }
-.comment-block .author-name{
+.author-name{
     font-size: 15px;
     font-weight: 600;
 }
-.comment-block .author-avatar img{
+.author-avatar img{
     border-radius: 5px;
     border: 1px solid #b7b7b7;
     height: 43px;
     width: 43px;
+    display: block;
 }
-.comment-block .author-avatar{
+.author-avatar{
     cursor: pointer;
+    display: flex;
 }
 .comment-block .tip{
     color: #8590a6;
@@ -94,4 +96,26 @@
 .tools .zan-active{
     color: #fff;
     background: #0084ff;
+}
+
+.discuss-block .avatar-block{
+    border-radius: 5px;
+    border: 1px solid #b7b7b7;
+    height: 25px;
+    width: 25px;
+    display: block;
+}
+.discuss-block{
+    display: flex
+}
+.xxxxxxxxx{
+    position: relative;
+    top: -2px;
+}
+.reply{
+    cursor: pointer;
+}
+.author-name-time{
+    font-size: 0.88888em;
+    font-weight: 100;
 }

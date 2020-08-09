@@ -5,3 +5,10 @@ body {
     background: #f5f6f9;
     font-size: 15px;
 }
+.login-true span{
+    cursor: pointer;
+    color: white;
+}
+.login-true{
+    margin-right: 25px;
+}

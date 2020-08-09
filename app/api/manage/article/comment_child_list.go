@@ -26,7 +26,7 @@ func comment_child_list(c *gin.Context) {
 	}
 	//查询结果并返回
 	_comment_child := []model.CommentChild{}
-	mc.Table(model.CommentChild{}.Table()).Where(bson.M{"rid": _f.RID}).Find(&_comment_child)
+	mc.Table(model.CommentChild{}.Table()).Where(bson.M{"rid": _f.RID}).Limit(10).Find(&_comment_child)
 	comment_child := []gin.H{}
 	for _, v := range _comment_child {
 		//获取text
@@ -49,6 +49,7 @@ func comment_child_list(c *gin.Context) {
 			},
 			"txt":  comment_text.Text,
 			"time": c_code.StrTime(comment_text.ReleaseTime),
+			"_id":  comment_text.ID.Hex(),
 		}
 
 		//检测是否实对别人进行回复
