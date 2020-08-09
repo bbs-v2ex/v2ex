@@ -1,14 +1,13 @@
 package view_data
 
 import (
-	"github.com/123456/c_code"
 	"github.com/123456/c_code/mc"
 	"github.com/gin-gonic/gin"
 	"github.com/globalsign/mgo/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"strconv"
 	"strings"
-	"v2ex/app/common"
+	api_article "v2ex/app/api/manage/article"
 	"v2ex/app/view"
 	"v2ex/model"
 )
@@ -49,44 +48,8 @@ func Article(c *gin.Context) {
 	mt := model.Member{}
 	member_info := mt.GetUserInfo(index.MID, true)
 	_ht["member_info"] = member_info
-
-	//查询评论
-	comment_list := []model.CommentRoot{}
-
-	where := bson.M{"did": index.DID}
-
 	_rid := c.Param("rid")
 	rid, err := primitive.ObjectIDFromHex(_rid)
-	if err == nil {
-		where["_id"] = bson.M{"$gte": rid}
-	}
-
-	mc.Table(model.CommentRoot{}.Table()).Where(where).Order(bson.M{"zan_len": -1, "_id": -1}).Limit(10).Find(&comment_list)
-	//提取文本
-	new_comment_list := []gin.H{}
-	for k, _ := range comment_list {
-		mc.Table(comment_list[k].Text.Table()).Where(bson.M{"_id": comment_list[k].ID}).FindOne(&comment_list[k].Text)
-		if comment_list[k].Text.Text == "" {
-			continue
-		}
-		//获取会员数据
-		user_info := model.Member{}.GetUserInfo(comment_list[k].MID, true)
-		new_comment_list = append(new_comment_list, gin.H{
-			"user_info": gin.H{
-				"name":   user_info.UserName,
-				"avatar": common.Avatar(user_info.Avatar),
-				"time":   c_code.StrTime(comment_list[k].Text.ReleaseTime),
-				"mid":    comment_list[k].MID,
-				"des":    user_info.More.Des,
-			},
-			"txt":      comment_list[k].Text.Text,
-			"zan":      comment_list[k].ZanLen,
-			"zan_user": comment_list[k].Text.Zan,
-			"rc":       comment_list[k].RC,
-			"_id":      comment_list[k].Text.ID,
-		})
-	}
-	_ht["comment"] = new_comment_list
-
+	_ht["comment"] = api_article.CommentRootList(model.DIDTYPE(did), rid)
 	view.Render(c, "data/article", _ht)
 }

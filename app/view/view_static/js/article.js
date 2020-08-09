@@ -4,10 +4,10 @@ var app = new Vue({
 
     data() {
         return {
-            load_data:{
-                stop:false,
-                wait:false,
-                message:'点击,加载更多... ',
+            load_data: {
+                stop: false,
+                wait: false,
+                message: '点击,加载更多... ',
             },
             comment: comment,
             user_info: '',
@@ -43,22 +43,39 @@ var app = new Vue({
     },
     methods: {
         //加载更多数据
-        load_more(){
-            if (this.load_data.stop || this.load_data.wait){
+        load_more() {
+            if (this.load_data.stop || this.load_data.wait) {
                 return
             }
-
-          console.log("load 更多数据")
+            this.load_data.wait = true;
+            let rid = this.comment.slice(-1)[0]._id;
+            post('/article/comment_root_list', {did: this.edit_root.did, rid: rid}).then(res => {
+                if (res.code === 1) {
+                    this.load_data.message = '点击加载数据...';
+                    this.comment.push(...res.data);
+                    if (res.data.length < 10) {
+                        this.load_data.message = '已加载所有评论';
+                        this.load_data.stop = true
+                    }
+                } else {
+                    this.load_data.message = '加载失败刷新重新'
+                }
+            }).finally(() => {
+                this.load_data.wait = false
+            });
+            console.log("load 更多数据")
         },
 
         //无限滚动
-        loading_data(e){
-            let  el = e.target;
+        loading_data(e) {
+            let el = e.target;
+
             function getScrollTop() {
                 var scrollTop = 0;
                 scrollTop = el.scrollTop;
                 return scrollTop;
             }
+
             function getClientHeight() {
                 var clientHeight = 0;
                 clientHeight = el.clientHeight;
@@ -68,11 +85,12 @@ var app = new Vue({
             function getScrollHeight() {
                 return el.scrollHeight;
             }
+
             console.log(getScrollTop());
             console.log(getClientHeight());
             console.log(getScrollHeight());
 
-            if(getScrollTop() + getClientHeight() == getScrollHeight()) {
+            if (getScrollTop() + getClientHeight() == getScrollHeight()) {
 
 
                 // if(pageNo <= totalPage) {

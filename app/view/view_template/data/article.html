@@ -74,7 +74,7 @@
                              </div>
                          </div>
                     </div>
-                    <div class="load-more-data w-100 text-center p-2 mb-3 mt-2" v-html="load_data.message" @click="load_more()"> 点击,加载更多... </div>
+                    <div class="load-more-data w-100 text-center p-2 mb-3 mt-2" v-if="comment.length >= 10 " v-html="load_data.message" @click="load_more()"> 点击,加载更多... </div>
                 {{end}}
                 <div  v-if="user_info.mid">
                     <textarea class="form-control" rows="4" v-model="edit_root.txt"></textarea>
