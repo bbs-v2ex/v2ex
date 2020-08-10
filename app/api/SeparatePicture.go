@@ -38,7 +38,7 @@ func SeparatePicture(_html string) (html string, imgs []string, err error) {
 	doc.Find("h1").Each(func(i int, selection *goquery.Selection) {
 		selection.ReplaceWithHtml(selection.Text())
 	})
-	doc.Find("br").Remove()
+	doc.Find("br").ReplaceWithHtml("\r\n")
 	//处理 a 标签
 	doc.Find("a").Each(func(i int, selection *goquery.Selection) {
 		href, _ := selection.Attr("href")
@@ -73,6 +73,13 @@ func SeparatePicture(_html string) (html string, imgs []string, err error) {
 	doc.Find("script").Remove()
 	//删除为空的p标签
 	doc.Find("p").Each(func(i int, selection *goquery.Selection) {
+
+		text := selection.Text()
+		if strings.Contains(text, "----占位符----") {
+			selection.Remove()
+			return
+		}
+
 		if strings.TrimSpace(selection.Text()) == "" {
 			selection.Remove()
 		}
@@ -83,8 +90,6 @@ func SeparatePicture(_html string) (html string, imgs []string, err error) {
 		}
 		selection.ReplaceWithHtml("<p>" + ret + "</p>")
 	})
-
 	html, err = doc.Find(SelfLoadTag).Html()
-
 	return
 }

@@ -61,14 +61,12 @@
                         if (res.token != undefined ){
                             this.ajax_message = '登录成功';
                             //获取 user-info
-                            sessionStorage.setItem(APITOKEN, JSON.stringify({
+                            localStorage.setItem(APITOKEN, JSON.stringify({
                                 token:res.token,
-                                user_info:{
-                                    name:'张三',
-                                }
+                                user_info:{}
                             }));
                             setUserInfo();
-                            window.location.href = "/"
+
                         }
                         this.wait_loading = false;
                         //发送请求并保存信息到本地

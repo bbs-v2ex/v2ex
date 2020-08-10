@@ -26,7 +26,7 @@
             <div class="answer-edit mt-3 p-3">
                 <div> 我要回答 </div>
                 <div v-if="edit_1 == ''">
-                    <div id="f1-content"></div>
+                    <div id="f1-content" spellcheck="false"></div>
                     <div v-if="ajax_message != ''" v-html="ajax_message"></div>
                     <button class="btn btn-primary  mb-2 mt-2 float-right"  type="button" disabled v-if="wait_loading">
                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -155,7 +155,6 @@
 <script>let comment = JSON.parse('{{.comment|json}}');let DID={{.index.DID}}; const UploadServer = "{{.___upload_server}}";</script>
 <script src="{{st "/js/question.js"}}"></script>
 <script> app.edit_root.did =DID;var discuss_modal  =  new bootstrap.Modal(document.querySelector('#puper-view'),{ keyboard: false});</script>
-{{/*<script type="application/javascript" src="{{st "/wangEditor-3.1.1/jquery.min.js"}}"></script>*/}}
 <script type="application/javascript" src="{{st "/wangEditor-3.1.1/wangEditor.min.js"}}"></script>
 <script type="application/javascript" src="{{st "/js/question_editor.js"}}"></script>
 {{end}}

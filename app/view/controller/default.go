@@ -31,8 +31,9 @@ func DefaultData(c *gin.Context) (_ht gin.H) {
 	}
 
 	_ht["u_list"] = gin.H{
-		"member":  "/member/",
-		"article": "/a/",
+		"member":   "/member/",
+		"article":  "/a/",
+		"question": "/q/",
 	}
 
 	return

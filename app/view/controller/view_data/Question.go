@@ -18,7 +18,7 @@ func Question(c *gin.Context) {
 
 	switch _type {
 	case "edit_answer":
-		c.Redirect(302, "/a/"+c.Param("did")+"/edit_answer")
+		c.Redirect(302, "/q/"+c.Param("did")+"/edit_answer")
 		return
 	}
 
