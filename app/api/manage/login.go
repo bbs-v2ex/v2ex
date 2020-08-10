@@ -31,7 +31,7 @@ func Login(c *gin.Context) {
 	}
 	//查询密码
 	member_more := model.MemberMore{}
-	mc.Table(member_more.Table()).Where(bson.M{"mid": member.MID}).FindOne(&member_more)
+	mc.Table(member_more.Table()).Where(bson.M{"_id": member.ID}).FindOne(&member_more)
 	if member_more.PassWord == "" {
 		result_json := c_code.V1GinError(103, "用户或密码错误")
 		c.JSON(200, result_json)

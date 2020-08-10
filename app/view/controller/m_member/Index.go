@@ -51,7 +51,7 @@ func Index(c *gin.Context) {
 		view.Render(c, "m_member/_index_list", _ht)
 		break
 	default:
-		u2 := strings.ReplaceAll(u, "/z", "")
+		u2 := strings.ReplaceAll(u, "/z", "/c")
 		_ht["send_list"] = []gin.H{
 			{
 				"t": "发文章",
@@ -60,6 +60,10 @@ func Index(c *gin.Context) {
 			{
 				"t": "发提问",
 				"u": u2 + "/send_question",
+			},
+			{
+				"t": "个人资料",
+				"u": u2 + "/user_info",
 			},
 		}
 

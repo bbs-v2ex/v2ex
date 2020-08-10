@@ -27,8 +27,7 @@ func RegisterRoute(r *gin.Engine) {
 	member_center.GET("/z/:_type", member_manage.Index)
 
 	//文章发布
-	member_center.GET("/send_article", member_manage.SendArticle)
-	member_center.GET("/send_question", member_manage.SendQuestion)
+	member_center.GET("/c/:_type", member_manage.CRouter)
 
 	//超级管理员权限页面
 	r_config := r.Group("/_/config")

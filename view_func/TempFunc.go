@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"html/template"
 	"strings"
+	"v2ex/app/common"
 )
 
 func TempFunc() template.FuncMap {
@@ -14,6 +15,7 @@ func TempFunc() template.FuncMap {
 		h := template.HTML(s)
 		return h
 	}
+	f["avatar"] = common.Avatar
 	f["format"] = func(i interface{}) string {
 		return fmt.Sprintf("%+v", i)
 	}

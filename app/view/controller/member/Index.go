@@ -36,6 +36,11 @@ func Index(c *gin.Context) {
 			"u":      u + "/article",
 			"active": false,
 		},
+		{
+			"t":      "收藏",
+			"u":      u + "/collect",
+			"active": false,
+		},
 	}
 	_type := c.Param("_type")
 	_type_active := false
@@ -54,7 +59,7 @@ func Index(c *gin.Context) {
 	_ht["_member_mav"] = _member_mav
 
 	//查询是否存在此会员
-	user_info := model.Member{}.GetUserInfo(model.MIDTYPE(mid), false)
+	user_info := model.Member{}.GetUserInfo(model.MIDTYPE(mid), true)
 	if user_info.MID == 0 {
 		view.R404(c, view.ViewError{Message: "无此会员"})
 		return

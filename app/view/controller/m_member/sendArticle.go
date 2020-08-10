@@ -2,10 +2,12 @@ package m_member
 
 import (
 	"github.com/gin-gonic/gin"
+	"strings"
 	"v2ex/app/view"
 )
 
-func SendArticle(c *gin.Context) {
+func CRouter(c *gin.Context) {
 	_ht := defaultData(c)
-	view.Render(c, "m_member/send_article", _ht)
+	_type := strings.TrimSpace(c.Param("_type"))
+	view.Render(c, "m_member/"+_type, _ht)
 }

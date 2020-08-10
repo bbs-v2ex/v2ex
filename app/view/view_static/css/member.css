@@ -1,4 +1,4 @@
-.member-left{
+.member-left,.member-top{
     background: #fff;
 }
 .member-nav{
@@ -21,4 +21,10 @@
     border-bottom: 1px solid #f6f6f6;
     padding-left: 0;
     padding-right:  0;
+}
+.member-top-avatar img{
+    height: 100%;
+    width: 100%;
+    border: 4px solid #efe4e4;
+    border-radius: 9px;
 }

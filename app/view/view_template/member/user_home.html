@@ -2,7 +2,19 @@
 <link rel="stylesheet" href="{{st "/css/member.css"}}">
 {{end}}
 {{define "body"}}
-<div class="row g-0">
+<div class="row member-top mb-2 p-2 pt-3 pb-3">
+    <div class="member-top-avatar col-sm-2">
+        <img src="{{.user_info.Avatar|avatar}}?&w=150&h=150">
+    </div>
+    <div class="row col-sm-10">
+        <div class="col-10">
+            <h1>{{.user_info.UserName}}</h1>
+            {{if ne .user_info.More.Des ""}} {{.user_info.More.Des}} {{end}}
+        </div>
+        <div class="col-2"></div>
+    </div>
+</div>
+<div class="row ">
     <div class="col-md-8 row g-0 p-3 member-left">
         <ul class="row member-nav"> {{range ._member_mav}} <li class="col-auto list-unstyled text-center  {{if .active }} member-nav-active {{end}}"> <a href="{{.u}}" title="会员-{{$.user_info.UserName}}-{{.t}}">{{.t}}</a>{{end}}</li></ul>
     </div>

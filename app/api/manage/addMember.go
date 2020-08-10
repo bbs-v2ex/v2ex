@@ -38,8 +38,7 @@ func AddMember(c *gin.Context) {
 	}
 	//写入内容表
 	member_more := model.MemberMore{
-		ID:       primitive.NewObjectID(),
-		MID:      mid,
+		ID:       member.ID,
 		PassWord: member.EncryptionPassWord(_f.PassWord),
 	}
 	err = mc.Table(member_more.Table()).Insert(member_more)
