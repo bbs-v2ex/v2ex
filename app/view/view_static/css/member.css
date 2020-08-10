@@ -1,0 +1,24 @@
+.member-left{
+    background: #fff;
+}
+.member-nav{
+
+}
+.member-nav li a{
+    height: 45px;
+    line-height: 45px;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 16px;
+    color: #1a1a1a;
+}
+.member-nav-active{
+    border-bottom: 2px solid #0084ff;
+    font-weight: 600;
+}
+.member-nav{
+    padding-bottom: 3px;
+    border-bottom: 1px solid #f6f6f6;
+    padding-left: 0;
+    padding-right:  0;
+}

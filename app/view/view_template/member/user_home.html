@@ -1,5 +1,14 @@
-{{define "head"}}{{end}}
+{{define "head"}}
+<link rel="stylesheet" href="{{st "/css/member.css"}}">
+{{end}}
 {{define "body"}}
-<pre>{{.dt|format2}}</pre>
+<div class="row g-0">
+    <div class="col-md-8 row g-0 p-3 member-left">
+        <ul class="row member-nav"> {{range ._member_mav}} <li class="col-auto list-unstyled text-center  {{if .active }} member-nav-active {{end}}"> <a href="{{.u}}" title="会员-{{$.user_info.UserName}}-{{.t}}">{{.t}}</a>{{end}}</li></ul>
+    </div>
+    <div class="col-md-4">
+
+    </div>
+</div>
 {{end}}
 {{define "js"}}{{end}}

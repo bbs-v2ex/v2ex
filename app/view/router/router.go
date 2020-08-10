@@ -47,5 +47,6 @@ func RegisterRoute(r *gin.Engine) {
 	v_member := r.Group("/member")
 	v_member.GET("/")
 	v_member.GET("/:mid", member.Index)
+	v_member.GET("/:mid/:_type", member.Index)
 
 }
