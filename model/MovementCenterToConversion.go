@@ -2,6 +2,7 @@ package model
 
 import (
 	"errors"
+	"github.com/123456/c_code"
 	"github.com/123456/c_code/mc"
 	"github.com/globalsign/mgo/bson"
 	bson2 "go.mongodb.org/mongo-driver/bson"
@@ -10,7 +11,11 @@ import (
 
 type MovementHtml struct {
 	// 最上方得提示信息
-	ST string
+	ST   string
+	Link struct {
+		T string
+		U string
+	}
 	//作者信息
 	Author struct {
 		Name   string
@@ -24,6 +29,7 @@ type MovementHtml struct {
 		Imags []string
 	}
 	Text string
+	Time string
 }
 
 func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
@@ -32,6 +38,7 @@ func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
 	if err != nil {
 		return
 	}
+	hs.Time = c_code.StrTime(t.ReleaseTime)
 	switch t.Type {
 	case MovementArticleSend: //1
 		d := articleSend{}
@@ -54,6 +61,10 @@ func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
 			err = errors.New("文章丢失")
 			return
 		}
+		hs.Link = struct {
+			T string
+			U string
+		}{T: index.T, U: UrlArticle(index)}
 		hs.TextS.H = index.InfoArticle.Content
 		hs.TextS.Imags = index.InfoArticle.Imgs
 		break
@@ -89,6 +100,19 @@ func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
 				Des    string
 			}{Name: author.UserName, Avatar: common.Avatar(author.Avatar), Des: author.More.Des}
 		}
+
+		//获取文章数据
+		index := DataIndex{}
+		mc.Table(index.Table()).Where(bson.M{"did": comment_article_root.DID}).FindOne(&index)
+		if index.ID.Hex() == mc.Empty {
+			err = errors.New("文章丢失")
+			return
+		}
+		hs.Link = struct {
+			T string
+			U string
+		}{T: index.T, U: UrlArticleAnswer(index, comment_article_root)}
+
 		//多少人赞同
 		hs.Zan = comment_article_root.ZanLen
 		//封装文本
@@ -118,6 +142,19 @@ func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
 			return
 		}
 		hs.ST = "对文章评论赞同"
+
+		//获取文章数据
+		index := DataIndex{}
+		mc.Table(index.Table()).Where(bson.M{"did": comment_article_root.DID}).FindOne(&index)
+		if index.ID.Hex() == mc.Empty {
+			err = errors.New("文章丢失")
+			return
+		}
+		hs.Link = struct {
+			T string
+			U string
+		}{T: index.T, U: UrlArticleAnswer(index, comment_article_root)}
+
 		//获取作者信息
 		if t.MID != comment_article_root.MID {
 			author := Member{}.GetUserInfo(comment_article_root.MID, true)
@@ -156,6 +193,12 @@ func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
 			err = errors.New("提问丢失")
 			return
 		}
+
+		hs.Link = struct {
+			T string
+			U string
+		}{T: index.T, U: UrlQuestion(index)}
+
 		hs.TextS.H = index.InfoQuestion.Content
 		hs.TextS.Imags = index.InfoQuestion.Imgs
 		break
@@ -191,6 +234,19 @@ func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
 				Des    string
 			}{Name: author.UserName, Avatar: common.Avatar(author.Avatar), Des: author.More.Des}
 		}
+
+		//获取回答数据
+		index := DataIndex{}
+		mc.Table(index.Table()).Where(bson.M{"did": comment_question_root.DID}).FindOne(&index)
+		if index.ID.Hex() == mc.Empty {
+			err = errors.New("文章丢失")
+			return
+		}
+		hs.Link = struct {
+			T string
+			U string
+		}{T: index.T, U: UrlQuestionAnswer(index, comment_question_root)}
+
 		//多少人赞同
 		hs.Zan = comment_question_root.ZanLen
 		//封装文本
@@ -201,7 +257,7 @@ func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
 
 		break
 
-	case MovementQuestionCommentGood: //3
+	case MovementQuestionCommentGood: //6
 		d := questionAnswerZan{}
 		err = bson2.UnmarshalExtJSON(json, false, &d)
 		if err != nil {
@@ -229,6 +285,19 @@ func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
 				Des    string
 			}{Name: author.UserName, Avatar: common.Avatar(author.Avatar), Des: author.More.Des}
 		}
+
+		//获取回答数据
+		index := DataIndex{}
+		mc.Table(index.Table()).Where(bson.M{"did": comment_question_root.DID}).FindOne(&index)
+		if index.ID.Hex() == mc.Empty {
+			err = errors.New("文章丢失")
+			return
+		}
+		hs.Link = struct {
+			T string
+			U string
+		}{T: index.T, U: UrlQuestionAnswer(index, comment_question_root)}
+
 		//多少人赞同
 		hs.Zan = comment_question_root.ZanLen
 		//封装文本

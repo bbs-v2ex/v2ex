@@ -26,6 +26,9 @@ func DefaultData(c *gin.Context) (_ht gin.H) {
 	_ht["mu"] = func(member model.Member) string {
 		return fmt.Sprintf("/member/%d", member.MID)
 	}
+
+	_ht["au"] = model.UrlArticle
+
 	_ht["mumid"] = func(mid model.MIDTYPE) string {
 		return fmt.Sprintf("/member/%d", mid)
 	}

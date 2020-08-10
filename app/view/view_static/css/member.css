@@ -28,3 +28,21 @@
     border: 4px solid #efe4e4;
     border-radius: 9px;
 }
+.member-top .des{
+    font-size: .888888em;
+    color: #b7a6a6;
+}
+.member-top .des-detailed{
+    font-size: .999999em;
+    color: #131212;
+}
+.member-top .tips .sixin{
+    border: 1px solid #0084ff;
+    text-align: center;
+    color: #0084ff;
+}
+.member-top .tips .guanzhu{
+    border: 1px solid #8590a6;
+    text-align: center;
+    color: #8590a6;
+}
