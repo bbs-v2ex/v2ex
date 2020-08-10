@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"github.com/123456/c_code/mc"
 	"github.com/globalsign/mgo/bson"
+	bson2 "go.mongodb.org/mongo-driver/bson"
+	"v2ex/app/common"
 )
 
 func (t MovementCenter) About(mid MIDTYPE) (list []MovementCenter) {
@@ -57,11 +59,49 @@ func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
 		if err != nil {
 			return
 		}
-		fmt.Println(d)
+
+		break
+
+	case MovementArticleCommentGood:
+		d := articleCommentRoot{}
+		//bson.UnmarshalJSON(json, &d)
+		err = bson2.UnmarshalExtJSON(json, false, &d)
+		if err != nil {
+			return
+		}
+		comment_article_root := CommentRoot{}
+		err = mc.Table(comment_article_root.Table()).Where(bson.M{"_id": d.RID}).FindOne(&comment_article_root)
+		if err != nil || comment_article_root.ID.Hex() == mc.Empty {
+			err = errors.New("回复丢失")
+			return
+		}
+		//获取文本
+		err = mc.Table(comment_article_root.Text.Table()).Where(bson.M{"_id": comment_article_root.ID}).FindOne(&comment_article_root.Text)
+		if err != nil || comment_article_root.Text.ID.Hex() == mc.Empty {
+			err = errors.New("回复丢失")
+			return
+		}
+		hs.ST = "对文章评论赞同"
+		//获取作者信息
+		if t.MID != comment_article_root.MID {
+			author := Member{}.GetUserInfo(comment_article_root.MID, true)
+			hs.Author = struct {
+				Name   string
+				Avatar string
+				Des    string
+			}{Name: author.UserName, Avatar: common.Avatar(author.Avatar), Des: author.More.Des}
+		}
+		//多少人赞同
+		hs.Zan = comment_article_root.ZanLen
+		//封装文本
+		hs.TextS = struct {
+			H     string
+			Imags []string
+		}{H: comment_article_root.Text.Text, Imags: comment_article_root.Text.Img}
 		break
 	case MovementQuestionSend:
 		d := questionSend{}
-		err = bson.UnmarshalJSON(json, &d)
+		err = bson2.UnmarshalExtJSON(json, false, &d)
 		if err != nil {
 			return
 		}

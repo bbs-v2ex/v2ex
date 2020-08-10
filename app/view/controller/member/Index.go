@@ -22,5 +22,6 @@ func Index(c *gin.Context) {
 		hs.Text = api.RestorePicture(hs.TextS.H, "cover", hs.TextS.Imags)
 		list_view = append(list_view, hs)
 	}
+	_ht["dt"] = list_view
 	view.Render(c, "member/user_home", _ht)
 }
