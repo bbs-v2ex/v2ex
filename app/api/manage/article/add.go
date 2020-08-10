@@ -66,7 +66,6 @@ func add(c *gin.Context) {
 		c.JSON(200, result_json)
 		return
 	}
-
 	//定义Article 文章表数据
 	d_article := model.DataArticle{
 		ID:            index.ID,
@@ -89,6 +88,10 @@ func add(c *gin.Context) {
 	}
 	result_json := c_code.V1GinSuccess("", "添加成功", fmt.Sprintf("/a/%d", did))
 	model.AutoID{}.DataAdd()
+
+	//添加进通知中心
+	model.Notice(user.MID, 0).AddArticleSend(index)
+
 	c.JSON(200, result_json)
 	return
 }

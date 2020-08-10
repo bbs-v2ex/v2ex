@@ -9,7 +9,7 @@ func main() {
 	//链接数据库
 	v2ex.ConnectMongodb()
 	index := model.DataIndex{DID: 1110}
-	model.Notice(789).SendArticle(index)
+	model.Notice(789, 0).AddArticleSend(index)
 
 	//id := primitive.NewObjectID()
 	//model.NotificationCenter{ID:  id, MID:  7, Read: false,}.SendArticle()
