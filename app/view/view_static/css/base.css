@@ -15,9 +15,19 @@ body {
 .w-e-text-container{
     z-index: 1!important;
 }
-.w-e-toolbar,.w-e-menu{
+.w-e-menu{
+    z-index: auto!important;
+}
+.w-e-toolbar{
+    z-index: 99!important;
+}
+.w-e-droplist{
     z-index: 100!important;
 }
+.w-e-dp-title{
+    z-index: 101!important;
+}
+
 .w-e-toolbar {
     flex-wrap: wrap;
 }

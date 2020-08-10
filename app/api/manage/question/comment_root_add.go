@@ -37,7 +37,7 @@ func comment_root_add(c *gin.Context) {
 	}
 	//验证是否回答过此问题
 	is_reply := model.CommentQuestionRoot{}
-	err := mc.Table(is_reply.Table()).Where(bson.M{"mid": user_info.MID}).FindOne(&is_reply)
+	err := mc.Table(is_reply.Table()).Where(bson.M{"mid": user_info.MID, "did": _f.DID}).FindOne(&is_reply)
 	if err != nil {
 		result_json := c_code.V1GinError(103, "查询失败")
 		c.JSON(200, result_json)

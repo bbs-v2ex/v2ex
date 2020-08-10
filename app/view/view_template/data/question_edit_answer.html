@@ -1,0 +1,34 @@
+{{define "head"}}
+{{end}}
+{{define "body"}}
+    <div class="card  bg-white rounded">
+        <h5 class="card-header">发布文章</h5>
+        <div class="card-body col-md-12 align-self-center">
+            <form class="row g-3 needs-validation was-validated" id="f1" novalidate>
+                <div class="col-md-12">
+                    <label for="validationServer01" class="form-label">标题</label>
+                    <input type="text" class="form-control is-valid" id="validationServer01" v-model="f1.title" required>
+                </div>
+                <div class="col-md-12">
+                    <label for="validationServer01" class="form-label">内容</label>
+                    <div id="f1-content"  v-html="f1.content_view"  spellcheck="false"></div>
+                </div>
+
+                <div v-if="ajax_message != ''">${ajax_message}</div>
+                <div class="col-12">
+                    <button class="btn btn-primary" type="button" disabled v-if="wait_loading">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Loading...
+                    </button>
+                    <button class="btn btn-primary" type="submit"  v-else  @click.prevent="submit($event)"> 发布文章 </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+{{end}}
+{{define "js"}}
+
+<script type="application/javascript" src="{{st "/wangEditor-3.1.1/jquery.min.js"}}"></script>
+<script type="application/javascript" src="{{st "/wangEditor-3.1.1/wangEditor.min.js"}}"></script>
+{{end}}

@@ -12,6 +12,7 @@ var app = new Vue({
                 message: '点击,加载更多... ',
             },
             comment: comment,
+            edit_1:'',
             user_info: '',
             edit_root: {
                 txt: '',
@@ -37,11 +38,21 @@ var app = new Vue({
     created() {
         const userInfo = getUserInfo();
         try {
-            this.user_info = userInfo
+            this.user_info = userInfo;
+            if (this.user_info.mid == undefined ){
+                this.edit_1 = `你需要登录才能回答问题 前去 <span class="link-info" onclick="window.location.href='/login'">登录</span>`;
+            }
         } catch (e) {
 
         }
-        console.log(userInfo)
+
+        post(`/${___now_type}/is_root_edit`, {did: DID}).then(res => {
+            if (res.code === 1){
+                if (!res.data){
+                    this.edit_1 =   `你已回答了此问题可选择 <span class="link-info " onclick="window.location.href='?type=edit_answer'">编辑</span>`;
+                }
+            }
+        })
     },
     methods: {
         //加载更多数据

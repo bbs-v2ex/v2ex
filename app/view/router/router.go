@@ -39,5 +39,7 @@ func RegisterRoute(r *gin.Engine) {
 
 	//问题页
 	r.GET("/q/:did", view_data.Question)
+	r.GET("/q/:did/edit_answer", view_data.QuestionEditAnswer)
 	r.GET("/q/:did/answer/:rid", view_data.Question)
+
 }

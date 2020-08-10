@@ -13,6 +13,15 @@ import (
 )
 
 func Question(c *gin.Context) {
+
+	_type := c.Query("type")
+
+	switch _type {
+	case "edit_answer":
+		c.Redirect(302, "/a/"+c.Param("did")+"/edit_answer")
+		return
+	}
+
 	did, _ := strconv.Atoi(c.Param("did"))
 	t_list := []string{}
 	if did == 0 {
