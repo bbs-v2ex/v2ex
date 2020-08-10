@@ -28,7 +28,6 @@
                 {{if eq $comment_len 0}}
                     <p>暂无评论，快来做第一个评论的小伙伴吧!!!!</p>
                 {{else}}
-{{/*                    <div id="comment-list" style="height: 25%;overflow: auto"  @scroll="loading_data($event)">*/}}
                     <div id="comment-list">
                         {{range $k,$v := .comment}}
                             <div class="comment-block mt-4 mb-2 seo-html" >
@@ -54,7 +53,7 @@
                                  </div>
                                  <div class="align-self-center">
                                      <div class="author-name"> ${item.user_info.name} </div>
-                                     <div v-if="item.user_info.des != ''" v-html="item.des"></div>
+                                     <div v-if="item.user_info.des != ''" v-html="item.user_info.des"></div>
                                  </div>
                              </div>
                              <div class="tip mt-2 mb-2">

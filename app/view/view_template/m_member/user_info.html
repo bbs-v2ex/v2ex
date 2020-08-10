@@ -4,23 +4,28 @@
     <div class="card  bg-white rounded">
         <h5 class="card-header">用户信息</h5>
         <div class="card-body col-md-12 align-self-center">
-            <form class="row g-3 needs-validation was-validated" id="f1" novalidate>
+            <form class="row g-3 col-sm-6 m-auto needs-validation was-validated" id="f1" novalidate>
                 <div class="col-md-12">
-                    <label for="validationServer01" class="form-label">标题</label>
-                    <input type="text" class="form-control is-valid" id="validationServer01" v-model="f1.title" required>
+                    <label for="validationServer01" class="form-label">姓名</label>
+                    <input type="text" class="form-control is-valid" id="validationServer01" v-model="f1.user_name" required>
                 </div>
                 <div class="col-md-12">
-                    <label for="validationServer01" class="form-label">内容</label>
-                    <div id="f1-content"  v-html="f1.content_view"  spellcheck="false"></div>
+                    <label for="validationServer01" class="form-label">简要描述</label>
+                    <textarea  class="form-control is-valid" v-model="f1.des" required></textarea>
+                </div>
+                <div class="col-md-12">
+                    <label for="validationServer01" class="form-label">详细描述</label>
+                    <textarea  class="form-control is-valid" v-model="f1.des_detailed" required style="height: 150px"></textarea>
                 </div>
 
                 <div v-if="ajax_message != ''">${ajax_message}</div>
+
                 <div class="col-12">
                     <button class="btn btn-primary" type="button" disabled v-if="wait_loading">
                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         Loading...
                     </button>
-                    <button class="btn btn-primary" type="submit"  v-else  @click.prevent="submit($event)"> 发布文章 </button>
+                    <button class="btn btn-primary" type="submit"  v-else  @click.prevent="submit($event)"> 提交并修改 </button>
                 </div>
             </form>
         </div>
@@ -47,11 +52,11 @@
             methods: {
                 get_user_info(){
                     post('/member/get_user_info',{}).then(res => {
-
+                        this.f1 = res.data
                     })
                 },
                 submit(e) {
-                    this.f1.content = editor.txt.html();
+
                     var l = document.querySelector('#f1').checkValidity();
                     if (!l) {
                         document.querySelector('#f1').classList.add("was-validated");
@@ -63,10 +68,8 @@
                     //禁用提交按钮
                     this.wait_loading = true;
                     this.ajax_message = '开始提交';
-                    post('/article/add',this.f1).then(res => {
+                    post('/member/set_user_info',this.f1).then(res => {
                         this.ajax_message = res.message;
-                        debugger
-
                     }).catch(err => {
                         this.ajax_message = '接口错误';
                     }).finally(()=>{
