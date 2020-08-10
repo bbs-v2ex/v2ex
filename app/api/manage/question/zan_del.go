@@ -19,7 +19,15 @@ func zan_del(c *gin.Context) {
 		return
 	}
 	//查询数据
-	comment_text := model.CommentQuestionText{}
+	comment_root := model.CommentQuestionRoot{}
+	mc.Table(comment_root.Table()).Where(bson.M{"_id": _f.ID}).FindOne(&comment_root)
+	if comment_root.ID.Hex() == mc.Empty {
+		result_json := c_code.V1GinError(102, "未查询到数据")
+		c.JSON(200, result_json)
+		return
+	}
+	comment_text := comment_root.Text
+
 	mc.Table(comment_text.Table()).Where(bson.M{"_id": _f.ID}).FindOne(&comment_text)
 	if comment_text.ID.Hex() == mc.Empty {
 		result_json := c_code.V1GinError(102, "未查询到数据")
@@ -53,6 +61,9 @@ func zan_del(c *gin.Context) {
 		c.JSON(200, result_json)
 		return
 	}
+
+	model.Movement(mid, comment_root.MID).DelQuestionCommentZan(comment_root)
+
 	result_json := c_code.V1GinSuccess(_zan)
 	c.JSON(200, result_json)
 	return

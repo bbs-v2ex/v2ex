@@ -89,6 +89,7 @@ func add(c *gin.Context) {
 	}
 	result_json := c_code.V1GinSuccess("", "添加成功", fmt.Sprintf("/q/%d", did))
 	model.AutoID{}.DataAdd()
+	model.Movement(user.MID, 0).AddQuestionSend(index)
 	c.JSON(200, result_json)
 	return
 }

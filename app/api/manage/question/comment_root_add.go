@@ -104,6 +104,9 @@ func comment_root_add(c *gin.Context) {
 	result_json := c_code.V1GinSuccess(comment_root.ID, "添加成功", _u)
 	//评论字段加 1
 	mc.Table(index.Table()).Where(bson.M{"did": index.DID}).FieldAddOrDel("rc", +1)
+
+	model.Movement(user_info.MID, index.MID).AddQuestionCommentRoot(comment_root)
+
 	c.JSON(200, result_json)
 	return
 }

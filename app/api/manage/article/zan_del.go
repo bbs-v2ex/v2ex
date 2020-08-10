@@ -64,7 +64,7 @@ func zan_del(c *gin.Context) {
 	}
 	result_json := c_code.V1GinSuccess(_zan)
 	//添加进通知中心
-	model.Movement(mid, comment_root.MID).DelArticleZan(comment_root)
+	model.Movement(mid, comment_root.MID).DelArticleCommentZan(comment_root)
 	c.JSON(200, result_json)
 	return
 }

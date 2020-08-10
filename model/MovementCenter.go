@@ -36,6 +36,15 @@ const (
 
 	//文章点赞
 	MovementArticleCommentGood = 3
+
+	//发布提问
+	MovementQuestionSend = 4
+
+	//提问回答
+	MovementQuestionCommentRoot = 5
+
+	//回答点赞
+	MovementQuestionCommentGood = 6
 )
 
 func Movement(mid, m2id MIDTYPE) MovementCenter {
@@ -70,6 +79,23 @@ func (t MovementCenter) AddArticleSend(index DataIndex) {
 	mc.Table(t.Table()).Insert(t)
 }
 
+type questionSend struct {
+	DID DIDTYPE `json:"did" bson:"did"`
+}
+
+//发布提问
+func (t MovementCenter) AddQuestionSend(index DataIndex) {
+	if !t.verify() {
+		return
+	}
+	t.Type = MovementQuestionSend
+	t.V = questionSend{
+		DID: index.DID,
+	}
+	mc.Table(t.Table()).Insert(t)
+}
+
+//提交评论
 type articleCommentRoot struct {
 	RID primitive.ObjectID `json:"rid" bson:"rid"`
 }
@@ -85,16 +111,33 @@ func (t MovementCenter) AddArticleCommentRoot(index CommentRoot) {
 	mc.Table(t.Table()).Insert(t)
 }
 
-type articleZan struct {
+//提交回答
+type questionCommentRoot struct {
 	RID primitive.ObjectID `json:"rid" bson:"rid"`
 }
 
-func (t MovementCenter) AddArticleZan(index CommentRoot) {
+func (t MovementCenter) AddQuestionCommentRoot(index CommentQuestionRoot) {
+	if !t.verify() {
+		return
+	}
+	t.Type = MovementQuestionCommentRoot
+	t.V = questionCommentRoot{
+		RID: index.ID,
+	}
+	mc.Table(t.Table()).Insert(t)
+}
+
+//文章点赞
+type articleCommentZan struct {
+	RID primitive.ObjectID `json:"rid" bson:"rid"`
+}
+
+func (t MovementCenter) AddArticleCommentZan(index CommentRoot) {
 	if !t.verify() {
 		return
 	}
 	t.Type = MovementArticleCommentGood
-	t.V = articleZan{
+	t.V = articleCommentZan{
 		RID: index.ID,
 	}
 	where := bson.M{"mid": t.MID, "m2id": t.M2ID, "hash": index.ID.Hex()}
@@ -108,7 +151,42 @@ func (t MovementCenter) AddArticleZan(index CommentRoot) {
 	mc.Table(t.Table()).Insert(t)
 }
 
-func (t MovementCenter) DelArticleZan(index CommentRoot) {
+//回答点赞
+type questionAnswerZan struct {
+	RID primitive.ObjectID `json:"rid" bson:"rid"`
+}
+
+func (t MovementCenter) AddQuestionAnswerZan(index CommentQuestionRoot) {
+	if !t.verify() {
+		return
+	}
+	t.Type = MovementQuestionCommentGood
+	t.V = questionAnswerZan{
+		RID: index.ID,
+	}
+	where := bson.M{"mid": t.MID, "m2id": t.M2ID, "hash": index.ID.Hex()}
+	//查询是否存在
+	_t := MovementCenter{}
+	mc.Table(t.Table()).Where(where).FindOne(&_t)
+	if _t.ID.Hex() != mc.Empty {
+		return
+	}
+	t.Hash = index.ID.Hex()
+	mc.Table(t.Table()).Insert(t)
+}
+
+//删除文章点赞
+func (t MovementCenter) DelArticleCommentZan(index CommentRoot) {
+	if !t.verify() {
+		return
+	}
+	where := bson.M{"mid": t.MID, "m2id": t.M2ID, "hash": index.ID.Hex()}
+	fmt.Println(where)
+	mc.Table(t.Table()).Where(where).DelOne()
+}
+
+//删除回答点赞
+func (t MovementCenter) DelQuestionCommentZan(index CommentQuestionRoot) {
 	if !t.verify() {
 		return
 	}
