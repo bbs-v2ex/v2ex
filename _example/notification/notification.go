@@ -8,8 +8,8 @@ import (
 func main() {
 	//链接数据库
 	v2ex.ConnectMongodb()
-	index := model.DataIndex{DID: 109}
-	model.Notice(7).SendArticle(index)
+	index := model.DataIndex{DID: 1110}
+	model.Notice(789).SendArticle(index)
 
 	//id := primitive.NewObjectID()
 	//model.NotificationCenter{ID:  id, MID:  7, Read: false,}.SendArticle()
