@@ -90,7 +90,7 @@ func add(c *gin.Context) {
 	model.AutoID{}.DataAdd()
 
 	//添加进通知中心
-	model.Notice(user.MID, 0).AddArticleSend(index)
+	model.Movement(user.MID, 0).AddArticleSend(index)
 
 	c.JSON(200, result_json)
 	return

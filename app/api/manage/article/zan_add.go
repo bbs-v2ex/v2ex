@@ -66,7 +66,7 @@ func zan_add(c *gin.Context) {
 		return
 	}
 	//添加进通知中心
-	model.Notice(mid, comment_root.MID).AddArticleZan(comment_root)
+	model.Movement(mid, comment_root.MID).AddArticleZan(comment_root)
 	result_json := c_code.V1GinSuccess(_zan)
 	c.JSON(200, result_json)
 	return
