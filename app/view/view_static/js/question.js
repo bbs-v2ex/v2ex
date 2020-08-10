@@ -117,9 +117,9 @@ var app = new Vue({
             } catch (e) {
                 add_zan = false
             }
-            let zan_url = '/article/zan_add';
+            let zan_url = '/'+___now_type+'/zan_add';
             if (add_zan) {
-                zan_url = '/article/zan_del'
+                zan_url = '/'+___now_type+'/zan_del'
             }
 
             post(zan_url, {'_id': this.comment[index]._id}).then(res => {
