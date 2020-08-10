@@ -85,7 +85,7 @@ func comment_root_add(c *gin.Context) {
 	mc.Table(index.Table()).Where(bson.M{"did": index.DID}).FieldAddOrDel("rc", +1)
 
 	//添加进通知中心
-	model.Movement(user_info.MID, index.MID).AddArticleSend(index)
+	model.Movement(user_info.MID, index.MID).AddArticleCommentRoot(comment_root)
 
 	c.JSON(200, result_json)
 	return
