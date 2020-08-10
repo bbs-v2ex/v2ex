@@ -37,7 +37,7 @@ func CommentRootList(did model.DIDTYPE, rid primitive.ObjectID, keep_self bool) 
 	}
 
 	fmt.Println(where)
-	mc.Table(model.CommentQuestionRoot{}.Table()).Where(where).Order(bson.M{"zan_len": -1, "_id": -1}).Limit(10).Find(&comment_list)
+	mc.Table(model.CommentQuestionRoot{}.Table()).Where(where).Order(bson.M{"zan_len": -1, "_id": -1}).Limit(1).Find(&comment_list)
 	//提取文本
 	new_comment_list := []gin.H{}
 	for k, _ := range comment_list {

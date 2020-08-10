@@ -62,7 +62,7 @@ var app = new Vue({
             }
             this.load_data.wait = true;
             let rid = this.comment.slice(-1)[0]._id;
-            post('/article/comment_root_list', {did: this.edit_root.did, rid: rid}).then(res => {
+            post('/'+___now_type+'/comment_root_list', {did: this.edit_root.did, rid: rid}).then(res => {
                 if (res.code === 1) {
                     this.load_data.message = '点击加载数据...';
                     this.comment.push(...res.data);
@@ -74,7 +74,10 @@ var app = new Vue({
                     this.load_data.message = '加载失败刷新重新'
                 }
             }).finally(() => {
-                this.load_data.wait = false
+                this.load_data.wait = false;
+                setTimeout(function () {
+                    highlightCode()
+                },30)
             });
             console.log("load 更多数据")
         },
@@ -95,7 +98,7 @@ var app = new Vue({
             this.discuss_reload()
         },
         discuss_reload() {
-            post('/article/comment_child_list', {rid: this.discuss.edit_child.rid}).then(res => {
+            post('/'+___now_type+'/comment_child_list', {rid: this.discuss.edit_child.rid}).then(res => {
                 if (res.code === 1) {
                     this.discuss.message = '';
                     if (res.data.length === 0)
@@ -175,7 +178,7 @@ var app = new Vue({
 
             }
 
-            post('/article/comment_child_add', this.discuss.edit_child).then(res => {
+            post('/'+___now_type+'/comment_child_add', this.discuss.edit_child).then(res => {
                 this.discuss.ajax_message = res.message;
                 if (res.code === 1) {
                     //清空输入框
