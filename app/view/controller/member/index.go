@@ -83,7 +83,7 @@ func Index(c *gin.Context) {
 		tpl_name = "member/question"
 		break
 	case "collect":
-
+		_ht["dt"] = member.ListCollect(model.MIDTYPE(mid), primitive.ObjectID{})
 		tpl_name = "member/collect"
 		break
 	default:
