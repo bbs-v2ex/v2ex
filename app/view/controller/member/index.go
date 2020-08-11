@@ -69,26 +69,33 @@ func Index(c *gin.Context) {
 
 	//页面分发
 	tpl_name := ""
+	txt := ""
 	switch _type {
 	case "question":
+		txt = "进行提问"
 		_ht["dt"] = member.ListQuestion(model.MIDTYPE(mid), primitive.ObjectID{})
 		tpl_name = "member/question"
 		break
 	case "comment":
+		txt = "对问题进行回复"
 		_ht["dt"] = member.ListComment(model.MIDTYPE(mid), primitive.ObjectID{})
 		tpl_name = "member/user_home"
 		break
 	case "article":
+		txt = "发布过文章"
 		_ht["dt"] = member.ListArticle(model.MIDTYPE(mid), primitive.ObjectID{})
 		tpl_name = "member/question"
 		break
 	case "collect":
+		txt = "收藏"
 		_ht["dt"] = member.ListCollect(model.MIDTYPE(mid), primitive.ObjectID{})
 		tpl_name = "member/collect"
 		break
 	default:
+		_ht["member_body_empty"] = "还没有动态哦"
 		_ht["dt"] = member.ListDynamic(model.MIDTYPE(mid), primitive.ObjectID{})
 		tpl_name = "member/user_home"
 	}
+	_ht["member_body_empty"] = "还没有" + txt + "哦"
 	view.Render(c, tpl_name, _ht)
 }

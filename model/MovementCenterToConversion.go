@@ -313,7 +313,39 @@ func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
 		}{H: comment_question_root.Text.Text, Imags: comment_question_root.Text.Img}
 		break
 	case MovementCollect: //7
-
+		d := collect{}
+		err = bson2.UnmarshalExtJSON(json, false, &d)
+		if err != nil {
+			return
+		}
+		index := DataIndex{}
+		mc.Table(index.Table()).Where(bson.M{"did": d.DID}).FindOne(&index)
+		switch index.DTYPE {
+		case DTYPEArticle:
+			hs.ST = "收藏了文章"
+			hs.Link = struct {
+				T string
+				U string
+			}{T: index.T, U: UrlArticle(index)}
+			mc.Table(index.InfoArticle.Table()).Where(bson.M{"_id": index.ID}).FindOne(&index.InfoArticle)
+			hs.TextS = struct {
+				H     string
+				Imags []string
+			}{H: index.InfoArticle.Content, Imags: index.InfoArticle.Imgs}
+			break
+		case DTYPEQuestion:
+			hs.ST = "收藏了问题"
+			hs.Link = struct {
+				T string
+				U string
+			}{T: index.T, U: UrlQuestion(index)}
+			mc.Table(index.InfoQuestion.Table()).Where(bson.M{"_id": index.ID}).FindOne(&index.InfoQuestion)
+			hs.TextS = struct {
+				H     string
+				Imags []string
+			}{H: index.InfoQuestion.Content, Imags: index.InfoQuestion.Imgs}
+			break
+		}
 		break
 	}
 	if len(hs.TextS.Imags) >= 1 {

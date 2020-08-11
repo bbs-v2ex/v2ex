@@ -92,7 +92,7 @@ var login_app = new Vue({
     methods:{
         loginout(){
             post('/loginout').then(res =>{
-                sessionStorage.removeItem(APITOKEN);
+                localStorage.removeItem(APITOKEN);
                 window.location.href = "?"
             })
         },

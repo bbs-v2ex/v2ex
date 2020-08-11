@@ -5,8 +5,15 @@
     <div class="row col-sm-12 col-lg-10">
         <div class="col-lg-10">
             <h1>{{.user_info.UserName}}</h1>
-            {{if ne .user_info.More.Des ""}} <div class="des">$: {{.user_info.More.Des}} </div> {{end}}
-            {{if ne .user_info.More.DesDetailed ""}}<div class="des-detailed mt-2">detailed: {{.user_info.More.DesDetailed}} </div>{{end}}
+            <div class="member-top-des">
+                {{if ne .user_info.More.Des ""}} <div class="des">$: {{.user_info.More.Des}} </div> {{end}}
+                {{if ne .user_info.More.DesDetailed ""}}<div class="des-detailed mt-2">detailed: {{.user_info.More.DesDetailed}} </div>{{end}}
+                {{if eq  .user_info.More.Des ""}} {{if eq  .user_info.More.DesDetailed ""}}
+                    <div>该用户超级懒，未设置任何数据哦</div>
+                    <div class="mt-2">用户ID: {{.user_info.MID}} </div>
+                    <div class="mt-2">@: 谁还不是一个小可爱呢 </div>
+                {{end}}{{end}}
+            </div>
             <div class="tips row mt-4">
                 <div class="sixin col-12 col-sm-3 p-2  mr-sm-5 m-auto"> 私信@ME </div>
                 <div class="guanzhu col-12 col-sm-3 p-2 mt-2 mt-sm-0 m-auto">  关注@TA </div>
