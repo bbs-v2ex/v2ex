@@ -1,18 +1,15 @@
-.member-left, .member-top {
+.member-left, .member-top,.member-right-box {
     background: #fff;
 }
 
-.member-left {
-    /*min-height: 250px;*/
-}
-
-.member-nav {
-
+.member-nav li,.member-nav{
+    height: 45px !important;
+    line-height: 45px!important;
 }
 
 .member-nav li a {
-    height: 45px;
-    line-height: 45px;
+    height: 45px !important;
+    line-height: 45px!important;
     display: inline-block;
     text-decoration: none;
     font-size: 16px;
@@ -145,4 +142,16 @@
 .member-body-empty p {
     margin-top: 50px;
     font-size: 1.111112em;
+}
+
+.member-right-box a  {
+    color: rgb(133, 144, 166);;
+}
+.member-right-box{
+    padding: 0 15px;
+}
+.member-right-box-title{
+    padding: 15px 0;
+    font-size: 16px;
+    font-weight: 600;
 }

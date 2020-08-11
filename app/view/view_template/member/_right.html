@@ -1,0 +1,18 @@
+<div class="col-md-4 g-0 pl-0 pl-sm-2">
+    <div class="member-right-box mt-2  mt-sm-0">
+        <div class="member-right-box-title"> 最新文章 </div>
+        <ul class="list-unstyled ">
+            {{range .article_list}}
+                <li><a href="{{.u}}" class="text-decoration-none">{{.t}}</a> </li>
+            {{end}}
+        </ul>
+    </div>
+    <div class="member-right-box">
+        <div class="member-right-box-title"> 最新提问 </div>
+        <ul class="list-unstyled ">
+            {{range .question_list}}
+                <li><a href="{{.u}}" class="text-decoration-none">{{.t}}</a> </li>
+            {{end}}
+        </ul>
+    </div>
+</div>

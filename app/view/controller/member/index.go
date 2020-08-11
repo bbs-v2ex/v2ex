@@ -2,7 +2,9 @@ package member
 
 import (
 	"fmt"
+	"github.com/123456/c_code/mc"
 	"github.com/gin-gonic/gin"
+	"github.com/globalsign/mgo/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"path/filepath"
 	"strconv"
@@ -95,7 +97,34 @@ func Index(c *gin.Context) {
 		_ht["member_body_empty"] = "还没有动态哦"
 		_ht["dt"] = member.ListDynamic(model.MIDTYPE(mid), primitive.ObjectID{})
 		tpl_name = "member/user_home"
+		break
 	}
+
+	//获取最新文章
+	index := model.DataIndex{}
+	_article_list := []model.DataIndex{}
+	mc.Table(index.Table()).Where(bson.M{"d_type": model.DTYPEArticle}).Limit(10).Find(&_article_list)
+	article_list := []gin.H{}
+	for _, v := range _article_list {
+		article_list = append(article_list, gin.H{
+			"t": v.T,
+			"u": model.UrlArticle(v),
+		})
+	}
+	_ht["article_list"] = article_list
+
+	//获取最新的提问
+	_question_list := []model.DataIndex{}
+	mc.Table(index.Table()).Where(bson.M{"d_type": model.DTYPEArticle}).Limit(10).Find(&_question_list)
+	question_list := []gin.H{}
+	for _, v := range _question_list {
+		question_list = append(question_list, gin.H{
+			"t": v.T,
+			"u": model.UrlQuestion(v),
+		})
+	}
+	_ht["question_list"] = question_list
+
 	_ht["member_body_empty"] = "还没有" + txt + "哦"
 	view.Render(c, tpl_name, _ht)
 }
