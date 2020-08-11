@@ -18,6 +18,9 @@
             </div>
             <div class="content mt-4">
                 {{.art.InfoArticle.Content|html}}
+                <div class="content-footer">
+                    <div class="collect-btn" :class="{'collect-btn-active':collect.status}" v-html="collect.txt" @click="collect_toggle"> 收藏 </div>
+                </div>
             </div>
         </div>
         <div class="mt-4 p-3" id="comment">
@@ -144,7 +147,7 @@
 {{end}}
 {{define "js"}}
 <script src="{{st "/btv5/popper.min.js"}}" type="application/javascript"></script>
-<script>let comment = JSON.parse('{{.comment|json}}')</script>
+<script>let comment = JSON.parse('{{.comment|json}}');let DID={{.art.DID}}; let UploadServer = "{{.___upload_server}}";</script>
 <script src="{{st "/js/article.js"}}"></script>
 <script> app.edit_root.did ={{.art.DID}};var discuss_modal  =  new bootstrap.Modal(document.querySelector('#puper-view'),{ keyboard: false});</script>
 {{end}}

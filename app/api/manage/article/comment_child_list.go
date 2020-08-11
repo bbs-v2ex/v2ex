@@ -7,7 +7,6 @@ import (
 	"github.com/globalsign/mgo/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"v2ex/app/api"
-	"v2ex/app/common"
 	"v2ex/model"
 )
 
@@ -44,7 +43,7 @@ func comment_child_list(c *gin.Context) {
 		child_one := gin.H{
 			"u1": gin.H{
 				"name":   self_member.UserName,
-				"avatar": common.Avatar(self_member.Avatar),
+				"avatar": model.Avatar(self_member.Avatar),
 				"mid":    self_member.MID,
 			},
 			"txt":  comment_text.Text,
@@ -61,7 +60,7 @@ func comment_child_list(c *gin.Context) {
 				if r_member.MID != 0 {
 					child_one["u2"] = gin.H{
 						"name":   r_member.UserName,
-						"avatar": common.Avatar(r_member.Avatar),
+						"avatar": model.Avatar(r_member.Avatar),
 						"mid":    r_member.MID,
 					}
 				}

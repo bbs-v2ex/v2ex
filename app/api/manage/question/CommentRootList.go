@@ -8,7 +8,6 @@ import (
 	"github.com/globalsign/mgo/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"v2ex/app/api"
-	"v2ex/app/common"
 	"v2ex/model"
 )
 
@@ -50,7 +49,7 @@ func CommentRootList(did model.DIDTYPE, rid primitive.ObjectID, keep_self bool) 
 		new_comment_list = append(new_comment_list, gin.H{
 			"user_info": gin.H{
 				"name":   user_info.UserName,
-				"avatar": common.Avatar(user_info.Avatar),
+				"avatar": model.Avatar(user_info.Avatar),
 				"time":   c_code.StrTime(comment_list[k].Text.ReleaseTime),
 				"mid":    comment_list[k].MID,
 				"des":    user_info.More.Des,

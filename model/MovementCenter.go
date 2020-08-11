@@ -45,6 +45,9 @@ const (
 
 	//回答点赞
 	MovementQuestionCommentGood = 6
+
+	//文章 或者 问题收藏
+	MovementCollect = 7
 )
 
 func Movement(mid, m2id MIDTYPE) MovementCenter {
@@ -163,6 +166,30 @@ func (t MovementCenter) AddQuestionAnswerZan(index CommentQuestionRoot) {
 	t.Type = MovementQuestionCommentGood
 	t.V = questionAnswerZan{
 		RID: index.ID,
+	}
+	where := bson.M{"mid": t.MID, "m2id": t.M2ID, "hash": index.ID.Hex()}
+	//查询是否存在
+	_t := MovementCenter{}
+	mc.Table(t.Table()).Where(where).FindOne(&_t)
+	if _t.ID.Hex() != mc.Empty {
+		return
+	}
+	t.Hash = index.ID.Hex()
+	mc.Table(t.Table()).Insert(t)
+}
+
+//收藏
+type collect struct {
+	DID DIDTYPE
+}
+
+func (t MovementCenter) AddCollect(index DataIndex) {
+	if !t.verify() {
+		return
+	}
+	t.Type = MovementCollect
+	t.V = collect{
+		DID: index.DID,
 	}
 	where := bson.M{"mid": t.MID, "m2id": t.M2ID, "hash": index.ID.Hex()}
 	//查询是否存在

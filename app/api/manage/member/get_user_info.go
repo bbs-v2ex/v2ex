@@ -4,7 +4,6 @@ import (
 	"github.com/123456/c_code"
 	"github.com/gin-gonic/gin"
 	"v2ex/app/api"
-	"v2ex/app/common"
 	"v2ex/model"
 )
 
@@ -15,7 +14,7 @@ func get_user_info(c *gin.Context) {
 
 	result := _set_user_info{
 		UserName:    user_info.UserName,
-		Avatar:      common.Avatar(user_info.Avatar),
+		Avatar:      model.Avatar(user_info.Avatar),
 		Des:         user_info.More.Des,
 		DesDetailed: user_info.More.DesDetailed,
 	}

@@ -6,7 +6,6 @@ import (
 	"github.com/123456/c_code/mc"
 	"github.com/globalsign/mgo/bson"
 	bson2 "go.mongodb.org/mongo-driver/bson"
-	"v2ex/app/common"
 )
 
 type MovementHtml struct {
@@ -100,7 +99,7 @@ func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
 			author := Member{}.GetUserInfo(comment_article_root.MID, true)
 			hs.Author = ___movementHtml_author{
 				Name:   author.UserName,
-				Avatar: common.Avatar(author.Avatar),
+				Avatar: Avatar(author.Avatar),
 				Des:    author.More.Des,
 				U:      UrlMember(author),
 			}
@@ -165,7 +164,7 @@ func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
 			author := Member{}.GetUserInfo(comment_article_root.MID, true)
 			hs.Author = ___movementHtml_author{
 				Name:   author.UserName,
-				Avatar: common.Avatar(author.Avatar),
+				Avatar: Avatar(author.Avatar),
 				Des:    author.More.Des,
 				U:      UrlMember(author),
 			}
@@ -236,7 +235,7 @@ func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
 			author := Member{}.GetUserInfo(comment_question_root.MID, true)
 			hs.Author = ___movementHtml_author{
 				Name:   author.UserName,
-				Avatar: common.Avatar(author.Avatar),
+				Avatar: Avatar(author.Avatar),
 				Des:    author.More.Des,
 				U:      UrlMember(author),
 			}
@@ -288,7 +287,7 @@ func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
 			author := Member{}.GetUserInfo(comment_question_root.MID, true)
 			hs.Author = ___movementHtml_author{
 				Name:   author.UserName,
-				Avatar: common.Avatar(author.Avatar),
+				Avatar: Avatar(author.Avatar),
 				Des:    author.More.Des,
 				U:      UrlMember(author)}
 		}
@@ -312,6 +311,9 @@ func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
 			H     string
 			Imags []string
 		}{H: comment_question_root.Text.Text, Imags: comment_question_root.Text.Img}
+		break
+	case MovementCollect: //7
+
 		break
 	}
 	if len(hs.TextS.Imags) >= 1 {

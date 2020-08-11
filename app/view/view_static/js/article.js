@@ -4,6 +4,10 @@ var app = new Vue({
 
     data() {
         return {
+            collect: {
+                status: false,
+                txt: '收藏',
+            },
             load_data: {
                 stop: false,
                 wait: false,
@@ -39,9 +43,20 @@ var app = new Vue({
         } catch (e) {
 
         }
-        console.log(userInfo)
+        post('/member/is_collect', {did: DID}).then(res => {
+            console.log(res)
+        })
     },
     methods: {
+
+        collect_toggle() {
+            if (this.collect.status) {
+                console.log("取消收藏")
+            } else {
+              console.log("添加收藏")
+            }
+        },
+
         //加载更多数据
         load_more() {
             if (this.load_data.stop || this.load_data.wait) {
@@ -64,42 +79,6 @@ var app = new Vue({
                 this.load_data.wait = false
             });
             console.log("load 更多数据")
-        },
-
-        //无限滚动
-        loading_data(e) {
-            let el = e.target;
-
-            function getScrollTop() {
-                var scrollTop = 0;
-                scrollTop = el.scrollTop;
-                return scrollTop;
-            }
-
-            function getClientHeight() {
-                var clientHeight = 0;
-                clientHeight = el.clientHeight;
-                return clientHeight;
-            }
-
-            function getScrollHeight() {
-                return el.scrollHeight;
-            }
-
-            console.log(getScrollTop());
-            console.log(getClientHeight());
-            console.log(getScrollHeight());
-
-            if (getScrollTop() + getClientHeight() == getScrollHeight()) {
-
-
-                // if(pageNo <= totalPage) {
-                //     queryRemainRechargeList();//获取数据的方法
-                // } else {
-                //     toast("没有更多了")
-                // }
-            }
-
         },
 
         active_reply(item) {
