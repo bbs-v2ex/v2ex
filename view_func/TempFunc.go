@@ -7,6 +7,7 @@ import (
 	"html/template"
 	"strings"
 	"v2ex/app/common"
+	"v2ex/model"
 )
 
 func TempFunc() template.FuncMap {
@@ -44,5 +45,6 @@ func TempFunc() template.FuncMap {
 		u := strings.Join(urls, "/")
 		return "/" + strings.TrimLeft(u, "/")
 	}
+	f["imgu"] = model.UrlImage
 	return f
 }

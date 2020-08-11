@@ -17,11 +17,7 @@ type MovementHtml struct {
 		U string
 	}
 	//作者信息
-	Author struct {
-		Name   string
-		Avatar string
-		Des    string
-	}
+	Author ___movementHtml_author
 	//多少人赞同
 	Zan   int
 	TextS struct {
@@ -30,9 +26,17 @@ type MovementHtml struct {
 	}
 	Text string
 	Time string
+	Img  string
+}
+type ___movementHtml_author struct {
+	Name   string
+	Avatar string
+	Des    string
+	U      string
 }
 
 func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
+
 	var json []byte
 	json, err = bson.MarshalJSON(t.V)
 	if err != nil {
@@ -94,11 +98,12 @@ func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
 		//获取作者信息
 		if t.MID != comment_article_root.MID {
 			author := Member{}.GetUserInfo(comment_article_root.MID, true)
-			hs.Author = struct {
-				Name   string
-				Avatar string
-				Des    string
-			}{Name: author.UserName, Avatar: common.Avatar(author.Avatar), Des: author.More.Des}
+			hs.Author = ___movementHtml_author{
+				Name:   author.UserName,
+				Avatar: common.Avatar(author.Avatar),
+				Des:    author.More.Des,
+				U:      UrlMember(author),
+			}
 		}
 
 		//获取文章数据
@@ -158,11 +163,12 @@ func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
 		//获取作者信息
 		if t.MID != comment_article_root.MID {
 			author := Member{}.GetUserInfo(comment_article_root.MID, true)
-			hs.Author = struct {
-				Name   string
-				Avatar string
-				Des    string
-			}{Name: author.UserName, Avatar: common.Avatar(author.Avatar), Des: author.More.Des}
+			hs.Author = ___movementHtml_author{
+				Name:   author.UserName,
+				Avatar: common.Avatar(author.Avatar),
+				Des:    author.More.Des,
+				U:      UrlMember(author),
+			}
 		}
 		//多少人赞同
 		hs.Zan = comment_article_root.ZanLen
@@ -228,11 +234,12 @@ func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
 		//获取作者信息
 		if t.MID != comment_question_root.MID {
 			author := Member{}.GetUserInfo(comment_question_root.MID, true)
-			hs.Author = struct {
-				Name   string
-				Avatar string
-				Des    string
-			}{Name: author.UserName, Avatar: common.Avatar(author.Avatar), Des: author.More.Des}
+			hs.Author = ___movementHtml_author{
+				Name:   author.UserName,
+				Avatar: common.Avatar(author.Avatar),
+				Des:    author.More.Des,
+				U:      UrlMember(author),
+			}
 		}
 
 		//获取回答数据
@@ -279,11 +286,11 @@ func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
 		//获取作者信息
 		if t.MID != comment_question_root.MID {
 			author := Member{}.GetUserInfo(comment_question_root.MID, true)
-			hs.Author = struct {
-				Name   string
-				Avatar string
-				Des    string
-			}{Name: author.UserName, Avatar: common.Avatar(author.Avatar), Des: author.More.Des}
+			hs.Author = ___movementHtml_author{
+				Name:   author.UserName,
+				Avatar: common.Avatar(author.Avatar),
+				Des:    author.More.Des,
+				U:      UrlMember(author)}
 		}
 
 		//获取回答数据
@@ -306,6 +313,9 @@ func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
 			Imags []string
 		}{H: comment_question_root.Text.Text, Imags: comment_question_root.Text.Img}
 		break
+	}
+	if len(hs.TextS.Imags) >= 1 {
+		hs.Img = UrlImage(hs.TextS.Imags[0])
 	}
 	return
 }

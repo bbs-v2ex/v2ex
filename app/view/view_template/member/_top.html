@@ -1,0 +1,19 @@
+<div class="row member-top mb-2 p-2 pt-3 pb-3">
+    <div class="member-top-avatar  col-sm-12 col-lg-2">
+        <img src="{{.user_info.Avatar|avatar}}?&w=150&h=150">
+    </div>
+    <div class="row col-sm-12 col-lg-10">
+        <div class="col-lg-10">
+            <h1>{{.user_info.UserName}}</h1>
+            {{if ne .user_info.More.Des ""}} <div class="des">$: {{.user_info.More.Des}} </div> {{end}}
+            {{if ne .user_info.More.DesDetailed ""}}<div class="des-detailed mt-2">detailed: {{.user_info.More.DesDetailed}} </div>{{end}}
+            <div class="tips row mt-4">
+                <div class="sixin col-12 col-sm-3 p-2  mr-sm-5 m-auto"> 私信@ME </div>
+                <div class="guanzhu col-12 col-sm-3 p-2 mt-2 mt-sm-0 m-auto">  关注@TA </div>
+            </div>
+        </div>
+        <div class="col-lg-2 tips">
+            Ad 位求租
+        </div>
+    </div>
+</div>

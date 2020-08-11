@@ -1,0 +1,24 @@
+{{define "head"}}<link rel="stylesheet" href="{{st "/css/member.css"}}">{{end}}
+{{define "body"}}
+{{include "member/_top"}}
+<div class="row ">
+    {{include "member/_left_top"}}
+    <ul>
+        {{range .dt}}
+            <li class="mc-list list-unstyled mt-3 mb-3 p-3">
+                {{if ne .img ""}} <div><img src="{{imgu .img}}?w=100" alt=""></div>{{end}}
+                <div class="col-auto flex-fill text-break">
+                    <div><a href="{{.u}}">{{.t}}</a></div>
+                    <div class="">{{.txt}}</div>
+                </div>
+            </li>
+        {{end}}
+    </ul>
+
+    {{include "member/_left_bottom"}}
+    <div class="col-md-4">
+
+    </div>
+</div>
+{{end}}
+{{define "js"}}{{end}}

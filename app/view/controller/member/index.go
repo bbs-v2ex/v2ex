@@ -3,9 +3,10 @@ package member
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"path/filepath"
 	"strconv"
-	"v2ex/app/api"
+	"v2ex/app/api/member"
 	"v2ex/app/view"
 	"v2ex/model"
 )
@@ -65,17 +66,16 @@ func Index(c *gin.Context) {
 		return
 	}
 	_ht["user_info"] = user_info
-	list := model.MovementCenter{}.About(model.MIDTYPE(mid))
-	list_view := []model.MovementHtml{}
-	for _, v := range list {
-		hs, err := v.ToConversion()
-		if err != nil {
-			continue
-		}
-		//处理图片
-		hs.Text = api.RestorePicture(hs.TextS.H, "cover", hs.TextS.Imags)
-		list_view = append(list_view, hs)
+
+	//页面分发
+	tpl_name := ""
+	switch _type {
+	case "question":
+		_ht["dt"] = member.ListQuestion(model.MIDTYPE(mid), primitive.ObjectID{})
+		tpl_name = "member/question"
+	default:
+		_ht["dt"] = member.ListDynamic(model.MIDTYPE(mid), primitive.ObjectID{})
+		tpl_name = "member/user_home"
 	}
-	_ht["dt"] = list_view
-	view.Render(c, "member/user_home", _ht)
+	view.Render(c, tpl_name, _ht)
 }

@@ -2,35 +2,29 @@
 <link rel="stylesheet" href="{{st "/css/member.css"}}">
 {{end}}
 {{define "body"}}
-<div class="row member-top mb-2 p-2 pt-3 pb-3">
-    <div class="member-top-avatar  col-sm-12 col-lg-2">
-        <img src="{{.user_info.Avatar|avatar}}?&w=150&h=150">
-    </div>
-    <div class="row col-sm-12 col-lg-10">
-        <div class="col-lg-10">
-            <h1>{{.user_info.UserName}}</h1>
-            {{if ne .user_info.More.Des ""}} <div class="des">$: {{.user_info.More.Des}} </div> {{end}}
-            {{if ne .user_info.More.DesDetailed ""}}<div class="des-detailed mt-2">detailed: {{.user_info.More.DesDetailed}} </div>{{end}}
-            <div class="tips row mt-4">
-                <div class="sixin col-12 col-sm-3 p-2  mr-sm-5 m-auto"> 私信@ME </div>
-                <div class="guanzhu col-12 col-sm-3 p-2 mt-2 mt-sm-0 m-auto">  关注@TA </div>
-            </div>
-        </div>
-        <div class="col-lg-2 tips">
-            Ad 位求租
-        </div>
-    </div>
-</div>
+{{include "member/_top"}}
 <div class="row ">
-    <div class="col-md-8 row g-0 p-3 member-left">
-        <ul class="row member-nav"> {{range ._member_mav}} <li class="col-auto list-unstyled text-center  {{if .active }} member-nav-active {{end}}"> <a href="{{.u}}" title="会员-{{$.user_info.UserName}}-{{.t}}">{{.t}}</a>{{end}}</li></ul>
-        <div class="m-list">
-            {{range .dt}}
-                <div>{{.ST}}</div>
-                <div><a href="{{.Link.U}}">{{.Link.T}}</a></div>
-            {{end}}
-        </div>
-    </div>
+    {{include "member/_left_top"}}
+        {{range .dt}}
+            <div class="m-list">
+                <div class="l-tip">{{.Time}} {{.ST}}</div>
+                <div class="l-title"><a href="{{.Link.U}}" title="{{.Link.T}}">{{.Link.T}}</a></div>
+                    {{if ne .Author.Name ""}}
+                        <a href="{{.Author.U}}" class="author-avatar">
+                            <div class="col-auto mr-3">
+                                <img src="{{.Author.Avatar}}?w=35"  alt="会员-{{.Author.Name}}-头像">
+                            </div>
+                            <div class="align-self-center">
+                                <div class="author-name"> {{.Author.Name}} </div>
+                                {{if ne .Author.Des ""}}<div class="text-break des-txt">{{.Author.Des}}</div>{{end}}
+                            </div>
+                        </a>
+                    {{end}}
+                {{if ne .Zan 0}} <div class="l-zan">{{.Zan}} 人赞同</div> {{end}}
+                <div>{{.Text|html}}</div>
+            </div>
+        {{end}}
+    {{include "member/_left_bottom"}}
     <div class="col-md-4">
 
     </div>
