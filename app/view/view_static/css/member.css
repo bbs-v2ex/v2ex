@@ -65,15 +65,17 @@
     margin:5px 0;
 }
 
-.m-list .l-title {
+.m-list .l-title,.mc-list .l-title {
     font-size: 1.133333222333em;
     font-weight: 600;
 }
-.m-list .l-title a{
+.m-list .l-title a,.mc-list .l-title a{
     color: rgb(26, 26, 26);
     text-decoration: none;
 }
-
+.mmm-b{
+    display: flex;
+}
 .author-avatar img{
     border-radius: 5px;
     border: 1px solid #b7b7b7;
@@ -104,4 +106,14 @@
 .mc-list{
     display: flex;
     border-bottom: 1px solid #f6f6f6;
+}
+.m-list .mc-list{
+    border-bottom: none;
+}
+.show-img{
+    margin-right: 15px!important;
+}
+.show-img img{
+    border: 1px solid #9c9090;
+    border-radius: 3px;
 }

@@ -73,6 +73,19 @@ func Index(c *gin.Context) {
 	case "question":
 		_ht["dt"] = member.ListQuestion(model.MIDTYPE(mid), primitive.ObjectID{})
 		tpl_name = "member/question"
+		break
+	case "comment":
+		_ht["dt"] = member.ListComment(model.MIDTYPE(mid), primitive.ObjectID{})
+		tpl_name = "member/user_home"
+		break
+	case "article":
+		_ht["dt"] = member.ListArticle(model.MIDTYPE(mid), primitive.ObjectID{})
+		tpl_name = "member/question"
+		break
+	case "collect":
+
+		tpl_name = "member/collect"
+		break
 	default:
 		_ht["dt"] = member.ListDynamic(model.MIDTYPE(mid), primitive.ObjectID{})
 		tpl_name = "member/user_home"

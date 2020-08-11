@@ -3,18 +3,15 @@
 {{include "member/_top"}}
 <div class="row ">
     {{include "member/_left_top"}}
-    <ul>
         {{range .dt}}
-            <li class="mc-list list-unstyled mt-3 mb-3 p-3">
-                {{if ne .img ""}} <div><img src="{{imgu .img}}?w=100" alt=""></div>{{end}}
+            <div class="mc-list list-unstyled mt-3 mb-3 p-3">
+                {{if ne .img ""}} <div class="mr-1 show-img"><img src="{{imgu .img}}?w=100" alt=""></div>{{end}}
                 <div class="col-auto flex-fill text-break">
-                    <div><a href="{{.u}}">{{.t}}</a></div>
-                    <div class="">{{.txt}}</div>
+                    <div class="l-title"><a href="{{.u}}">{{.t}}</a></div>
+                    <div class="mt-3 mb-3">{{.txt}}</div>
                 </div>
-            </li>
+            </div>
         {{end}}
-    </ul>
-
     {{include "member/_left_bottom"}}
     <div class="col-md-4">
 

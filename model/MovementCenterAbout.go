@@ -22,3 +22,21 @@ func (t MovementCenter) About(mid MIDTYPE) (list []MovementCenter) {
 	}
 	return _list
 }
+
+func (t MovementCenter) Comment(mid MIDTYPE) (list []MovementCenter) {
+	_list := []MovementCenter{}
+
+	//where := bson.M{
+	//	"$or": []bson.M{
+	//		{"mid": mid},
+	//		//{"m2id": mid},
+	//	},
+	//}
+	where := bson.M{"mid": mid, "type": MovementQuestionCommentRoot}
+	//fmt.Println(where)
+	err := mc.Table(t.Table()).Where(where).Order(bson.M{"_id": -1}).Limit(10).Find(&_list)
+	if err != nil {
+		return
+	}
+	return _list
+}
