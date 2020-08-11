@@ -20,6 +20,10 @@
                 </div>
                 <div class="content mt-4">
                     {{.index.InfoQuestion.Content|html}}
+                    <div class="content-footer">
+                        <div class="collect-btn" :class="{'collect-btn-active':collect.status}" v-html="collect.txt" @click="collect_toggle"> 收藏 </div>
+                        <div v-html="collect.ajax_txt"></div>
+                    </div>
                 </div>
             </div>
 
@@ -93,7 +97,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="load-more-data w-100 text-center p-2 mb-3 mt-2" v-if="comment.length >= 1 " v-html="load_data.message" @click="load_more()"> 点击,加载更多... </div>
+                        <div class="load-more-data w-100 text-center p-2 mb-3 mt-2" v-if="comment.length >= 10 " v-html="load_data.message" @click="load_more()"> 点击,加载更多... </div>
                     {{end}}
                 </div>
             </div>

@@ -131,6 +131,7 @@
     width: 73px;
     text-align: center;
     padding: 3px 3px;
+    cursor: pointer;
 }
 .collect-btn-active{
     color: #fff;

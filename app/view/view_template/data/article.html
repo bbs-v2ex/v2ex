@@ -20,6 +20,7 @@
                 {{.art.InfoArticle.Content|html}}
                 <div class="content-footer">
                     <div class="collect-btn" :class="{'collect-btn-active':collect.status}" v-html="collect.txt" @click="collect_toggle"> 收藏 </div>
+                    <div v-html="collect.ajax_txt"></div>
                 </div>
             </div>
         </div>

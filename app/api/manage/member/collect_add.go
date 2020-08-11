@@ -10,12 +10,12 @@ import (
 	"v2ex/model"
 )
 
-type _add_collect struct {
+type _collect_add struct {
 	DID model.DIDTYPE `json:"did"`
 }
 
-func add_collect(c *gin.Context) {
-	_f := _add_collect{}
+func collect_add(c *gin.Context) {
+	_f := _collect_add{}
 	c.BindJSON(&_f)
 	index := model.DataIndex{}
 	mc.Table(index.Table()).Where(bson.M{"did": _f.DID}).FindOne(&index)

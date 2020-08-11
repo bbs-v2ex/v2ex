@@ -202,6 +202,16 @@ func (t MovementCenter) AddCollect(index DataIndex) {
 	mc.Table(t.Table()).Insert(t)
 }
 
+//删除收藏信息
+func (t MovementCenter) DelCollect(index DataIndex) {
+	if !t.verify() {
+		return
+	}
+	where := bson.M{"mid": t.MID, "m2id": t.M2ID, "hash": index.ID.Hex()}
+	fmt.Println(where)
+	mc.Table(t.Table()).Where(where).DelOne()
+}
+
 //删除文章点赞
 func (t MovementCenter) DelArticleCommentZan(index CommentRoot) {
 	if !t.verify() {

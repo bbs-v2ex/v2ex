@@ -1,6 +1,7 @@
 package member
 
 import (
+	"fmt"
 	"github.com/123456/c_code"
 	"github.com/123456/c_code/mc"
 	"github.com/gin-gonic/gin"
@@ -9,7 +10,7 @@ import (
 	"v2ex/model"
 )
 
-func is_collect(c *gin.Context) {
+func collect_del(c *gin.Context) {
 	_f := _collect_add{}
 	c.BindJSON(&_f)
 	index := model.DataIndex{}
@@ -19,16 +20,12 @@ func is_collect(c *gin.Context) {
 		c.JSON(200, result_json)
 		return
 	}
-
 	mid := api.GetMID(c)
-	collect := model.MemberCollect{}
-	mc.Table(collect.Table()).Where(bson.M{"mid": mid, "did": index.DID}).FindOne(&collect)
-	if collect.MID != 0 {
-		result_json := c_code.V1GinSuccess(true)
-		c.JSON(200, result_json)
-		return
-	}
-	result_json := c_code.V1GinSuccess(false)
+	where := bson.M{"mid": mid, "did": _f.DID}
+	fmt.Println(where)
+	mc.Table(model.MemberCollect{}.Table()).Where(where).DelOne()
+	model.Movement(mid, index.MID).DelCollect(index)
+	result_json := c_code.V1GinSuccess("删除成功")
 	c.JSON(200, result_json)
 	return
 }

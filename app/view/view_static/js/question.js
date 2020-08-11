@@ -6,6 +6,11 @@ var app = new Vue({
 
     data() {
         return {
+            collect: {
+                status: false,
+                txt: '收藏',
+                ajax_txt: '',
+            },
             load_data: {
                 stop: false,
                 wait: false,
@@ -52,9 +57,45 @@ var app = new Vue({
                     this.edit_1 =   `你已回答了此问题可选择 <span class="link-info " onclick="window.location.href='?type=edit_answer'">编辑</span>`;
                 }
             }
+        });
+        post('/member/is_collect', {did: DID}).then(res => {
+            this.collect.status = res.data;
+            if (this.collect.status) {
+                this.collect.txt = '已收藏'
+            }
         })
     },
     methods: {
+        collect_toggle() {
+            if (this.collect.status) {
+                console.log("取消收藏")
+                post('/member/collect_del', {did: DID}).then(res => {
+                    if (res.code === 1) {
+
+                        this.collect.status = false;
+                        this.collect.txt = '收藏';
+                        this.collect.ajax_txt = '';
+                    }
+                });
+            } else {
+                post('/member/collect_add', {did: DID}).then(res => {
+                    if (res.code === 1) {
+                        if (res.data) {
+                            this.collect.status = true;
+                            this.collect.txt = '已收藏';
+                            this.collect.ajax_txt = '';
+                        } else {
+                            this.collect.ajax_txt = res.message;
+                        }
+                    } else {
+                        this.collect.ajax_txt = res.message;
+                    }
+                });
+                console.log("添加收藏")
+            }
+        },
+
+
         //加载更多数据
         load_more() {
             if (this.load_data.stop || this.load_data.wait) {
@@ -62,7 +103,7 @@ var app = new Vue({
             }
             this.load_data.wait = true;
             let rid = this.comment.slice(-1)[0]._id;
-            post('/'+___now_type+'/comment_root_list', {did: this.edit_root.did, rid: rid}).then(res => {
+            post('/article/comment_root_list', {did: this.edit_root.did, rid: rid}).then(res => {
                 if (res.code === 1) {
                     this.load_data.message = '点击加载数据...';
                     this.comment.push(...res.data);
@@ -74,10 +115,7 @@ var app = new Vue({
                     this.load_data.message = '加载失败刷新重新'
                 }
             }).finally(() => {
-                this.load_data.wait = false;
-                setTimeout(function () {
-                    highlightCode()
-                },30)
+                this.load_data.wait = false
             });
             console.log("load 更多数据")
         },
@@ -98,7 +136,7 @@ var app = new Vue({
             this.discuss_reload()
         },
         discuss_reload() {
-            post('/'+___now_type+'/comment_child_list', {rid: this.discuss.edit_child.rid}).then(res => {
+            post('/article/comment_child_list', {rid: this.discuss.edit_child.rid}).then(res => {
                 if (res.code === 1) {
                     this.discuss.message = '';
                     if (res.data.length === 0)
@@ -178,7 +216,7 @@ var app = new Vue({
 
             }
 
-            post('/'+___now_type+'/comment_child_add', this.discuss.edit_child).then(res => {
+            post('/article/comment_child_add', this.discuss.edit_child).then(res => {
                 this.discuss.ajax_message = res.message;
                 if (res.code === 1) {
                     //清空输入框

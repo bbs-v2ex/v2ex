@@ -7,6 +7,7 @@ var app = new Vue({
             collect: {
                 status: false,
                 txt: '收藏',
+                ajax_txt: '',
             },
             load_data: {
                 stop: false,
@@ -44,7 +45,10 @@ var app = new Vue({
 
         }
         post('/member/is_collect', {did: DID}).then(res => {
-            console.log(res)
+            this.collect.status = res.data;
+            if (this.collect.status) {
+                this.collect.txt = '已收藏'
+            }
         })
     },
     methods: {
@@ -52,8 +56,29 @@ var app = new Vue({
         collect_toggle() {
             if (this.collect.status) {
                 console.log("取消收藏")
+                post('/member/collect_del', {did: DID}).then(res => {
+                    if (res.code === 1) {
+
+                        this.collect.status = false;
+                        this.collect.txt = '收藏';
+                        this.collect.ajax_txt = '';
+                    }
+                });
             } else {
-              console.log("添加收藏")
+                post('/member/collect_add', {did: DID}).then(res => {
+                    if (res.code === 1) {
+                        if (res.data) {
+                            this.collect.status = true;
+                            this.collect.txt = '已收藏';
+                            this.collect.ajax_txt = '';
+                        } else {
+                            this.collect.ajax_txt = res.message;
+                        }
+                    } else {
+                        this.collect.ajax_txt = res.message;
+                    }
+                });
+                console.log("添加收藏")
             }
         },
 
