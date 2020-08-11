@@ -14,6 +14,7 @@ func RegisterRoute(r *gin.Engine) {
 
 	//动态页
 	r.GET("/last_activity", controller.LastActivity)
+	r.GET("/last_activity/:rid", controller.LastActivity)
 
 	//注册
 	r.GET("/registered", controller.Registered)

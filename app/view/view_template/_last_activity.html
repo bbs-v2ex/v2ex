@@ -2,9 +2,13 @@
     <link rel="stylesheet" href="{{st "/css/member.css"}}">
 {{end}}
 {{define "body"}}
-    <div>
+<div class="row">
+    <div class="col-md-8 row g-0 p-3 ly-left">
         {{include "member/member_dz_activity"}}
+        <a  href="{{.next_link}}">下一页</a>
+        <a class="visually-hidden" href="{{.next_link}}">下一页</a>
     </div>
-
+    <div class="col-md-4 row g-0"></div>
+</div>
 {{end}}
 {{define "js"}}{{end}}

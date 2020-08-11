@@ -9,6 +9,7 @@ import (
 )
 
 type MovementHtml struct {
+	ID string
 	// 最上方得提示信息
 	ST   string
 	Link struct {
@@ -35,7 +36,7 @@ type ___movementHtml_author struct {
 }
 
 func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
-
+	hs.ID = t.ID.Hex()
 	var json []byte
 	json, err = bson.MarshalJSON(t.V)
 	if err != nil {

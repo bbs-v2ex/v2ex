@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"v2ex/app/api/manage"
 	api_router "v2ex/app/api/router"
+	"v2ex/app/view"
 	view_router "v2ex/app/view/router"
 	"v2ex/config"
 	"v2ex/view_func"
@@ -47,13 +48,15 @@ func RunWebServer() {
 	tempFunc := view_func.TempFunc()
 
 	//模板文件是否 打包
+
 	if debug {
 		_view_config := goview.DefaultConfig
 		_view_config.Root = cg.ExecPath + "/app/view/view_template"
 		_view_config.Funcs = tempFunc
 		_view_config.DisableCache = true
-		r.HTMLRender = ginview.New(_view_config)
-
+		engine := ginview.New(_view_config)
+		view.ViewEngine = engine
+		r.HTMLRender = engine
 	} else {
 		basic := gorice.NewWithConfig(rice.MustFindBox("z_view"), goview.Config{
 			Root:         "z_view",
@@ -62,7 +65,9 @@ func RunWebServer() {
 			Funcs:        tempFunc,
 			DisableCache: true,
 		})
-		r.HTMLRender = ginview.Wrap(basic)
+		engine := ginview.Wrap(basic)
+		view.ViewEngine = engine
+		r.HTMLRender = engine
 	}
 	//监听端口启动
 

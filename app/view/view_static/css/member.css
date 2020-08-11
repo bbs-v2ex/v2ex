@@ -1,7 +1,9 @@
 .member-left, .member-top,.member-right-box {
     background: #fff;
 }
-
+.member-left{
+    min-height: 150px!important;
+}
 .member-nav li,.member-nav{
     height: 45px !important;
     line-height: 45px!important;

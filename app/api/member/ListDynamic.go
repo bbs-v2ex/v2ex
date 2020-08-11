@@ -6,7 +6,7 @@ import (
 )
 
 func ListDynamic(mid model.MIDTYPE, PID primitive.ObjectID) []model.MovementHtml {
-	list := model.MovementCenter{}.About(mid)
+	list := model.MovementCenter{WID: PID}.About(mid)
 	list_view := []model.MovementHtml{}
 	for _, v := range list {
 		hs, err := v.ToConversion()

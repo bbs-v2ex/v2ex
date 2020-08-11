@@ -1,10 +1,10 @@
 {{define "head"}}<link rel="stylesheet" href="{{st "/css/member.css"}}">{{end}}
 {{define "body"}}
     {{include "member/_top"}}
-    <div class="row ">
+    <div class="row">
         {{include "member/_left_top"}}
         {{range .dt}}
-            <div class="m-list">
+            <div class="mc-list h-100" style="">
                 <div class="l-title"><a href="{{.u}}" title="{{.t}}">{{.t}}</a></div>
             </div>
         {{end}}

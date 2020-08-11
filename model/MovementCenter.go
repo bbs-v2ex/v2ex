@@ -21,6 +21,8 @@ type MovementCenter struct {
 	Type        int         `json:"type" bson:"type"`
 	V           interface{} `json:"v" bson:"v"`
 	ReleaseTime time.Time   `json:"release_time" bson:"release_time"`
+	//用来做查询的临时字段
+	WID primitive.ObjectID `json:"-" bson:"-"`
 }
 
 func (t MovementCenter) Table() string {
