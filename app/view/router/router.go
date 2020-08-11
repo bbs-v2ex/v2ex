@@ -12,6 +12,9 @@ import (
 func RegisterRoute(r *gin.Engine) {
 	r.GET("/", controller.Home)
 
+	//动态页
+	r.GET("/last_activity", controller.LastActivity)
+
 	//注册
 	r.GET("/registered", controller.Registered)
 

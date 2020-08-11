@@ -15,7 +15,9 @@ func ListDynamic(mid model.MIDTYPE, PID primitive.ObjectID) []model.MovementHtml
 		}
 		//处理图片
 		//hs.Text = api.RestorePicture(hs.TextS.H, "cover", hs.TextS.Imags)
+
 		hs.Text = model.DesSplit(hs.TextS.H, 120)
+		hs.TextS.H = ""
 		list_view = append(list_view, hs)
 	}
 	return list_view

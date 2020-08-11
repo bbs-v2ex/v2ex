@@ -23,20 +23,33 @@ func DefaultData(c *gin.Context) (_ht gin.H) {
 	_ht["avatar"] = func(s string) string {
 		return _con.Run.UploadServer + s
 	}
-	_ht["mu"] = func(member model.Member) string {
-		return fmt.Sprintf("/member/%d", member.MID)
-	}
-
+	_ht["mu"] = model.UrlMember
 	_ht["au"] = model.UrlArticle
 
 	_ht["mumid"] = func(mid model.MIDTYPE) string {
-		return fmt.Sprintf("/member/%d", mid)
+		return fmt.Sprintf("/%s/%d", model.UrlTagMember, mid)
 	}
 
 	_ht["u_list"] = gin.H{
-		"member":   "/member/",
-		"article":  "/a/",
-		"question": "/q/",
+		"member":   "/" + model.UrlTagMember + "/",
+		"article":  "/" + model.UrlTagArticle + "/",
+		"question": "/" + model.UrlTagQuestion + "/",
+	}
+
+	//首页菜单
+	_ht["home_nav"] = []gin.H{
+		{
+			"t": "动态",
+			"u": "/last_activity",
+		},
+		{
+			"t": "问题",
+			"u": "/q/",
+		},
+		{
+			"t": "文章",
+			"u": "/a/",
+		},
 	}
 
 	return

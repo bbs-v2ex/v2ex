@@ -15,6 +15,9 @@ func (t MovementCenter) About(mid MIDTYPE) (list []MovementCenter) {
 	//	},
 	//}
 	where := bson.M{"mid": mid}
+	if mid == 0 {
+		where = bson.M{}
+	}
 	//fmt.Println(where)
 	err := mc.Table(t.Table()).Where(where).Order(bson.M{"_id": -1}).Limit(10).Find(&_list)
 	if err != nil {

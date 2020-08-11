@@ -103,7 +103,7 @@ func Index(c *gin.Context) {
 	//获取最新文章
 	index := model.DataIndex{}
 	_article_list := []model.DataIndex{}
-	mc.Table(index.Table()).Where(bson.M{"d_type": model.DTYPEArticle}).Limit(10).Find(&_article_list)
+	mc.Table(index.Table()).Where(bson.M{"d_type": model.DTYPEArticle}).Limit(10).Order(bson.M{"_id": -1}).Find(&_article_list)
 	article_list := []gin.H{}
 	for _, v := range _article_list {
 		article_list = append(article_list, gin.H{
@@ -115,7 +115,7 @@ func Index(c *gin.Context) {
 
 	//获取最新的提问
 	_question_list := []model.DataIndex{}
-	mc.Table(index.Table()).Where(bson.M{"d_type": model.DTYPEArticle}).Limit(10).Find(&_question_list)
+	mc.Table(index.Table()).Where(bson.M{"d_type": model.DTYPEArticle}).Limit(10).Order(bson.M{"_id": -1}).Find(&_question_list)
 	question_list := []gin.H{}
 	for _, v := range _question_list {
 		question_list = append(question_list, gin.H{
