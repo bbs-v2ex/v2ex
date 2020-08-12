@@ -67,13 +67,17 @@ function getBase64(img){
  * @returns {boolean}
  */
 
-
-function highlightCode() {
-    var pres = document.querySelectorAll("pre>code");
-    for (var i = 0; i < pres.length; i++) {
-        hljs.highlightBlock(pres[i]);
-    }
+function bodyScrollLoad(h = 0){
+    var pageHeight = Math.max(document.body.scrollHeight,document.body.offsetHeight);
+    var viewportHeight = window.innerHeight ||
+        document.documentElement.clientHeight ||
+        document.body.clientHeight || 0;
+    var scrollHeight = window.pageYOffset ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop || 0;
+    return pageHeight - viewportHeight - scrollHeight < h;  // 通过 真实内容高度 - 视窗高度 - 上面隐藏的高度 < 20，作为加载的触发条件
 }
+
 
 var login_app = new Vue({
     el: '.vue-user-show',

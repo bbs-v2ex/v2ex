@@ -73,7 +73,7 @@ func LastActivity(c *gin.Context) {
 	for _, v := range _question {
 		question = append(question, gin.H{
 			"t":  v.T,
-			"u":  model.UrlArticle(v),
+			"u":  model.UrlQuestion(v),
 			"rc": v.RC,
 		})
 	}
