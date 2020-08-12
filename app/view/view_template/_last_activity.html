@@ -5,10 +5,14 @@
 <div class="row">
     <div class="col-md-8 row g-0 p-3 ly-left">
         {{include "member/member_dz_activity"}}
-        <a  href="{{.next_link}}">下一页</a>
+        <div v-for="item in load_list" v-html="item"></div>
+        <div v-if="message != ''" v-html="message"></div>
         <a class="visually-hidden" href="{{.next_link}}">下一页</a>
     </div>
     <div class="col-md-4 row g-0"></div>
 </div>
 {{end}}
-{{define "js"}}{{end}}
+{{define "js"}}
+<script src="{{st "/js/last_activity.js"}}"></script>
+<script>app.next='{{.next_link}}'</script>
+{{end}}

@@ -61,6 +61,12 @@ function getBase64(img){
     })
 }
 
+/**
+ * 监听加载
+ * @param h
+ * @returns {boolean}
+ */
+
 
 function highlightCode() {
     var pres = document.querySelectorAll("pre>code");
