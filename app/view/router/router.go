@@ -1,12 +1,15 @@
 package router
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"v2ex/app/view/controller"
+	"v2ex/app/view/controller/article"
 	"v2ex/app/view/controller/m_config"
 	member_manage "v2ex/app/view/controller/m_member"
 	"v2ex/app/view/controller/member"
-	"v2ex/app/view/controller/view_data"
+	"v2ex/app/view/controller/question"
+	"v2ex/model"
 )
 
 func RegisterRoute(r *gin.Engine) {
@@ -38,16 +41,20 @@ func RegisterRoute(r *gin.Engine) {
 	r_config.GET("/seo", m_config.Seo)
 
 	//文章页
-	r.GET("/a/:did", view_data.Article)
-	r.GET("/a/:did/r/:rid", view_data.Article)
+	v_article := r.Group(fmt.Sprintf("/%s", model.UrlTagArticle))
+	v_article.GET("/", article.Index)
+	v_article.GET("/:did", article.Article)
+	v_article.GET(fmt.Sprintf("/:did/%s/:rid", model.UrlTagArticleReply), article.Article)
 
 	//问题页
-	r.GET("/q/:did", view_data.Question)
-	r.GET("/q/:did/edit_answer", view_data.QuestionEditAnswer)
-	r.GET("/q/:did/answer/:rid", view_data.Question)
+	v_question := r.Group(fmt.Sprintf("/%s", model.UrlTagQuestion))
+	v_question.GET("/", question.Index)
+	v_question.GET(fmt.Sprintf("/:did"), question.Question)
+	v_question.GET(fmt.Sprintf("/:did/edit_answer"), question.QuestionEditAnswer)
+	v_question.GET(fmt.Sprintf("/:did/%s/:rid", model.UrlTagQuestionReply), question.Question)
 
 	//会员页面
-	v_member := r.Group("/member")
+	v_member := r.Group(fmt.Sprintf("/%s", model.UrlTagMember))
 	v_member.GET("/")
 	v_member.GET("/:mid", member.Index)
 	v_member.GET("/:mid/:_type", member.Index)

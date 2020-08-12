@@ -1,4 +1,4 @@
-package view_data
+package question
 
 import (
 	"github.com/gin-gonic/gin"

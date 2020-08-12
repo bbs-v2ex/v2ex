@@ -1,4 +1,4 @@
-package view_data
+package question
 
 import (
 	"github.com/123456/c_code/mc"

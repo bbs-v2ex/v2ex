@@ -1,4 +1,4 @@
-package view_data
+package article
 
 import (
 	"github.com/123456/c_code/mc"
