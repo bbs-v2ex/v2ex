@@ -12,6 +12,8 @@ func DefaultData(c *gin.Context) (_ht gin.H) {
 	seoconfig := nc.GetSeoConfig()
 	_con := config.GetConfig()
 	_ht = gin.H{}
+	//页面类型
+
 	_ht["_______API"] = "/api/manage"
 	_ht["___upload_server"] = _con.Run.UploadServer
 	//初始化tdk
@@ -53,6 +55,7 @@ func DefaultData(c *gin.Context) (_ht gin.H) {
 			"u": "/a/",
 		},
 	}
+	//导航菜单
 
 	return
 }

@@ -13,7 +13,7 @@ import (
 	"v2ex/model"
 )
 
-func Index(c *gin.Context) {
+func Member(c *gin.Context) {
 	_ht := defaultData(c)
 	mid, _ := strconv.Atoi(c.Param("mid"))
 

@@ -17,7 +17,6 @@ import (
 func LastActivity(c *gin.Context) {
 	seoconfig := nc.GetSeoConfig()
 	xx := c.Query("xx")
-
 	_ht := defaultData(c)
 	rid, _ := primitive.ObjectIDFromHex(c.Param("rid"))
 

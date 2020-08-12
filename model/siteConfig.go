@@ -17,14 +17,15 @@ func (t SiteConfig) Table() string {
 }
 
 type SiteConfigSeo struct {
-	T              string   `json:"t" bson:"t"`
-	D              string   `json:"d" bson:"d"`
-	K              string   `json:"k" bson:"k"`
-	T_             string   `json:"t_" bson:"t_"`
-	TitleDelimiter string   `json:"title_delimiter" bson:"title_delimiter"`
-	Activity       _____tdk `json:"activity" bson:"activity"`
-	Question       _____tdk `json:"question" bson:"question"`
-	Article        _____tdk `json:"article" bson:"article"`
+	T                   string   `json:"t" bson:"t"`
+	D                   string   `json:"d" bson:"d"`
+	K                   string   `json:"k" bson:"k"`
+	T_                  string   `json:"t_" bson:"t_"`
+	NavigationHomeTitle string   `json:"navigation_home_title" bson:"navigation_home_title"`
+	TitleDelimiter      string   `json:"title_delimiter" bson:"title_delimiter"`
+	Activity            _____tdk `json:"activity" bson:"activity"`
+	Question            _____tdk `json:"question" bson:"question"`
+	Article             _____tdk `json:"article" bson:"article"`
 }
 type _____tdk struct {
 	T string `json:"t" bson:"t"`
