@@ -59,6 +59,7 @@ func add(c *gin.Context) {
 		MID:   user.MID,
 		T:     _f.Title,
 		RC:    0,
+		CT:    time.Now().Unix(),
 	}
 	err = mc.Table(index.Table()).Insert(index)
 	if err != nil {

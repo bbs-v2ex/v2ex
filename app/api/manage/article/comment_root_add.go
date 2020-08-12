@@ -82,8 +82,8 @@ func comment_root_add(c *gin.Context) {
 	_u += "/r/" + comment_root.ID.Hex()
 	result_json := c_code.V1GinSuccess(comment_root.ID, "添加成功", _u)
 	//评论字段加 1
-	mc.Table(index.Table()).Where(bson.M{"did": index.DID}).FieldAddOrDel("rc", +1)
-
+	//mc.Table(index.Table()).Where(bson.M{"did": index.DID}).FieldAddOrDel("rc", +1)
+	mc.Table(index.Table()).Where(bson.M{"did": index.DID}).UpdateOne(bson.M{"rc": index.RC + 1, "ct": time.Now().Unix()})
 	//添加进通知中心
 	model.Movement(user_info.MID, index.MID).AddArticleCommentRoot(comment_root)
 
