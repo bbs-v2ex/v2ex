@@ -44,13 +44,7 @@ func LastActivity(c *gin.Context) {
 	index_t := model.DataIndex{}
 	_article := []model.DataIndex{}
 	article := []gin.H{}
-	mc.Table(index_t.Table()).Where(bson.M{"ct": bson.M{"$gt": t_30.Unix()}, "d_type": model.DTYPEArticle}).Order(bson.M{"rc": -1}).Limit(10).Find(&_article)
-	////如果不足10 条则以最新的数据填充
-	//if len(_article) != 10 {
-	//	_a := []model.DataIndex{}
-	//	mc.Table(index_t.Table()).Where(bson.M{"d_type": model.DTYPEArticle}).Order(bson.M{"_id": -1}).Limit(int64(10 - len(_article))).Find(&_a)
-	//	_article = append(_article, _a...)
-	//}
+	mc.Table(index_t.Table()).Where(bson.M{"ct": bson.M{"$gt": t_30.Unix()}, "d_type": model.DTYPEArticle}).Order(bson.M{"rc": -1, "_id": -1}).Limit(10).Find(&_article)
 
 	for _, v := range _article {
 		article = append(article, gin.H{
@@ -62,13 +56,7 @@ func LastActivity(c *gin.Context) {
 	//得到热门问题
 	_question := []model.DataIndex{}
 	question := []gin.H{}
-	mc.Table(index_t.Table()).Where(bson.M{"ct": bson.M{"$gt": t_30.Unix()}, "d_type": model.DTYPEQuestion}).Order(bson.M{"rc": -1}).Limit(10).Find(&_question)
-
-	//if len(_question) != 10 {
-	//	_a := []model.DataIndex{}
-	//	mc.Table(index_t.Table()).Where(bson.M{"d_type": model.DTYPEQuestion}).Order(bson.M{"_id": -1}).Limit(int64(10 - len(_article))).Find(&_a)
-	//	_question = append(_question, _a...)
-	//}
+	mc.Table(index_t.Table()).Where(bson.M{"ct": bson.M{"$gt": t_30.Unix()}, "d_type": model.DTYPEQuestion}).Order(bson.M{"rc": -1, "_id": -1}).Limit(10).Find(&_question)
 
 	for _, v := range _question {
 		question = append(question, gin.H{

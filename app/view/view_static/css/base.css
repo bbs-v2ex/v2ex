@@ -1,6 +1,6 @@
 /* Show it is fixed to the top */
 body {
-    min-height: 75rem;
+    /*min-height: 75rem;*/
     padding-top: 4.5rem;
     background: #f5f6f9;
     font-size: 15px;
@@ -32,7 +32,18 @@ body {
     flex-wrap: wrap;
 }
 
-
 .ly-left{
     background: #fff;
+}
+.i-tag-blue{
+    font-size: 0.7777777777em;
+    border: 1px solid blue;
+    color: blue;
+    padding: 1px 5px;
+}
+.i-tag-red{
+    font-size: 0.7777777777em;
+    border: 1px solid red;
+    color: red;
+    padding: 1px 5px;
 }

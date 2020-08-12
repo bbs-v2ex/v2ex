@@ -14,7 +14,7 @@ import (
 
 func RegisterRoute(r *gin.Engine) {
 	r.GET("/", controller.Home)
-
+	r.GET("/l/:rid", controller.Home)
 	//动态页
 	r.GET("/last_activity", controller.LastActivity)
 	r.GET("/last_activity/:rid", controller.LastActivity)
