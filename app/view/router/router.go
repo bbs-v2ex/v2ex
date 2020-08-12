@@ -43,7 +43,17 @@ func RegisterRoute(r *gin.Engine) {
 	//文章页
 	v_article := r.Group(fmt.Sprintf("/%s", model.UrlTagArticle))
 	v_article.GET("/", article.Index)
+	v_article.GET("/:did/l/:rid", article.Index)
 	v_article.GET("/:did", article.Article)
+	//v_article.GET("/:did", func(c *gin.Context) {
+	//	if strings.HasPrefix(c.Request.URL.Path,fmt.Sprintf("/%s/l/",model.UrlTagArticle)) {
+	//		article.Index(c)
+	//		return
+	//	}else {
+	//		article.Article(c)
+	//		return
+	//	}
+	//})
 	v_article.GET(fmt.Sprintf("/:did/%s/:rid", model.UrlTagArticleReply), article.Article)
 
 	//问题页
