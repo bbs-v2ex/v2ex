@@ -22,9 +22,11 @@ type SiteConfigSeo struct {
 	K              string   `json:"k" bson:"k"`
 	T_             string   `json:"t_" bson:"t_"`
 	TitleDelimiter string   `json:"title_delimiter" bson:"title_delimiter"`
-	Activity       activity `json:"activity" bson:"activity"`
+	Activity       _____tdk `json:"activity" bson:"activity"`
+	Question       _____tdk `json:"question" bson:"question"`
+	Article        _____tdk `json:"article" bson:"article"`
 }
-type activity struct {
+type _____tdk struct {
 	T string `json:"t" bson:"t"`
 	D string `json:"d" bson:"d"`
 	K string `json:"k" bson:"k"`

@@ -7,11 +7,14 @@ import (
 	"github.com/globalsign/mgo/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"time"
+	"v2ex/app/nc"
 	"v2ex/app/view"
+	"v2ex/app/view/controller"
 	"v2ex/model"
 )
 
 func Index(c *gin.Context) {
+	seoconfig := nc.GetSeoConfig()
 	_ht := defaultData(c)
 	xx := c.Query("xx")
 	//获取最新的文章
@@ -97,6 +100,8 @@ func Index(c *gin.Context) {
 		})
 	}
 	_ht["article_new"] = article_new
-
+	_ht["t"] = controller.TitleJoin([]string{seoconfig.Question.T})
+	_ht["k"] = seoconfig.Question.K
+	_ht["d"] = controller.DesJoin(seoconfig.Question.D)
 	view.Render(c, "data/question_index", _ht)
 }
