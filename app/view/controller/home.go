@@ -56,7 +56,7 @@ func Home(c *gin.Context) {
 			}
 			_one = gin.H{
 				"t":   v.T,
-				"u":   model.UrlArticle(v),
+				"u":   model.UrlQuestion(v),
 				"txt": model.DesSplit(v.InfoQuestion.Content, 120),
 				"img": "",
 			}
