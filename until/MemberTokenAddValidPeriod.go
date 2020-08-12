@@ -13,3 +13,11 @@ func MemberTokenAddValidPeriod() string {
 	//fmt.Println(add.String())
 	return add.Format("20060102150405")
 }
+
+/**
+首页加载的 最热数据时差
+*/
+func DataTimeDifferenceIndexHome() time.Time {
+	t_30 := time.Now().AddDate(0, 0, -30)
+	return t_30
+}

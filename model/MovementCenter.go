@@ -3,6 +3,7 @@ package model
 import (
 	"fmt"
 	"github.com/123456/c_code/mc"
+	"github.com/gin-gonic/gin"
 	"github.com/globalsign/mgo/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"time"
@@ -82,6 +83,59 @@ func (t MovementCenter) AddArticleSend(index DataIndex) {
 		DID: index.DID,
 	}
 	mc.Table(t.Table()).Insert(t)
+}
+
+//获取最后活跃的会员
+
+func (t MovementCenter) GetHuoYueMID(nums int64) (m []gin.H) {
+	pid := primitive.ObjectID{}
+	mids := []MIDTYPE{}
+	for {
+		where := bson.M{}
+		if pid.Hex() != mc.Empty {
+			where["_id"] = bson.M{"$lt": pid}
+		}
+		tmp := []MovementCenter{}
+		mc.Table(t.Table()).Where(where).Order(bson.M{"_id": -1}).Limit(nums + 5).Find(&tmp)
+		if len(tmp) == 0 {
+			break
+		}
+		pid = tmp[len(tmp)-1].ID
+		for _, v := range tmp {
+
+			if _inmids(v.MID, mids) {
+				continue
+			}
+			mids = append(mids, v.MID)
+			if len(mids) >= int(nums) {
+				break
+			}
+		}
+		if len(mids) >= int(nums) {
+			break
+		}
+
+	}
+	members := []Member{}
+	mc.Table(Member{}.Table()).Where(bson.M{"mid": bson.M{"$in": mids}}).Find(&members)
+	for _, v := range members {
+		m = append(m, gin.H{
+			"t":      v.UserName,
+			"u":      UrlMember(v),
+			"avatar": Avatar(v.Avatar),
+		})
+	}
+
+	return
+}
+
+func _inmids(array_val MIDTYPE, array []MIDTYPE) bool {
+	for _, v := range array {
+		if v == array_val {
+			return true
+		}
+	}
+	return false
 }
 
 type questionSend struct {

@@ -8,13 +8,30 @@
             <a class="visually-hidden" href="{{.next_link}}">下一页</a>
         </div>
         <div class="col-md-4 g-0 pl-0 pl-md-2  mt-md-0 mt-3">
-
             <div class="member-right-box mt-2  mt-sm-0">
                 <div class="member-right-box-title"> 热门文章</div>
                 <ul class="list-unstyled ">
-{{/*                    {{range .article}}*/}}
-{{/*                        <li><a href="{{.u}}" class="text-decoration-none">{{.t}}</a> </li>*/}}
-{{/*                    {{end}}*/}}
+                    {{range .article}}
+                        <li><a href="{{.u}}" class="text-decoration-none">{{.t}}</a> </li>
+                    {{end}}
+                </ul>
+            </div>
+            <div class="member-right-box mt-2  mt-sm-0">
+                <div class="member-right-box-title"> 热门提问</div>
+                <ul class="list-unstyled ">
+                    {{range .question}}
+                        <li><a href="{{.u}}" class="text-decoration-none">{{.t}}</a> </li>
+                    {{end}}
+                </ul>
+            </div>
+            <div class="member-right-box mt-2  mt-sm-0">
+                <div class="member-right-box-title"> 最近活跃会员</div>
+                <ul class="list-unstyled  clearfix">
+                    {{range .members}}
+                        <li class="float-left index-members">
+                            <a href="{{.u}}" title="会员-{{.t}}" ><img src="{{.avatar}}?w=50" alt="会员-{{.t}}"></a>
+                        </li>
+                    {{end}}
                 </ul>
             </div>
         </div>

@@ -8,6 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"v2ex/app/view"
 	"v2ex/model"
+	"v2ex/until"
 )
 
 func Home(c *gin.Context) {
@@ -94,5 +95,41 @@ func Home(c *gin.Context) {
 		c.Redirect(301, "/")
 	}
 	_ht["dt"] = list
+
+	//渲染最热数据 获取数据设置的时差
+	t := until.DataTimeDifferenceIndexHome()
+	//得到最热的文章
+	_article := []model.DataIndex{}
+	article := []gin.H{}
+
+	hot_where := bson.M{"_id": bson.M{"$nin": aids}, "ct": bson.M{"$gt": t.Unix()}}
+	hot_where["d_type"] = model.DTYPEArticle
+	mc.Table(index_t.Table()).Where(hot_where).Order(bson.M{"rc": -1, "_id": -1}).Limit(10).Find(&_article)
+	for _, v := range _article {
+		article = append(article, gin.H{
+			"t": v.T,
+			"u": model.UrlArticle(v),
+		})
+		aids = append(aids, v.ID)
+	}
+	_ht["article"] = article
+	//得到最热的提问
+	_q := []model.DataIndex{}
+	q := []gin.H{}
+	hot_where["d_type"] = model.DTYPEQuestion
+	mc.Table(index_t.Table()).Where(hot_where).Order(bson.M{"rc": -1, "_id": -1}).Limit(10).Find(&_q)
+	for _, v := range _q {
+		q = append(q, gin.H{
+			"t": v.T,
+			"u": model.UrlArticle(v),
+		})
+		aids = append(aids, v.ID)
+	}
+	_ht["question"] = q
+
+	//得到活跃会员
+	members := model.MovementCenter{}.GetHuoYueMID(10)
+	_ht["members"] = members
+
 	view.Render(c, "index", _ht)
 }
