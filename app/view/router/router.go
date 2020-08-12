@@ -45,20 +45,12 @@ func RegisterRoute(r *gin.Engine) {
 	v_article.GET("/", article.Index)
 	v_article.GET("/:did/l/:rid", article.Index)
 	v_article.GET("/:did", article.Article)
-	//v_article.GET("/:did", func(c *gin.Context) {
-	//	if strings.HasPrefix(c.Request.URL.Path,fmt.Sprintf("/%s/l/",model.UrlTagArticle)) {
-	//		article.Index(c)
-	//		return
-	//	}else {
-	//		article.Article(c)
-	//		return
-	//	}
-	//})
 	v_article.GET(fmt.Sprintf("/:did/%s/:rid", model.UrlTagArticleReply), article.Article)
 
 	//问题页
 	v_question := r.Group(fmt.Sprintf("/%s", model.UrlTagQuestion))
 	v_question.GET("/", question.Index)
+	v_question.GET("/:did/l/:rid", question.Index)
 	v_question.GET(fmt.Sprintf("/:did"), question.Question)
 	v_question.GET(fmt.Sprintf("/:did/edit_answer"), question.QuestionEditAnswer)
 	v_question.GET(fmt.Sprintf("/:did/%s/:rid", model.UrlTagQuestionReply), question.Question)

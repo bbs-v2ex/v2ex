@@ -1,6 +1,7 @@
 package article
 
 import (
+	"fmt"
 	"github.com/123456/c_code"
 	"github.com/123456/c_code/mc"
 	"github.com/gin-gonic/gin"
@@ -20,11 +21,11 @@ func Index(c *gin.Context) {
 
 	_list := []model.DataIndex{}
 	list := []gin.H{}
-	where := bson.M{"_id": -1}
+	where := bson.M{"d_type": model.DTYPEArticle}
 	if rid.Hex() != mc.Empty {
 		where["_id"] = bson.M{"$lt": rid}
 	}
-	mc.Table(index_t.Table()).Order(where).Limit(10).Find(&_list)
+	mc.Table(index_t.Table()).Where(where).Limit(10).Order(bson.M{"_id": -1}).Find(&_list)
 	aids := []primitive.ObjectID{}
 	for _, v := range _list {
 		mc.Table(v.InfoArticle.Table()).Where(bson.M{"_id": v.ID}).FindOne(&v.InfoArticle)
@@ -65,37 +66,37 @@ func Index(c *gin.Context) {
 	t_30 := time.Now().AddDate(0, 0, -30)
 	_article := []model.DataIndex{}
 	article := []gin.H{}
-	mc.Table(index_t.Table()).Where(bson.M{"_id": bson.M{"$nin": aids}, "ct": bson.M{"$gt": t_30.Unix()}, "d_type": model.DTYPEArticle}).Order(bson.M{"rc": -1}).Limit(10).Find(&_article)
-	//如果不足10 条则以最新的数据填充
-	if len(_article) != 10 {
-		for _, iq := range _article {
-			aids = append(aids, iq.ID)
-		}
-		_a := []model.DataIndex{}
-		mc.Table(index_t.Table()).Where(bson.M{"$nin": aids, "d_type": model.DTYPEArticle}).Order(bson.M{"_id": -1}).Limit(int64(10 - len(_article))).Find(&_a)
-		_article = append(_article, _a...)
-	}
+	mc.Table(index_t.Table()).Where(bson.M{"_id": bson.M{"$nin": aids}, "ct": bson.M{"$gt": t_30.Unix()}, "d_type": model.DTYPEArticle}).Order(bson.M{"rc": -1, "_id": -1}).Limit(10).Find(&_article)
 
 	for _, v := range _article {
 		article = append(article, gin.H{
 			"t": v.T,
 			"u": model.UrlArticle(v),
 		})
+		aids = append(aids, v.ID)
 	}
 	_ht["article"] = article
 
 	//加载最新文章
 	_article_new := []model.DataIndex{}
 	article_new := []gin.H{}
-	mc.Table(index_t.Table()).Where(bson.M{"_id": bson.M{"$nin": aids}, "d_type": model.DTYPEArticle}).Order(bson.M{"rc": -1}).Limit(10).Find(&_article_new)
+	where = bson.M{"_id": bson.M{"$nin": aids}, "d_type": model.DTYPEArticle}
+	mc.Table(index_t.Table()).Where(where).Order(bson.M{"_id": -1}).Limit(10).Find(&_article_new)
 
+	ii := []string{}
+	for _, v := range aids {
+		ii = append(ii, v.Hex())
+	}
 	for _, v := range _article_new {
+		if c_code.InArrayString(v.ID.Hex(), ii) {
+			fmt.Println(v.ID.Hex())
+		}
 		article_new = append(article_new, gin.H{
 			"t": v.T,
 			"u": model.UrlArticle(v),
 		})
 	}
-	_ht["article_new"] = article
+	_ht["article_new"] = article_new
 
 	view.Render(c, "data/article_index", _ht)
 }

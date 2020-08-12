@@ -1,0 +1,35 @@
+{{define "head"}}
+    <link rel="stylesheet" href="{{st "/css/member.css"}}">
+{{end}}
+{{define "body"}}
+    <div class="row">
+        <div class="col-md-8 row g-0 p-3 ly-left">
+            {{include "data/question_index_list"}}
+            <div v-for="item in load_list" v-html="item"></div>
+            <div v-if="message != ''" v-html="message"></div>
+            <a class="visually-hidden" href="{{.next_link}}">下一页</a>
+        </div>
+        <div class="col-md-4 g-0 pl-0 pl-md-2  mt-md-0 mt-3">
+            <div class="member-right-box mt-2  mt-sm-0">
+                <div class="member-right-box-title"> 热门问题 </div>
+                <ul class="list-unstyled ">
+                    {{range .article}}
+                        <li><a href="{{.u}}" class="text-decoration-none">{{.t}}</a> </li>
+                    {{end}}
+                </ul>
+            </div>
+            <div class="member-right-box mt-2  mt-sm-0">
+                <div class="member-right-box-title"> 最新问题 </div>
+                <ul class="list-unstyled ">
+                    {{range .article_new}}
+                        <li><a href="{{.u}}" class="text-decoration-none">{{.t}}</a> </li>
+                    {{end}}
+                </ul>
+            </div>
+        </div>
+    </div>
+{{end}}
+{{define "js"}}
+    <script src="{{st "/js/last_activity.js"}}"></script>
+    <script>app.next='{{.next_link}}'</script>
+{{end}}
