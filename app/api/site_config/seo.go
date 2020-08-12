@@ -3,6 +3,7 @@ package site_config
 import (
 	"github.com/123456/c_code"
 	"github.com/gin-gonic/gin"
+	"v2ex/app/nc"
 	"v2ex/model"
 )
 
@@ -16,11 +17,10 @@ func seopost(c *gin.Context) {
 
 	err := model.SiteConfig{}.SetSeo(sc)
 	if err != nil {
-
 		result_json := c_code.V1GinError(101, err.Error())
-
 		c.JSON(200, result_json)
 	}
+	nc.ReloadSeoConfig()
 	result_json := c_code.V1GinSuccess("", "修改成功")
 	c.JSON(200, result_json)
 }

@@ -9,12 +9,13 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"time"
 	"v2ex/app/api/member"
+	"v2ex/app/nc"
 	"v2ex/app/view"
 	"v2ex/model"
 )
 
 func LastActivity(c *gin.Context) {
-
+	seoconfig := nc.GetSeoConfig()
 	xx := c.Query("xx")
 
 	_ht := defaultData(c)
@@ -66,6 +67,8 @@ func LastActivity(c *gin.Context) {
 		})
 	}
 	_ht["question"] = question
-
+	_ht["t"] = TitleJoin([]string{seoconfig.Activity.T})
+	_ht["k"] = seoconfig.Activity.K
+	_ht["d"] = DesJoin(seoconfig.Activity.D)
 	view.Render(c, "_last_activity", _ht)
 }

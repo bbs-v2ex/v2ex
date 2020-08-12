@@ -8,26 +8,41 @@
             <form id="f1" novalidate="novalidate" class="row g-3 needs-validation was-validated">
                 <div class="col-md-12">
                     <label class="form-label">Title</label>
-                    <textarea class="form-control  is-invalid" rows="3" v-model="seo.T" required></textarea>
+                    <textarea class="form-control  is-invalid" rows="3" v-model="seo.t" required></textarea>
                 </div>
 
                 <div class="col-md-12">
                     <label  class="form-label">KeyWords</label>
-                    <textarea class="form-control  is-invalid" rows="3" v-model="seo.K" required></textarea>
+                    <textarea class="form-control  is-invalid" rows="3" v-model="seo.k" required></textarea>
                 </div>
                 <div class="col-md-12">
                     <label  class="form-label">Description</label>
-                    <textarea class="form-control  is-invalid" rows="3" v-model="seo.D" required></textarea>
+                    <textarea class="form-control  is-invalid" rows="3" v-model="seo.d" required></textarea>
                 </div>
 
                 <div>
                     <label class="form-label">短标题</label>
-                    <input type="text" class="form-control is-valid" v-model="seo.T_" required>
+                    <input type="text" class="form-control is-valid" v-model="seo.t_" required>
                 </div>
 
                 <div>
                     <label class="form-label">标题分隔符</label>
-                    <input type="text" class="form-control is-valid" v-model="seo.TitleDelimiter" required>
+                    <input type="text" class="form-control is-valid" v-model="seo.title_delimiter" required>
+                </div>
+
+                <div class="col-12">
+                    <label  class="form-label">动态-Title</label>
+                    <textarea class="form-control  is-invalid" rows="3" v-model="seo.activity.t" required></textarea>
+                </div>
+
+                <div class="col-12">
+                    <label  class="form-label">动态-Keywords</label>
+                    <textarea class="form-control  is-invalid" rows="3" v-model="seo.activity.k" required></textarea>
+                </div>
+
+                <div class="col-12">
+                    <label  class="form-label">动态-Description</label>
+                    <textarea class="form-control  is-invalid" rows="3" v-model="seo.activity.d" required></textarea>
                 </div>
 
                 <div v-if="ajax_message != ''">${ajax_message}</div>
@@ -35,6 +50,7 @@
                 <div class="col-12">
                     <button type="submit" class="btn btn-primary"  @click.prevent="submit($event)">提交修改</button>
                 </div>
+
             </form>
         </div>
     </div>

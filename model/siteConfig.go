@@ -17,11 +17,17 @@ func (t SiteConfig) Table() string {
 }
 
 type SiteConfigSeo struct {
-	T              string
-	D              string
-	K              string
-	T_             string
-	TitleDelimiter string
+	T              string   `json:"t" bson:"t"`
+	D              string   `json:"d" bson:"d"`
+	K              string   `json:"k" bson:"k"`
+	T_             string   `json:"t_" bson:"t_"`
+	TitleDelimiter string   `json:"title_delimiter" bson:"title_delimiter"`
+	Activity       activity `json:"activity" bson:"activity"`
+}
+type activity struct {
+	T string `json:"t" bson:"t"`
+	D string `json:"d" bson:"d"`
+	K string `json:"k" bson:"k"`
 }
 
 const _site_d_seo = 1
