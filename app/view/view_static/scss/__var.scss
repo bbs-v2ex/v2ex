@@ -1,3 +1,17 @@
-$font-size:15px;
-$body-background-color:#f5f6f9;
-$body-main-background-color:#fff;
+$font-size: 15px;
+$body-background-color: #f5f6f9;
+$body-main-background-color: #fff;
+$s-list-border-color: #e4e3e3;
+$box-title-color:rgb(33, 37, 41);
+%s-list-title {
+  $_color: rgb(26, 26, 26);
+  a {
+    text-decoration: none;
+    color: $_color;
+  }
+
+  color: $_color;
+
+  font-size: 1.133333222333em;
+  font-weight: 600;
+}

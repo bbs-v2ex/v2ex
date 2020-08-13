@@ -11,16 +11,44 @@ body {
   background: $body-main-background-color;
 }
 
+//滚动加载的盒子
+@import "_b/sroller-box";
 
 //右边布局盒子
 .ly-right {
   .-box {
     background: $body-main-background-color;
     padding: 0 15px;
+    ul{
+      padding-bottom: 15px;
+    }
     .-title{
       padding: 15px 0;
       font-size: 16px;
       font-weight: 600;
+    }
+    a{
+      color: $box-title-color;
+    }
+  }
+}
+
+//首页的最近活跃会员
+.index-members{
+  border-radius: 50%;
+  img{
+    border-radius: 50%;
+    border: 1px solid #cab9b9;
+    margin-right: 5px;
+  }
+}
+//登录显示的链接
+.vue-user-show{
+  .navbar-right{
+    margin-right: 15px;
+    color: $body-main-background-color!important;
+    a{
+      color: $body-main-background-color!important;
     }
   }
 }

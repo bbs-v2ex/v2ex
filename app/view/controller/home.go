@@ -84,7 +84,7 @@ func Home(c *gin.Context) {
 		_ht["next_link"] = "/l/" + _list[len(_list)-1].ID.Hex()
 	}
 	if xx == "nohead" {
-		html_content := view.RenderGetContent("data/home_index_list.html", _ht)
+		html_content := view.RenderGetContent("_list/home.html", _ht)
 		_ht["content"] = c_code.CompressHtml(html_content)
 		result_json := c_code.V1GinSuccess(html_content)
 		result_json["next"] = _ht["next_link"]

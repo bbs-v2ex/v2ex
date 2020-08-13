@@ -1,0 +1,11 @@
+{{range .dt}}
+    <div class="s-list">
+        <div class="-title">{{range .tag}}   <span class="{{.class}} mr-1">{{.t}}</span>{{end}}<a href="{{.u}}" title="{{.t}}">{{.t}}</a></div>
+        <div class="-l1 mt-2">
+            {{if ne .img ""}}<div class="mr-1 show-img"><img src="{{.img}}?w=100" alt="{{.t}}"></div>{{end}}
+            <div class="col-auto flex-fill text-break">
+                <div class="mt-3 mb-3 -text-m-text-m">{{.txt}}</div>
+            </div>
+        </div>
+    </div>
+{{end}}

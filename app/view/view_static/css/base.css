@@ -1,3 +1,13 @@
+.s-list .-title {
+  color: #1a1a1a;
+  font-size: 1.1333332223em;
+  font-weight: 600;
+}
+.s-list .-title a {
+  text-decoration: none;
+  color: #1a1a1a;
+}
+
 body {
   /*min-height: 75rem;*/
   padding-top: 4.5rem;
@@ -9,14 +19,60 @@ body {
   background: #fff;
 }
 
+.s-list {
+  border-bottom: 1px solid #e4e3e3;
+  padding: 15px 0;
+}
+.s-list .i-tag-blue {
+  font-size: 0.7777777777em;
+  border: 1px solid blue;
+  color: blue;
+  padding: 1px 5px;
+}
+.s-list .i-tag-red {
+  font-size: 0.7777777777em;
+  border: 1px solid red;
+  color: red;
+  padding: 1px 5px;
+}
+.s-list .-l1 {
+  display: flex;
+}
+.s-list .-l1 .-text-des {
+  font-size: 888888em;
+}
+
 .ly-right .-box {
   background: #fff;
   padding: 0 15px;
+}
+.ly-right .-box ul {
+  padding-bottom: 15px;
 }
 .ly-right .-box .-title {
   padding: 15px 0;
   font-size: 16px;
   font-weight: 600;
+}
+.ly-right .-box a {
+  color: #212529;
+}
+
+.index-members {
+  border-radius: 50%;
+}
+.index-members img {
+  border-radius: 50%;
+  border: 1px solid #cab9b9;
+  margin-right: 5px;
+}
+
+.vue-user-show .navbar-right {
+  margin-right: 15px;
+  color: #fff !important;
+}
+.vue-user-show .navbar-right a {
+  color: #fff !important;
 }
 
 /*# sourceMappingURL=base.css.map */

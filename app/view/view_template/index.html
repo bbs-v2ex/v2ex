@@ -3,13 +3,13 @@
 {{end}}
 {{define "body"}}
     {{include "layouts/_left_start"}}
-        {{include "data/home_index_list"}}
+        {{include "_list/home"}}
         <div v-for="item in load_list" v-html="item"></div>
         <div v-if="message != ''" v-html="message"></div>
         <a class="visually-hidden" href="{{.next_link}}">下一页</a>
     {{include "layouts/_left_stop"}}
     {{include "layouts/_right_start"}}
-        <div class="-box mt-2  mt-sm-0">
+        <div class="-box">
             <div class="-title"> 热门文章</div>
             <ul class="list-unstyled ">
                 {{range .article}}
@@ -17,15 +17,15 @@
                 {{end}}
             </ul>
         </div>
-        <div class="-box mt-2  mt-sm-0">
+        <div class="-box ">
             <div class="-title"> 热门提问</div>
-            <ul class="list-unstyled ">
+            <ul class="list-unstyled">
                 {{range .question}}
                     <li><a href="{{.u}}" class="text-decoration-none">{{.t}}</a> </li>
                 {{end}}
             </ul>
         </div>
-        <div class="-box mt-2  mt-sm-0">
+        <div class="-box">
             <div class="-title"> 最近活跃会员</div>
             <ul class="list-unstyled  clearfix">
                 {{range .members}}

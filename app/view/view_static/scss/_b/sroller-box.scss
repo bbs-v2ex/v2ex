@@ -1,0 +1,30 @@
+.s-list {
+  $_red: red;
+  $_blue: blue;
+  border-bottom: 1px solid $s-list-border-color;
+  padding: 15px 0;
+  .i-tag-blue {
+    font-size: 0.7777777777em;
+    border: 1px solid $_blue;
+    color: $_blue;
+    padding: 1px 5px;
+  }
+
+  .i-tag-red {
+    font-size: 0.7777777777em;
+    border: 1px solid $_red;
+    color: $_red;
+    padding: 1px 5px;
+  }
+
+  .-title {
+    @extend %s-list-title;
+  }
+  //第一个布局
+  .-l1{
+    display: flex;
+    .-text-des{
+      font-size: 0888888em;
+    }
+  }
+}
