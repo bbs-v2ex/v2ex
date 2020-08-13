@@ -24,6 +24,7 @@ func Html(c *gin.Context, htmlContent string) {
 }
 
 func Render(c *gin.Context, name string, _ht gin.H) {
+	_ht["navigation"] = setNavigation(c, _ht)
 	c.HTML(200, name, _ht)
 }
 

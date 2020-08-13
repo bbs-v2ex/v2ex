@@ -3,6 +3,7 @@ package router
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"v2ex/app/view"
 	"v2ex/app/view/controller"
 	"v2ex/app/view/controller/article"
 	"v2ex/app/view/controller/m_config"
@@ -20,34 +21,34 @@ func setParam(view_type string) gin.HandlerFunc {
 
 func RegisterRoute(r *gin.Engine) {
 	r.GET("/",
-		setParam("home"), controller.Home,
+		setParam(view.ViewTypeHome), controller.Home,
 	)
 	r.GET(
 		"/l/:rid",
-		setParam("home"),
+		setParam(view.ViewTypeHome),
 		controller.Home,
 	)
 	//动态页
 	r.GET(
 		"/last_activity",
-		setParam("last_activity"),
+		setParam(view.ViewTypeLastActivity),
 		controller.LastActivity,
 	)
 	r.GET("/last_activity/:rid",
-		setParam("last_activity"), controller.LastActivity)
+		setParam(view.ViewTypeLastActivity), controller.LastActivity)
 
 	//注册
 	r.GET(
 		"/registered",
-		setParam("registered"), controller.Registered)
+		setParam(view.ViewTypeRegistered), controller.Registered)
 
 	//登录
 	r.GET(
 		"/login",
-		setParam("login"), controller.Login)
+		setParam(view.ViewTypeLogin), controller.Login)
 
 	//会员
-	_manage := r.Group("/_", setParam("manage"))
+	_manage := r.Group("/_", setParam(view.ViewTypeManage))
 	member_center := _manage.Group("/member")
 
 	//会员首页
@@ -63,44 +64,44 @@ func RegisterRoute(r *gin.Engine) {
 	//文章页
 	v_article := r.Group(fmt.Sprintf("/%s", model.UrlTagArticle))
 	v_article.GET("/",
-		setParam("article_list"), article.Index)
+		setParam(view.ViewTypeArticleList), article.Index)
 
 	v_article.GET("/:did/l/:rid",
-		setParam("article_list"), article.Index)
+		setParam(view.ViewTypeArticleList), article.Index)
 
 	v_article.GET("/:did", setParam("article"),
-		article.Article, setParam("article"))
+		article.Article, setParam(view.ViewTypeArticle))
 
 	v_article.GET(fmt.Sprintf("/:did/%s/:rid", model.UrlTagArticleReply),
-		setParam("article"), article.Article)
+		setParam(view.ViewTypeArticle), article.Article)
 
 	//问题页
 	v_question := r.Group(fmt.Sprintf("/%s", model.UrlTagQuestion))
 	v_question.GET("/", question.Index,
-		setParam("question_list"))
+		setParam(view.ViewTypeQuestionList))
 
 	v_question.GET("/:did/l/:rid",
-		setParam("question_list"), question.Index)
+		setParam(view.ViewTypeQuestionList), question.Index)
 
 	v_question.GET(fmt.Sprintf("/:did"),
-		setParam("question"), question.Question)
+		setParam(view.ViewTypeQuestion), question.Question)
 
 	v_question.GET(fmt.Sprintf("/:did/edit_answer"),
-		setParam("question_edit"), question.QuestionEditAnswer)
+		setParam(view.ViewTypeQuestionEdit), question.QuestionEditAnswer)
 
 	v_question.GET(fmt.Sprintf("/:did/%s/:rid", model.UrlTagQuestionReply),
-		setParam("question"), question.Question)
+		setParam(view.ViewTypeQuestion), question.Question)
 
 	//会员页面
 	v_member := r.Group(fmt.Sprintf("/%s", model.UrlTagMember))
 
 	v_member.GET("/",
-		setParam("member_list"))
+		setParam(view.ViewTypeMemberList))
 
 	v_member.GET("/:mid",
-		setParam("member"), member.Member)
+		setParam(view.ViewTypeMember), member.Member)
 
 	v_member.GET("/:mid/:_type",
-		setParam("member"), member.Member)
+		setParam(view.ViewTypeMember), member.Member)
 
 }

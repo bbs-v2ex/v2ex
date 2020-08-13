@@ -58,3 +58,18 @@ body {
     border-radius: 50%;
     height: 100%;
 }
+.-navigation{
+    background: #fff;
+    margin-bottom: 15px;
+    margin-left: -12px;
+    margin-right: -12px;
+    padding: 5px;
+    padding-left: 10px;
+}
+.-navigation .-tag{
+    color: #bbbbbb;
+}
+.-navigation a{
+    color: #474b4e;
+    text-decoration: none;
+}

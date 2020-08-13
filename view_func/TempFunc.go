@@ -40,10 +40,7 @@ func TempFunc() template.FuncMap {
 		u := strings.Join(urls, "/")
 		return "/static/" + strings.TrimLeft(u, "/")
 	}
-	f["u"] = func(urls ...string) string {
-		u := strings.Join(urls, "/")
-		return "/" + strings.TrimLeft(u, "/")
-	}
+	f["u"] = model.Url
 	f["imgu"] = model.UrlImage
 	return f
 }
