@@ -1,6 +1,7 @@
 package view
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"v2ex/app/nc"
 	"v2ex/model"
@@ -44,6 +45,61 @@ func setNavigation(c *gin.Context, _ht gin.H) (n []gin.H) {
 			"u":   model.Url("/last_activity"),
 			"tag": false,
 		})
+		return _navigation
+	case ViewTypeRegistered:
+		_navigation = append(_navigation, []gin.H{
+			{
+				"t":   "会员",
+				"u":   model.Url("/" + model.UrlTagMember),
+				"tag": true,
+			},
+			{
+				"t":   "注册",
+				"u":   "",
+				"tag": false,
+			},
+		}...)
+		return _navigation
+	case ViewTypeLogin:
+		_navigation = append(_navigation, []gin.H{
+			{
+				"t":   "会员",
+				"u":   model.Url("/" + model.UrlTagMember),
+				"tag": true,
+			},
+			{
+				"t":   "登录",
+				"u":   "",
+				"tag": false,
+			},
+		}...)
+		return _navigation
+	case ViewTypeManage:
+		_navigation = append(_navigation, []gin.H{
+			{
+				"t":   "管理",
+				"u":   "/_/member/z/",
+				"tag": false,
+			},
+		}...)
+		return _navigation
+	case ViewTypeArticleList:
+		_navigation = append(_navigation, []gin.H{
+			{
+				"t":   "文章列表",
+				"u":   model.Url(fmt.Sprintf("/%s/", model.UrlTagArticle)),
+				"tag": false,
+			},
+		}...)
+		return _navigation
+	case ViewTypeQuestionList:
+		_navigation = append(_navigation, []gin.H{
+			{
+				"t":   "问题列表",
+				"u":   model.Url(fmt.Sprintf("/%s/", model.UrlTagQuestion)),
+				"tag": false,
+			},
+		}...)
 		return _navigation
 	}
 	return

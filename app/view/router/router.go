@@ -77,8 +77,8 @@ func RegisterRoute(r *gin.Engine) {
 
 	//问题页
 	v_question := r.Group(fmt.Sprintf("/%s", model.UrlTagQuestion))
-	v_question.GET("/", question.Index,
-		setParam(view.ViewTypeQuestionList))
+	v_question.GET("/",
+		setParam(view.ViewTypeQuestionList), question.Index)
 
 	v_question.GET("/:did/l/:rid",
 		setParam(view.ViewTypeQuestionList), question.Index)
