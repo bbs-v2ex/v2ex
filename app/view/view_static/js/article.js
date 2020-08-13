@@ -49,7 +49,10 @@ var app = new Vue({
             if (this.collect.status) {
                 this.collect.txt = '已收藏'
             }
-        })
+        });
+        setTimeout(function () {
+            post('/show',{did: DID})
+        },1500)
     },
     methods: {
 

@@ -7,6 +7,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"strconv"
 	"strings"
+	"v2ex/app/api"
 	api_article "v2ex/app/api/manage/article"
 	"v2ex/app/view"
 	"v2ex/model"
@@ -40,11 +41,17 @@ func Article(c *gin.Context) {
 	index.InfoArticle = article
 	//渲染数据
 	_ht := defaultData(c)
+	//图片归位
+	for k, _ := range index.InfoArticle.Imgs {
+		//index.InfoArticle.Imgs[k] += "?w=700"
+		index.InfoArticle.Imgs[k] += "?h=500"
+	}
+	index.InfoArticle.Content = api.RestorePicture(index.InfoArticle.Content, index.T, index.InfoArticle.Imgs)
 	_ht["art"] = index
 	t_list = append(t_list, index.T)
 	t_list = append(t_list, _ht["t_"].(string))
 	_ht["t"] = strings.Join(t_list, _ht["title_fgf"].(string))
-
+	_ht["sp_t"] = index.T
 	mt := model.Member{}
 	member_info := mt.GetUserInfo(index.MID, true)
 	_ht["member_info"] = member_info

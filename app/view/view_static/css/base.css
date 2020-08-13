@@ -73,3 +73,6 @@ body {
     color: #1890ea;
     text-decoration: none;
 }
+#article .content img{
+    max-width: 95%;
+}

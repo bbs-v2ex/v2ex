@@ -18,6 +18,7 @@ func RegisterRoute(r *gin.Engine) {
 	ro.POST("/add_member", manage.AddMember)
 	ro.POST("/login", manage.Login)
 	ro.POST("/loginout", manage.LoginOut)
+	ro.POST("/show", manage.Show)
 
 	ro.Use(checkLogin)
 	site_config.R(ro)

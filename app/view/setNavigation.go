@@ -101,6 +101,20 @@ func setNavigation(c *gin.Context, _ht gin.H) (n []gin.H) {
 			},
 		}...)
 		return _navigation
+	case ViewTypeArticle:
+		_navigation = append(_navigation, []gin.H{
+			{
+				"t":   "文章",
+				"u":   model.Url(fmt.Sprintf("/%s/", model.UrlTagArticle)),
+				"tag": true,
+			},
+			{
+				"t":   _ht["sp_t"],
+				"u":   "",
+				"tag": false,
+			},
+		}...)
+		return _navigation
 	}
 	return
 }
