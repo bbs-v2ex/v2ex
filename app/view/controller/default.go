@@ -55,8 +55,10 @@ func DefaultData(c *gin.Context) (_ht gin.H) {
 			"u": "/a/",
 		},
 	}
-	//导航菜单
-
+	//公示信息
+	_ht["gsinfo"] = gin.H{
+		"icp": seoconfig.ICP,
+	}
 	return
 }
 

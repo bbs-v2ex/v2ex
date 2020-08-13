@@ -23,6 +23,7 @@ type SiteConfigSeo struct {
 	T_                  string   `json:"t_" bson:"t_"`
 	NavigationHomeTitle string   `json:"navigation_home_title" bson:"navigation_home_title"`
 	TitleDelimiter      string   `json:"title_delimiter" bson:"title_delimiter"`
+	ICP                 string   `json:"icp" bson:"icp"`
 	Activity            _____tdk `json:"activity" bson:"activity"`
 	Question            _____tdk `json:"question" bson:"question"`
 	Article             _____tdk `json:"article" bson:"article"`

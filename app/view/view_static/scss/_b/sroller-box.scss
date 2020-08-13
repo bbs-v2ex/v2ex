@@ -3,6 +3,7 @@
   $_blue: blue;
   border-bottom: 1px solid $s-list-border-color;
   padding: 15px 0;
+
   .i-tag-blue {
     font-size: 0.7777777777em;
     border: 1px solid $_blue;
@@ -21,22 +22,41 @@
     @extend %s-list-title;
   }
 
-  .-tip,.-zan{
+  .-tip, .-zan {
     color: #8590a6;
     font-size: 0.8888888em;
     margin-top: 5px;
     margin-bottom: 5px;
   }
-  .-text-des{
+
+  .-text-des {
     font-size: 0888888em;
   }
-  //第一个布局 对应 问题及文章列表
-  .-l1{
-    display: flex;
 
+  .show-img {
+    margin-right: 15px !important;
   }
+
+  .author-avatar {
+    display: flex;
+    text-decoration: none;
+
+    font-size: 0.99999999em;
+    font-weight: 600;
+    color: #646464;
+    .des-txt {
+
+      font-size: 0.8888888889em;
+    }
+  }
+
+  //第一个布局 对应 问题及文章列表
+  .-l1 {
+    display: flex;
+  }
+
   //第二个布局 对应 动态
-  .-l2{
+  .-l2 {
     display: flex;
   }
 }

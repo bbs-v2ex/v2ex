@@ -46,6 +46,18 @@ body {
 }
 
 
+.-right-footer{
+  padding: 15px;
+  color: $a-color-1;
+  a{
+    text-decoration: none;
+    color: $a-color-1;
+  }
+  > div{
+    margin-bottom: 10px;
+  }
+}
+
 //滚动加载的盒子
 @import "_b/sroller-box";
 
@@ -133,7 +145,6 @@ body {
   .navbar-right {
     margin-right: 15px;
     color: $body-main-background-color !important;
-
     a {
       color: $body-main-background-color !important;
     }
