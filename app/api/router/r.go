@@ -21,6 +21,7 @@ func RegisterRoute(r *gin.Engine) {
 	ro.POST("/show", manage.Show)
 
 	ro.Use(checkLogin)
+	ro.POST("/reload_token", manage.ReloadToken)
 	site_config.R(ro)
 	//获取用户信息
 	ro.POST("/get_user_info", manage.GetUserInfo)

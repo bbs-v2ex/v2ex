@@ -129,6 +129,20 @@ func setNavigation(c *gin.Context, _ht gin.H) (n []gin.H) {
 			},
 		}...)
 		return _navigation
+	case ViewTypeMemberList:
+		_navigation = append(_navigation, []gin.H{
+			{
+				"t":   "会员",
+				"u":   model.Url(fmt.Sprintf("/%s/", model.UrlTagMember)),
+				"tag": true,
+			},
+			{
+				"t":   "新会员",
+				"u":   "",
+				"tag": false,
+			},
+		}...)
+		return _navigation
 	case ViewTypeQuestion:
 		_navigation = append(_navigation, []gin.H{
 			{

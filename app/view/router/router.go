@@ -96,7 +96,7 @@ func RegisterRoute(r *gin.Engine) {
 	v_member := r.Group(fmt.Sprintf("/%s", model.UrlTagMember))
 
 	v_member.GET("/",
-		setParam(view.ViewTypeMemberList))
+		setParam(view.ViewTypeMemberList), member.Index)
 
 	v_member.GET("/:mid",
 		setParam(view.ViewTypeMember), member.Member)

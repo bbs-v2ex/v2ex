@@ -60,13 +60,13 @@
                         //判断是否登录
                         if (res.token != undefined ){
                             this.ajax_message = '登录成功';
-                            //获取 user-info
-                            localStorage.setItem(APITOKEN, JSON.stringify({
-                                token:res.token,
-                                user_info:{}
-                            }));
-                            setUserInfo();
-
+                            //设置token
+                            user_client.setToken(res.token);
+                            if (user_client.check() === true){
+                                window.location.href = "/";
+                                return
+                            }
+                            this.ajax_message = '鉴权失败';
                         }
                         this.wait_loading = false;
                         //发送请求并保存信息到本地
