@@ -13,7 +13,7 @@ import (
 
 type _add struct {
 	Title   string `json:"title"   validate:"required"`
-	Content string `json:"content"  validate:"required"`
+	Content string `json:"content"`
 	Html    string `json:"-"`
 }
 

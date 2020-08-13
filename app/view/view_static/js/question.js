@@ -63,12 +63,15 @@ var app = new Vue({
             if (this.collect.status) {
                 this.collect.txt = '已收藏'
             }
-        })
+        });
+        setTimeout(function () {
+            post('/show',{did: DID})
+        },1500)
     },
     methods: {
         collect_toggle() {
             if (this.collect.status) {
-                console.log("取消收藏")
+                console.log("取消收藏");
                 post('/member/collect_del', {did: DID}).then(res => {
                     if (res.code === 1) {
 
@@ -136,7 +139,7 @@ var app = new Vue({
             this.discuss_reload()
         },
         discuss_reload() {
-            post('/article/comment_child_list', {rid: this.discuss.edit_child.rid}).then(res => {
+            post('/'+___now_type+'/comment_child_list', {rid: this.discuss.edit_child.rid}).then(res => {
                 if (res.code === 1) {
                     this.discuss.message = '';
                     if (res.data.length === 0)
@@ -216,7 +219,7 @@ var app = new Vue({
 
             }
 
-            post('/article/comment_child_add', this.discuss.edit_child).then(res => {
+            post('/'+___now_type+'/comment_child_add', this.discuss.edit_child).then(res => {
                 this.discuss.ajax_message = res.message;
                 if (res.code === 1) {
                     //清空输入框

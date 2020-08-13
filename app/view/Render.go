@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/foolin/goview/supports/ginview"
 	"github.com/gin-gonic/gin"
+	"v2ex/app/nc"
 )
 
 func RenderGetContent(name string, _ht gin.H) string {
@@ -26,6 +27,10 @@ func Html(c *gin.Context, htmlContent string) {
 func Render(c *gin.Context, name string, _ht gin.H) {
 	_ht["navigation"] = setNavigation(c, _ht)
 	_ht["view_type"], _ = c.Get("view_type")
+	if _ht["k"].(string) == "" {
+		seoconfig := nc.GetSeoConfig()
+		_ht["k"] = seoconfig.K
+	}
 	c.HTML(200, name, _ht)
 }
 

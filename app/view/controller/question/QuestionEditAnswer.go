@@ -12,5 +12,5 @@ func QuestionEditAnswer(c *gin.Context) {
 	_ht["index"] = gin.H{
 		"DID": did,
 	}
-	view.Render(c, "data/question_edit_answer", _ht)
+	view.Render(c, "question/edit_answer", _ht)
 }

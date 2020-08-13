@@ -50,6 +50,7 @@ func Article(c *gin.Context) {
 	}
 	index.InfoArticle.Content = api.RestorePicture(index.InfoArticle.Content, index.T, index.InfoArticle.Imgs)
 	_ht["art"] = index
+
 	t_list = append(t_list, index.T)
 	_ht["t"] = controller.TitleJoin(t_list)
 	k := controller.KeywordJoin(index.T + index.InfoArticle.Content)
@@ -61,6 +62,7 @@ func Article(c *gin.Context) {
 	}
 	_ht["d"] = d
 	_ht["sp_t"] = index.T
+
 	mt := model.Member{}
 	member_info := mt.GetUserInfo(index.MID, true)
 	_ht["member_info"] = member_info
@@ -69,6 +71,7 @@ func Article(c *gin.Context) {
 	rid, err := primitive.ObjectIDFromHex(_rid)
 
 	_ht["comment"] = api_article.CommentRootList(model.DIDTYPE(did), rid, true)
+
 	//加载相关文章
 
 	nids := []primitive.ObjectID{
