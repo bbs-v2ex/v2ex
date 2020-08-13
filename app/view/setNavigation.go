@@ -123,7 +123,7 @@ func setNavigation(c *gin.Context, _ht gin.H) (n []gin.H) {
 				"tag": true,
 			},
 			{
-				"t":   "",
+				"t":   _ht["sp_t"],
 				"u":   "",
 				"tag": false,
 			},

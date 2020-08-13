@@ -2,14 +2,18 @@ package member
 
 import (
 	"fmt"
+	"github.com/123456/c_code"
 	"github.com/123456/c_code/mc"
 	"github.com/gin-gonic/gin"
 	"github.com/globalsign/mgo/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"path/filepath"
 	"strconv"
+	"strings"
 	"v2ex/app/api/member"
+	"v2ex/app/nc"
 	"v2ex/app/view"
+	"v2ex/app/view/controller"
 	"v2ex/model"
 )
 
@@ -17,7 +21,7 @@ func Member(c *gin.Context) {
 	_ht := defaultData(c)
 	mid, _ := strconv.Atoi(c.Param("mid"))
 
-	u := fmt.Sprintf("/member/%d", mid)
+	u := fmt.Sprintf("/"+model.UrlTagMember+"/%d", mid)
 	_member_mav := []gin.H{
 		{
 			"t":      "动态",
@@ -72,28 +76,34 @@ func Member(c *gin.Context) {
 	//页面分发
 	tpl_name := ""
 	txt := ""
+	_txt := ""
 	switch _type {
 	case "question":
 		txt = "进行提问"
+		_txt = "提问"
 		_ht["dt"] = member.ListQuestion(model.MIDTYPE(mid), primitive.ObjectID{})
 		tpl_name = "member/question"
 		break
 	case "comment":
 		txt = "对问题进行回复"
+		_txt = "回复"
 		_ht["dt"] = member.ListComment(model.MIDTYPE(mid), primitive.ObjectID{})
 		tpl_name = "member/user_home"
 		break
 	case "article":
 		txt = "发布过文章"
+		_txt = "文章"
 		_ht["dt"] = member.ListArticle(model.MIDTYPE(mid), primitive.ObjectID{})
 		tpl_name = "member/question"
 		break
 	case "collect":
 		txt = "收藏"
+		_txt = "收藏"
 		_ht["dt"] = member.ListCollect(model.MIDTYPE(mid), primitive.ObjectID{})
 		tpl_name = "member/collect"
 		break
 	default:
+		_txt = "动态"
 		_ht["member_body_empty"] = "还没有动态哦"
 		_ht["dt"] = member.ListDynamic(model.MIDTYPE(mid), primitive.ObjectID{})
 		tpl_name = "member/user_home"
@@ -126,5 +136,25 @@ func Member(c *gin.Context) {
 	_ht["question_list"] = question_list
 
 	_ht["member_body_empty"] = "还没有" + txt + "哦"
+	t_list := []string{
+		user_info.UserName,
+		_txt,
+	}
+	//处理TDK
+	//t_list = append(t_list,)
+	_ht["t"] = controller.TitleJoin(t_list)
+	_ht["k"] = strings.Join([]string{user_info.UserName + "的" + _txt, "网站会员"}, ",")
+
+	if c_code.RemoveHtmlTag(user_info.More.DesDetailed) != "" {
+		_ht["d"] = c_code.RemoveHtmlTag(user_info.More.DesDetailed)
+	} else {
+		_ht["d"] = strings.Join(t_list, "、") + user_info.More.Des
+	}
+	if _ht["d"].(string) == "" {
+		seoconfig := nc.GetSeoConfig()
+		_ht["d"] = strings.Join(t_list, "、") + seoconfig.D
+	}
+	_ht["sp_t"] = user_info.UserName
+
 	view.Render(c, tpl_name, _ht)
 }

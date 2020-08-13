@@ -96,8 +96,8 @@ func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
 		hs.ST = "对文章发布评论"
 
 		//获取作者信息
-		if t.MID != comment_article_root.MID {
-			author := Member{}.GetUserInfo(comment_article_root.MID, true)
+		if t.MID != t.M2ID {
+			author := Member{}.GetUserInfo(t.M2ID, true)
 			hs.Author = ___movementHtml_author{
 				Name:   author.UserName,
 				Avatar: Avatar(author.Avatar),
@@ -161,7 +161,7 @@ func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
 		}{T: index.T, U: UrlArticleAnswer(index, comment_article_root)}
 
 		//获取作者信息
-		if t.MID != comment_article_root.MID {
+		if t.MID != t.M2ID {
 			author := Member{}.GetUserInfo(comment_article_root.MID, true)
 			hs.Author = ___movementHtml_author{
 				Name:   author.UserName,
@@ -232,7 +232,7 @@ func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
 		hs.ST = "对问题进行回复"
 
 		//获取作者信息
-		if t.MID != comment_question_root.MID {
+		if t.MID != t.M2ID {
 			author := Member{}.GetUserInfo(comment_question_root.MID, true)
 			hs.Author = ___movementHtml_author{
 				Name:   author.UserName,
@@ -284,7 +284,7 @@ func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
 		}
 		hs.ST = "对回答赞同"
 		//获取作者信息
-		if t.MID != comment_question_root.MID {
+		if t.MID != t.M2ID {
 			author := Member{}.GetUserInfo(comment_question_root.MID, true)
 			hs.Author = ___movementHtml_author{
 				Name:   author.UserName,

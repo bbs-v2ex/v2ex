@@ -1,0 +1,159 @@
+.member-left, .member-top,.member-right-box {
+  background: #fff;
+}
+.member-left{
+  min-height: 150px!important;
+}
+.member-nav li,.member-nav{
+  height: 45px !important;
+  line-height: 45px!important;
+}
+
+.member-nav li a {
+  height: 45px !important;
+  line-height: 45px!important;
+  display: inline-block;
+  text-decoration: none;
+  font-size: 16px;
+  color: #1a1a1a;
+}
+
+.member-nav-active {
+  border-bottom: 2px solid #0084ff;
+  font-weight: 600;
+}
+
+.member-nav {
+  padding-bottom: 3px;
+  border-bottom: 1px solid #f6f6f6;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.member-top-avatar img {
+  height: 100%;
+  width: 100%;
+  border: 4px solid #efe4e4;
+  border-radius: 9px;
+}
+
+.member-top .des {
+  font-size: .888888em;
+  color: #b7a6a6;
+}
+
+.member-top .des-detailed {
+  font-size: .999999em;
+  color: #131212;
+}
+
+.member-top .tips .sixin {
+  border: 1px solid #0084ff;
+  text-align: center;
+  color: #0084ff;
+}
+
+.member-top .tips .guanzhu {
+  border: 1px solid #8590a6;
+  text-align: center;
+  color: #8590a6;
+}
+
+.m-list {
+  border-bottom: 1px solid #f6f6f6;
+  padding: 10px 0;
+}
+
+.m-list .l-tip {
+  color: #8590a6;
+  margin: 5px 0;
+}
+
+.m-list .l-title, .mc-list .l-title {
+  font-size: 1.133333222333em;
+  font-weight: 600;
+}
+
+.m-list .l-title a, .mc-list .l-title a {
+  color: rgb(26, 26, 26);
+  text-decoration: none;
+}
+
+.mmm-b {
+  display: flex;
+}
+
+.author-avatar img {
+  border-radius: 5px;
+  border: 1px solid #b7b7b7;
+  height: 40px;
+  width: 40px;
+  display: block;
+}
+
+.author-avatar {
+  margin: 5px 0;
+  cursor: pointer;
+  display: flex;
+  text-decoration: none;
+}
+
+.author-avatar .des-txt {
+  color: rgb(100, 100, 100);
+  font-size: 0.88888888888888em;
+}
+
+.author-avatar .author-name {
+  font-size: 0.99999999em;
+  font-weight: 600;
+  color: rgb(100, 100, 100);;
+}
+
+.m-list .l-zan {
+  color: #8590a6;
+  margin: 5px 0;
+}
+
+.mc-list {
+  display: flex;
+  border-bottom: 1px solid #f6f6f6;
+}
+
+.m-list .mc-list {
+  border-bottom: none;
+}
+
+.show-img {
+  margin-right: 15px !important;
+}
+
+.show-img img {
+  border: 1px solid #9c9090;
+  border-radius: 3px;
+}
+
+.member-body-empty {
+  height: 250px;
+
+}
+
+.member-top-des {
+  min-height: 60px;
+}
+
+.member-body-empty p {
+  margin-top: 50px;
+  font-size: 1.111112em;
+}
+
+.member-right-box a  {
+  color: rgb(133, 144, 166);;
+}
+.member-right-box{
+  padding: 0 15px;
+}
+.member-right-box-title{
+  padding: 15px 0;
+  font-size: 16px;
+  font-weight: 600;
+}
