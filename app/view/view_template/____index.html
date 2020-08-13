@@ -1,3 +1,13 @@
 {{define "head"}}{{end}}
-{{define "body"}}{{end}}
-{{define "js"}}{{end}}
+{{define "body"}}
+    {{include "layouts/_left_start"}}
+    {{include "_list/home"}}
+    LEFT
+    {{include "layouts/_left_stop"}}
+    {{include "layouts/_right_start"}}
+    RIGHT
+    {{include "layouts/_right_stop"}}
+{{end}}
+{{define "js"}}
+    <script></script>
+{{end}}

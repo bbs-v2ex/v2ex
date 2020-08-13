@@ -1,6 +1,4 @@
-{{define "head"}}
-{{/*    <link rel="stylesheet" href="{{st "/css/member.css"}}">*/}}
-{{end}}
+{{define "head"}}{{end}}
 {{define "body"}}
     {{include "layouts/_left_start"}}
         {{include "_list/home"}}
@@ -10,7 +8,7 @@
     {{include "layouts/_left_stop"}}
     {{include "layouts/_right_start"}}
         <div class="-box">
-            <div class="-title"> 热门文章</div>
+            <div class="-title"> 热门问题</div>
             <ul class="list-unstyled ">
                 {{range .article}}
                     <li><a href="{{.u}}" class="text-decoration-none">{{.t}}</a> </li>
@@ -18,26 +16,16 @@
             </ul>
         </div>
         <div class="-box">
-            <div class="-title"> 热门提问</div>
-            <ul class="list-unstyled">
-                {{range .question}}
+            <div class="-title"> 最新问题</div>
+            <ul class="list-unstyled ">
+                {{range .article_new}}
                     <li><a href="{{.u}}" class="text-decoration-none">{{.t}}</a> </li>
-                {{end}}
-            </ul>
-        </div>
-        <div class="-box">
-            <div class="-title"> 最近活跃会员</div>
-            <ul class="list-unstyled  clearfix">
-                {{range .members}}
-                    <li class="float-left index-members">
-                        <a href="{{.u}}" title="会员-{{.t}}" ><img src="{{.avatar}}?w=50" alt="会员-{{.t}}"></a>
-                    </li>
                 {{end}}
             </ul>
         </div>
     {{include "layouts/_right_stop"}}
 {{end}}
 {{define "js"}}
-    <script src="{{st "/js/last_activity.js"}}"></script>
-    <script>app.next='{{.next_link}}'</script>
+<script src="{{st "/js/last_activity.js"}}"></script>
+<script>app.next='{{.next_link}}'</script>
 {{end}}

@@ -54,7 +54,7 @@ func Index(c *gin.Context) {
 		_ht["next_link"] = "/" + model.UrlTagQuestion + "/_/l/" + _list[len(_list)-1].ID.Hex()
 	}
 	if xx == "nohead" {
-		html_content := view.RenderGetContent("data/question_index_list.html", _ht)
+		html_content := view.RenderGetContent("_list/home.html", _ht)
 		_ht["content"] = c_code.CompressHtml(html_content)
 		result_json := c_code.V1GinSuccess(html_content)
 		result_json["next"] = _ht["next_link"]
@@ -103,5 +103,5 @@ func Index(c *gin.Context) {
 	_ht["t"] = controller.TitleJoin([]string{seoconfig.Question.T})
 	_ht["k"] = seoconfig.Question.K
 	_ht["d"] = controller.DesJoin(seoconfig.Question.D)
-	view.Render(c, "data/question_index", _ht)
+	view.Render(c, "question/index", _ht)
 }

@@ -46,7 +46,7 @@
         </div>
     </div>
 </nav>
-<div class="container" id="vue-app">
+<div class="container {{.view_type}}" id="vue-app">
     {{$nav_len := len .navigation}}{{if ne $nav_len 0}} <div class="row"><nav class="-navigation "> {{range .navigation}} {{if eq .u ""}} <span>{{.t}}</span> {{else}} <a href="{{.u}}">{{.t}}</a>  {{end}}{{if .tag}} <span class="-tag" > \ </span>{{end}} {{end}}</nav> </div>{{end}}
     {{template "body" .}}
 </div>
