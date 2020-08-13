@@ -62,5 +62,5 @@ func Question(c *gin.Context) {
 	rid, err := primitive.ObjectIDFromHex(_rid)
 
 	_ht["comment"] = api_question.CommentRootList(model.DIDTYPE(did), rid, true)
-	view.Render(c, "data/question", _ht)
+	view.Render(c, "question/data", _ht)
 }

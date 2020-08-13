@@ -77,7 +77,7 @@ func Article(c *gin.Context) {
 	//获取最新文章
 	_vd_new := []model.DataIndex{}
 	vd_new := []gin.H{}
-	mc.Table(index.Table()).Where(bson.M{"d_type": model.DTYPEArticle, "_id": bson.M{"$nin": nids}}).Limit(10).Find(&_vd_new)
+	mc.Table(index.Table()).Where(bson.M{"d_type": model.DTYPEArticle, "_id": bson.M{"$nin": nids}}).Order(bson.M{"_id": -1}).Limit(10).Find(&_vd_new)
 	for _, v := range _vd_new {
 		vd_new = append(vd_new, gin.H{
 			"t": v.T,
@@ -117,5 +117,5 @@ func Article(c *gin.Context) {
 		nids = append(nids, v.ID)
 	}
 	_ht["vd_rl"] = r_list
-	view.Render(c, "data/article", _ht)
+	view.Render(c, "article/data", _ht)
 }
