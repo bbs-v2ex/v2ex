@@ -25,6 +25,7 @@ func DesSplit(s string, sp int) string {
 	}
 	return s
 }
+
 func Url(urls ...string) string {
 	u := strings.Join(urls, "/")
 	return "/" + strings.TrimLeft(u, "/")

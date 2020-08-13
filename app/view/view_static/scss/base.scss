@@ -1,0 +1,26 @@
+@import "_var";
+
+body {
+  /*min-height: 75rem;*/
+  padding-top: 4.5rem;
+  background: $body-background-color;
+  font-size: $font-size;
+}
+
+.ly-left {
+  background: $body-main-background-color;
+}
+
+
+//右边布局盒子
+.ly-right {
+  .-box {
+    background: $body-main-background-color;
+    padding: 0 15px;
+    .-title{
+      padding: 15px 0;
+      font-size: 16px;
+      font-weight: 600;
+    }
+  }
+}

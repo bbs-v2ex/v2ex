@@ -21,3 +21,8 @@ func DataTimeDifferenceIndexHome() time.Time {
 	t_30 := time.Now().AddDate(0, 0, -30)
 	return t_30
 }
+
+func DataTimeDifference(day int) time.Time {
+	t_30 := time.Now().AddDate(0, 0, day)
+	return t_30
+}

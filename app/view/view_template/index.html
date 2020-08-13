@@ -1,41 +1,41 @@
-{{define "head"}}<link rel="stylesheet" href="{{st "/css/member.css"}}">{{end}}
+{{define "head"}}
+{{/*    <link rel="stylesheet" href="{{st "/css/member.css"}}">*/}}
+{{end}}
 {{define "body"}}
-    <div class="row">
-        <div class="col-md-8 row g-0 p-3 ly-left">
-            {{include "data/home_index_list"}}
-            <div v-for="item in load_list" v-html="item"></div>
-            <div v-if="message != ''" v-html="message"></div>
-            <a class="visually-hidden" href="{{.next_link}}">下一页</a>
+    {{include "layouts/_left_start"}}
+        {{include "data/home_index_list"}}
+        <div v-for="item in load_list" v-html="item"></div>
+        <div v-if="message != ''" v-html="message"></div>
+        <a class="visually-hidden" href="{{.next_link}}">下一页</a>
+    {{include "layouts/_left_stop"}}
+    {{include "layouts/_right_start"}}
+        <div class="-box mt-2  mt-sm-0">
+            <div class="-title"> 热门文章</div>
+            <ul class="list-unstyled ">
+                {{range .article}}
+                    <li><a href="{{.u}}" class="text-decoration-none">{{.t}}</a> </li>
+                {{end}}
+            </ul>
         </div>
-        <div class="col-md-4 g-0 pl-0 pl-md-2  mt-md-0 mt-3">
-            <div class="member-right-box mt-2  mt-sm-0">
-                <div class="member-right-box-title"> 热门文章</div>
-                <ul class="list-unstyled ">
-                    {{range .article}}
-                        <li><a href="{{.u}}" class="text-decoration-none">{{.t}}</a> </li>
-                    {{end}}
-                </ul>
-            </div>
-            <div class="member-right-box mt-2  mt-sm-0">
-                <div class="member-right-box-title"> 热门提问</div>
-                <ul class="list-unstyled ">
-                    {{range .question}}
-                        <li><a href="{{.u}}" class="text-decoration-none">{{.t}}</a> </li>
-                    {{end}}
-                </ul>
-            </div>
-            <div class="member-right-box mt-2  mt-sm-0">
-                <div class="member-right-box-title"> 最近活跃会员</div>
-                <ul class="list-unstyled  clearfix">
-                    {{range .members}}
-                        <li class="float-left index-members">
-                            <a href="{{.u}}" title="会员-{{.t}}" ><img src="{{.avatar}}?w=50" alt="会员-{{.t}}"></a>
-                        </li>
-                    {{end}}
-                </ul>
-            </div>
+        <div class="-box mt-2  mt-sm-0">
+            <div class="-title"> 热门提问</div>
+            <ul class="list-unstyled ">
+                {{range .question}}
+                    <li><a href="{{.u}}" class="text-decoration-none">{{.t}}</a> </li>
+                {{end}}
+            </ul>
         </div>
-    </div>
+        <div class="-box mt-2  mt-sm-0">
+            <div class="-title"> 最近活跃会员</div>
+            <ul class="list-unstyled  clearfix">
+                {{range .members}}
+                    <li class="float-left index-members">
+                        <a href="{{.u}}" title="会员-{{.t}}" ><img src="{{.avatar}}?w=50" alt="会员-{{.t}}"></a>
+                    </li>
+                {{end}}
+            </ul>
+        </div>
+    {{include "layouts/_right_stop"}}
 {{end}}
 {{define "js"}}
     <script src="{{st "/js/last_activity.js"}}"></script>

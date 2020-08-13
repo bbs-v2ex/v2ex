@@ -1,78 +1,22 @@
-/* Show it is fixed to the top */
 body {
-    /*min-height: 75rem;*/
-    padding-top: 4.5rem;
-    background: #f5f6f9;
-    font-size: 15px;
-}
-.login-true span{
-    cursor: pointer;
-    color: white;
-}
-.login-true{
-    margin-right: 25px;
-}
-.w-e-text-container{
-    z-index: 1!important;
-}
-.w-e-menu{
-    z-index: auto!important;
-}
-.w-e-toolbar{
-    z-index: 99!important;
-}
-.w-e-droplist{
-    z-index: 100!important;
-}
-.w-e-dp-title{
-    z-index: 101!important;
+  /*min-height: 75rem;*/
+  padding-top: 4.5rem;
+  background: #f5f6f9;
+  font-size: 15px;
 }
 
-.w-e-toolbar {
-    flex-wrap: wrap;
+.ly-left {
+  background: #fff;
 }
 
-.ly-left{
-    background: #fff;
+.ly-right .-box {
+  background: #fff;
+  padding: 0 15px;
 }
-.i-tag-blue{
-    font-size: 0.7777777777em;
-    border: 1px solid blue;
-    color: blue;
-    padding: 1px 5px;
-}
-.i-tag-red{
-    font-size: 0.7777777777em;
-    border: 1px solid red;
-    color: red;
-    padding: 1px 5px;
+.ly-right .-box .-title {
+  padding: 15px 0;
+  font-size: 16px;
+  font-weight: 600;
 }
 
-.index-members{
-    border: 1px solid #bfbcbc;
-    margin-right: 5px;
-    border-radius: 50%;
-    margin-bottom: 15px;
-}
-.index-members img{
-    border-radius: 50%;
-    height: 100%;
-}
-.-navigation{
-    background: #fff;
-    margin-bottom: 15px;
-    margin-left: -12px;
-    margin-right: -12px;
-    padding: 5px;
-    padding-left: 10px;
-}
-.-navigation .-tag{
-    color: #bbbbbb;
-}
-.-navigation a{
-    color: #1890ea;
-    text-decoration: none;
-}
-#article .content img{
-    max-width: 95%;
-}
+/*# sourceMappingURL=base.css.map */

@@ -19,8 +19,8 @@ type DataArticle struct {
 	CommentSum    int       `json:"comment_sum" bson:"comment_sum"`
 	CommentRoot   int       `json:"comment_root" bson:"comment_root"`
 	//相关搜索
-	RelatedTime time.Time            `json:"related_time" bson:"related_time"`
-	RelatedList []primitive.ObjectID `json:"related_list" bson:"related_list"`
+	RelatedTime time.Time `json:"related_time" bson:"related_time"`
+	RelatedList []DIDTYPE `json:"related_list" bson:"related_list"`
 }
 
 func (t DataArticle) Table() string {

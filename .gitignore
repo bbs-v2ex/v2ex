@@ -3,3 +3,4 @@
 /000_config.toml
 /_example/run/tmp/
 /app/view/view_static/tmp/
+/app/view/view_static/css/

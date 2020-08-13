@@ -94,11 +94,10 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4 g-0">
 
     </div>
 </div>
-
 <div class="modal fade l" id="puper-view" tabindex="-1" aria-labelledby="puper-viewLabel" aria-hidden="true">
     <div class="modal-dialog  modal-lg modal-dialog-scrollable">
         <div class="modal-content">
@@ -108,7 +107,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body" style="min-height: 350px">
+            <div class="modal-body">
                 <p v-if="discuss.message != ''">${discuss.message}</p>
                 <div v-for="item in discuss.list" class="discuss-block g-0 flex-column clearfix ">
                     <div class="author-avatar pb-3">
