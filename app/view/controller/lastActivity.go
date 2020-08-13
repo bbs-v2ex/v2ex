@@ -28,7 +28,7 @@ func LastActivity(c *gin.Context) {
 		_ht["next_link"] = "/last_activity/" + list[len(list)-1].ID
 	}
 	if xx == "nohead" {
-		html_content := view.RenderGetContent("member/member_dz_activity.html", _ht)
+		html_content := view.RenderGetContent("_list/dongtai.html", _ht)
 		_ht["content"] = c_code.CompressHtml(html_content)
 		result_json := c_code.V1GinSuccess(html_content)
 		result_json["next"] = _ht["next_link"]

@@ -20,11 +20,23 @@
   .-title {
     @extend %s-list-title;
   }
-  //第一个布局
+
+  .-tip,.-zan{
+    color: #8590a6;
+    font-size: 0.8888888em;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  .-text-des{
+    font-size: 0888888em;
+  }
+  //第一个布局 对应 问题及文章列表
   .-l1{
     display: flex;
-    .-text-des{
-      font-size: 0888888em;
-    }
+
+  }
+  //第二个布局 对应 动态
+  .-l2{
+    display: flex;
   }
 }

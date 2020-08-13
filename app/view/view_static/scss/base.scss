@@ -14,6 +14,24 @@ body {
 //滚动加载的盒子
 @import "_b/sroller-box";
 
+//导航栏
+.-navigation{
+  background: #fff;
+  margin-bottom: 15px;
+  /*margin-left: -12px;*/
+  /*margin-right: -12px;*/
+  padding: 5px;
+  padding-left: 10px;
+  .-tag{
+    color: #bbbbbb;
+  }
+  a{
+    text-decoration: none;
+    color: #091425;
+  }
+}
+
+
 //右边布局盒子
 .ly-right {
   .-box {
