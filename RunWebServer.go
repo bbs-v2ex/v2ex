@@ -30,18 +30,21 @@ func RunWebServer() {
 
 	//设置 gin 启动参数
 	if debug {
+		gin.SetMode(gin.TestMode)
 		r = gin.Default()
 	} else {
+		gin.SetMode(gin.ReleaseMode)
 		r = gin.New()
+
 	}
 
 	//处理静态文件
 	if debug {
-		r.Static("/static", "./app/view/view_static/")
+		r.Static("/static", "./app/view/view_static")
 	} else {
-		box := rice.MustFindBox("z_static")
+		box := rice.MustFindBox("app/view/view_static")
 		cssFileServer := http.StripPrefix("/static", http.FileServer(box.HTTPBox()))
-		r.GET("/static/:a", gin.WrapH(cssFileServer))
+		r.GET("/static/*a", gin.WrapH(cssFileServer))
 	}
 
 	//加载全局模板函数
@@ -58,8 +61,8 @@ func RunWebServer() {
 		view.ViewEngine = engine
 		r.HTMLRender = engine
 	} else {
-		basic := gorice.NewWithConfig(rice.MustFindBox("z_view"), goview.Config{
-			Root:         "z_view",
+		basic := gorice.NewWithConfig(rice.MustFindBox("app/view/view_template"), goview.Config{
+			Root:         "view_template",
 			Extension:    ".html",
 			Master:       "layouts/master",
 			Funcs:        tempFunc,

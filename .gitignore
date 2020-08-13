@@ -4,3 +4,5 @@
 /_example/run/tmp/
 /app/view/view_static/tmp/
 /app/view/view_static/css/
+/_example/run/webServe.exe
+/rice-box.go
