@@ -1,5 +1,47 @@
 {{define "head"}}{{end}}
 {{define "body"}}
+    {{include "layouts/_left_start"}}
+        <div class="-box2 mb-3">
+            <div class="-title"> 活跃会员 </div>
+            <div class="-content">
+                <ul class="list-unstyled">
+                    {{range .last_hd_member}}
+                        <li class="float-left index-members mr-3 ">
+                            <a class="text-decoration-none" href="{{.u}}" title="会员-{{.t}}" >
+                                <img src="{{.avatar}}?w=50" alt="会员-{{.t}}"> <br>
+                                <div class="text-decoration-none text-center"> {{.t}} </div>
+                            </a>
+                        </li>
+                    {{end}}
+                </ul>
+            </div>
+        </div>
+        <div class="-box2 ">
+            <div class="-title"> 新加入会员 </div>
+            <div class="-content">
+                <ul class="list-unstyled">
+                    {{range .insert_hd_member}}
+                        <li class="float-left index-members mr-3 ">
+                            <a class="text-decoration-none" href="{{.u}}" title="会员-{{.t}}" >
+                                <img src="{{.avatar}}?w=50" alt="会员-{{.t}}"> <br>
+                                <div class="text-decoration-none text-center"> {{.t}} </div>
+                            </a>
+                        </li>
+                    {{end}}
+                </ul>
+            </div>
+        </div>
+    {{include "layouts/_left_stop"}}
+    {{include "layouts/_right_start"}}
+        <div class="-box">
+            <div class="-title"> 告示 </div>
+            <div class="-content pb-3">
+                <p>你来到这里,里突然变的美丽了,在严寒的冬天里,鲜花突然开放了,蝴蝶突然都出来了,天边也同时出现了一到5色的彩虹,冻结的河流突然流动了起来.感谢你来到这里,谢谢你为这里带来了希望!</p>
+                <p> 点击>> <a href="/registered">注册</a> << 加入我们这个大家庭吧 </p>
+            </div>
+        </div>
+    {{include "layouts/_right_stop"}}
+
 
 {{end}}
 {{define "js"}}

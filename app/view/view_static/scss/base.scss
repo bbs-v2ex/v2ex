@@ -12,29 +12,33 @@ body {
 }
 
 
-
-
-.login-true span{
+.login-true span {
   cursor: pointer;
   color: white;
 }
-.login-true{
+
+.login-true {
   margin-right: 25px;
 }
-.w-e-text-container{
-  z-index: 1!important;
+
+.w-e-text-container {
+  z-index: 1 !important;
 }
-.w-e-menu{
-  z-index: auto!important;
+
+.w-e-menu {
+  z-index: auto !important;
 }
-.w-e-toolbar{
-  z-index: 99!important;
+
+.w-e-toolbar {
+  z-index: 99 !important;
 }
-.w-e-droplist{
-  z-index: 100!important;
+
+.w-e-droplist {
+  z-index: 100 !important;
 }
-.w-e-dp-title{
-  z-index: 101!important;
+
+.w-e-dp-title {
+  z-index: 101 !important;
 }
 
 .w-e-toolbar {
@@ -42,24 +46,23 @@ body {
 }
 
 
-
-
-
 //滚动加载的盒子
 @import "_b/sroller-box";
 
 //导航栏
-.-navigation{
+.-navigation {
   background: #fff;
   margin-bottom: 15px;
   /*margin-left: -12px;*/
   /*margin-right: -12px;*/
   padding: 5px;
   padding-left: 10px;
-  .-tag{
+
+  .-tag {
     color: #bbbbbb;
   }
-  a{
+
+  a {
     text-decoration: none;
     color: #091425;
   }
@@ -71,36 +74,68 @@ body {
   .-box {
     background: $body-main-background-color;
     padding: 0 15px;
-    ul{
+
+    ul {
       padding-bottom: 15px;
     }
-    .-title{
+
+    .-title {
       padding: 15px 0;
       font-size: 16px;
       font-weight: 600;
     }
-    a{
+
+    a {
       color: $box-title-color;
     }
   }
 }
 
+.-box2 {
+  background: $body-main-background-color;
+  padding: 0 15px;
+
+  ul {
+    padding-bottom: 15px;
+  }
+
+  .-title {
+    padding: 15px 0;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  a {
+    color: $box-title-color;
+  }
+}
+.container.member_list{
+  div.ly-left{
+    background: unset;
+    padding: unset!important;
+  }
+}
+
+
 //首页的最近活跃会员
-.index-members{
+.index-members {
   border-radius: 50%;
-  img{
+
+  img {
     border-radius: 50%;
     border: 1px solid #cab9b9;
     margin-right: 5px;
   }
 }
+
 //登录显示的链接
-.vue-user-show{
-  .navbar-right{
+.vue-user-show {
+  .navbar-right {
     margin-right: 15px;
-    color: $body-main-background-color!important;
-    a{
-      color: $body-main-background-color!important;
+    color: $body-main-background-color !important;
+
+    a {
+      color: $body-main-background-color !important;
     }
   }
 }

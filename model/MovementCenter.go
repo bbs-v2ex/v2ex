@@ -123,9 +123,9 @@ func (t MovementCenter) GetHuoYueMID(nums int64) (m []gin.H) {
 			"t":      v.UserName,
 			"u":      UrlMember(v),
 			"avatar": Avatar(v.Avatar),
+			"mid":    v.MID,
 		})
 	}
-
 	return
 }
 
