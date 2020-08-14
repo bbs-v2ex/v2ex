@@ -59,7 +59,7 @@ func RegisterRoute(r *gin.Engine) {
 
 	//超级管理员权限页面
 	r_config := _manage.Group("/config")
-	r_config.GET("/seo", m_config.Seo)
+	r_config.GET("/*seo", m_config.Index)
 
 	//文章页
 	v_article := r.Group(fmt.Sprintf("/%s", model.UrlTagArticle))

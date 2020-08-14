@@ -36,6 +36,10 @@ func MemberNav(c *gin.Context) {
 				"t": "SEO设置",
 				"u": u + "seo",
 			},
+			{
+				"t": "索引查看",
+				"u": u + "db_index",
+			},
 		}...)
 
 	} else {

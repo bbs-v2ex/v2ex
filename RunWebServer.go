@@ -30,7 +30,6 @@ func RunWebServer() {
 
 	//设置 gin 启动参数
 	if debug {
-		gin.SetMode(gin.TestMode)
 		r = gin.Default()
 	} else {
 		gin.SetMode(gin.ReleaseMode)

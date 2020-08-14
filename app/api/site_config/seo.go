@@ -19,6 +19,7 @@ func seopost(c *gin.Context) {
 	if err != nil {
 		result_json := c_code.V1GinError(101, err.Error())
 		c.JSON(200, result_json)
+		return
 	}
 	nc.ReloadSeoConfig()
 	result_json := c_code.V1GinSuccess("", "修改成功")

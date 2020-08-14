@@ -5,7 +5,7 @@ import (
 	"v2ex/app/view"
 )
 
-func Seo(c *gin.Context) {
+func Index(c *gin.Context) {
 	_ht := defaultData(c)
-	view.Render(c, "m_config/seo", _ht)
+	view.Render(c, "m_config/"+c.Param("seo"), _ht)
 }
