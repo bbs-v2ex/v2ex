@@ -6,6 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/globalsign/mgo/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/x/bsonx"
 	"time"
 )
 
@@ -28,6 +30,18 @@ type MovementCenter struct {
 
 func (t MovementCenter) Table() string {
 	return "movement_center"
+}
+func (t MovementCenter) IndexList() []mongo.IndexModel {
+
+	return []mongo.IndexModel{
+		{
+			Keys: bsonx.Doc{
+				{"mid", bsonx.Int32(-1)},
+				{"m2id", bsonx.Int32(-1)},
+				{"hash", bsonx.Int32(-1)},
+			},
+		},
+	}
 }
 
 const (

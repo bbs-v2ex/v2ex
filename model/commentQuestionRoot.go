@@ -1,6 +1,11 @@
 package model
 
-import "go.mongodb.org/mongo-driver/bson/primitive"
+import (
+	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongodb.org/mongo-driver/x/bsonx"
+)
 
 type CommentQuestionRoot struct {
 	ID primitive.ObjectID `json:"_id" bson:"_id"`
@@ -19,4 +24,17 @@ type CommentQuestionRoot struct {
 
 func (t CommentQuestionRoot) Table() string {
 	return "comment_question_root"
+}
+func (t CommentQuestionRoot) IndexList() []mongo.IndexModel {
+
+	return []mongo.IndexModel{
+		{
+			Keys: bsonx.Doc{
+				{"mid", bsonx.Int32(-1)},
+				{"did", bsonx.Int32(1)},
+				{"zan_len", bsonx.Int32(-1)},
+			},
+			Options: &options.IndexOptions{},
+		},
+	}
 }

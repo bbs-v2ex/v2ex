@@ -5,6 +5,8 @@ import (
 	"github.com/123456/c_code/mc"
 	"github.com/globalsign/mgo/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/x/bsonx"
 )
 
 type Member struct {
@@ -18,6 +20,22 @@ type Member struct {
 
 func (t Member) Table() string {
 	return "member"
+}
+
+func (t Member) IndexList() []mongo.IndexModel {
+
+	return []mongo.IndexModel{
+		{
+			Keys: bsonx.Doc{
+				{"mid", bsonx.Int32(-1)},
+			},
+		},
+		{
+			Keys: bsonx.Doc{
+				{"user_name", bsonx.Int32(-1)},
+			},
+		},
+	}
 }
 
 func (t Member) EncryptionPassWord(password string) string {

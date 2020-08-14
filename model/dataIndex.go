@@ -2,6 +2,9 @@ package model
 
 import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongodb.org/mongo-driver/x/bsonx"
 )
 
 //数据索引
@@ -21,4 +24,23 @@ type DataIndex struct {
 
 func (t DataIndex) Table() string {
 	return "data_index"
+}
+
+func (t DataIndex) IndexList() []mongo.IndexModel {
+
+	return []mongo.IndexModel{
+		{
+			Keys: bsonx.Doc{
+				{"mid", bsonx.Int32(-1)},
+				{"did", bsonx.Int32(1)},
+				{"zan_len", bsonx.Int32(-1)},
+			},
+			Options: &options.IndexOptions{},
+		},
+		{
+			Keys: bsonx.Doc{
+				{"t", bsonx.Int32(-1)},
+			},
+		},
+	}
 }

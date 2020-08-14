@@ -2,6 +2,8 @@ package model
 
 import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/x/bsonx"
 )
 
 type MemberToken struct {
@@ -18,4 +20,15 @@ type MemberToken struct {
 
 func (t MemberToken) Table() string {
 	return "member_token"
+}
+
+func (t MemberToken) IndexList() []mongo.IndexModel {
+
+	return []mongo.IndexModel{
+		{
+			Keys: bsonx.Doc{
+				{"token", bsonx.Int32(-1)},
+			},
+		},
+	}
 }
