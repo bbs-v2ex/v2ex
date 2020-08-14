@@ -3,6 +3,7 @@
     <div v-if="html_err != ''">${html_err}</div>
     <div v-else>
         <div class="card  bg-white rounded">
+            <div @click="create_index"> 点击创建索引 </div>
             <table>
                 <tr  v-for="item in seo">
                     <td> ${item.coll}</td> <td>${item.index}</td>
@@ -40,6 +41,9 @@
                         this.ajax_message = res.message;
                         console.log(res)
                     })
+                },
+                create_index(){
+                    get('/config/create_index')
                 }
             }
         })
