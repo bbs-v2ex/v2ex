@@ -37,6 +37,10 @@ func MemberNav(c *gin.Context) {
 				"u": u + "seo",
 			},
 			{
+				"t": "网站权限",
+				"u": u + "api_auth",
+			},
+			{
 				"t": "索引查看",
 				"u": u + "db_index",
 			},

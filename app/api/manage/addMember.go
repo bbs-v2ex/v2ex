@@ -5,6 +5,7 @@ import (
 	"github.com/123456/c_code/mc"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"v2ex/app/nc"
 	"v2ex/model"
 )
 
@@ -14,6 +15,12 @@ type _add_member_post struct {
 }
 
 func AddMember(c *gin.Context) {
+	api_auth := nc.GetApiAuth()
+	if !api_auth.Register {
+		result_json := c_code.V1GinError(100, "网站关闭注册")
+		c.JSON(200, result_json)
+		return
+	}
 	_f := _add_member_post{}
 	c.BindJSON(&_f)
 

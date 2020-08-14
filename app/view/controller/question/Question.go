@@ -64,7 +64,7 @@ func Question(c *gin.Context) {
 		return
 	}
 	index.InfoQuestion = question
-	index.InfoQuestion.Content = api.RestorePicture(index.InfoQuestion.Content, index.T, index.InfoQuestion.Imgs)
+	index.InfoQuestion.Content = api.RestorePicture(index.InfoQuestion.Content, index.T, index.InfoQuestion.Imgs, "600")
 	//渲染数据
 	_ht := defaultData(c)
 	_ht["index"] = index

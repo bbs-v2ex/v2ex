@@ -7,15 +7,15 @@ import (
 	"v2ex/model"
 )
 
-func seo(c *gin.Context) {
-	result_json := c_code.V1GinSuccess(model.SiteConfig{}.GetSeo())
+func api_auth(c *gin.Context) {
+	result_json := c_code.V1GinSuccess(model.SiteConfig{}.GetApiAuth())
 	c.JSON(200, result_json)
 }
-func seopost(c *gin.Context) {
-	sc := model.SiteConfigSeo{}
+func api_auth_post(c *gin.Context) {
+	sc := model.SiteConfigApiAuth{}
 	c.BindJSON(&sc)
 
-	err := model.SiteConfig{}.SetSeo(sc)
+	err := model.SiteConfig{}.SetApiAuth(sc)
 	if err != nil {
 		result_json := c_code.V1GinError(101, err.Error())
 		c.JSON(200, result_json)
