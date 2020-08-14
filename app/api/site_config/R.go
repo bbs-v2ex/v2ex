@@ -12,7 +12,7 @@ func R(r *gin.RouterGroup) {
 	r1.GET("/seo", seo)
 	r1.POST("/seo", seopost)
 	r1.GET("/db_index", db_index)
-	r1.POST("/db_index")
+	r1.GET("/create_index", create_index)
 }
 
 func isok(c *gin.Context) {
