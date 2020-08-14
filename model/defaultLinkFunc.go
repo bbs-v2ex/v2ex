@@ -16,6 +16,11 @@ const (
 	UrlTagMember        = "member"
 )
 
+func Avatar(u string) string {
+	_con := config.GetConfig()
+	return _con.Run.UploadServer + u
+}
+
 func DesSplit(s string, sp int) string {
 	s = c_code.RemoveHtmlTag(s)
 	s = regexp.MustCompile(`[\r\n|\n|\r|\t|{xxx{img}xxx}]+`).ReplaceAllString(s, " ")

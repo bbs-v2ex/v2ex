@@ -5,6 +5,7 @@ import (
 )
 
 var cstZone = time.FixedZone("CST", 8*3600)
+var CST = time.FixedZone("CST", 8*3600)
 
 func MemberTokenAddValidPeriod() string {
 

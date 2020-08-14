@@ -20,6 +20,9 @@ func setParam(view_type string) gin.HandlerFunc {
 }
 
 func RegisterRoute(r *gin.Engine) {
+	//robots 文件
+	r.StaticFile("/robots.txt", "./000_robots.txt")
+
 	r.GET("/",
 		setParam(view.ViewTypeHome), controller.Home,
 	)
@@ -103,5 +106,5 @@ func RegisterRoute(r *gin.Engine) {
 
 	v_member.GET("/:mid/:_type",
 		setParam(view.ViewTypeMember), member.Member)
-
+	r.GET("/update_site_map", view.UpdateSiteMap)
 }

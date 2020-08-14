@@ -1,6 +1,7 @@
 package v2ex
 
 import (
+	"flag"
 	"fmt"
 	rice "github.com/GeertJohan/go.rice"
 	"github.com/foolin/goview"
@@ -18,6 +19,11 @@ import (
 )
 
 func RunWebServer() {
+
+	debug_str := ""
+	flag.StringVar(&debug_str, "debug", "", "debug 模式")
+
+	fmt.Println(debug_str)
 	cg, err := config.LoadingConfigSourceFile()
 	if err != nil {
 		log.Fatal("加载配置文件失败", err)

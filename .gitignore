@@ -6,3 +6,5 @@
 /app/view/view_static/css/
 /_example/run/webServe.exe
 /rice-box.go
+/_example/run/webServe
+/__sitemap/

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<head>
+    <title>网站地图 - v3.0</title>
+    <meta http-equiv="Content-type" content="text/html;" charset="UTF-8" />
+    <style>
+        body{font-family: Arial, "微软雅黑";font-size: 13px;}
+        ul, li{margin:0px; padding:0px; list-style:none;}ul{width:800px;margin-left: auto;margin-right: auto;}.title{width:800px;font-size: 18px;}.lks{float: left;padding-right: 15px;line-height: 30px;font-size: 16px;}
+    </style>
+</head><body align="center">
+<ul>
+    <li class="title"><h3>网站地图：()</h3></li>
+    {{range .list}}<li class="lks"><a href="{{.loc}}" title="{{.t}}" target="_blank">{{.t}}</a></li>{{end}}
+</ul></body></html>
