@@ -26,7 +26,7 @@ func Article(c *gin.Context) {
 	//查询数据库
 	article := model.DataArticle{}
 	index := model.DataIndex{}
-	err := mc.Table(index.Table()).Where(bson.M{"did": did}).FindOne(&index)
+	err := mc.Table(index.Table()).Where(bson.M{"did": did, "d_type": model.DTYPEArticle}).FindOne(&index)
 	if err != nil {
 		view.R404(c, view.ViewError{Message: "文章不存在111"})
 		return

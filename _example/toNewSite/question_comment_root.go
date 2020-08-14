@@ -25,11 +25,18 @@ func main() {
 		if err != nil {
 			continue
 		}
+
+		index := model.DataIndex{}
+		err = mc.Table(index.Table()).Where(bson.M{"_id": d2["qid"]}).FindOne(&index)
+		if err != nil {
+			continue
+		}
+
 		member := bson.M{
 			"_id":     d2["_id"],
 			"mid":     d2["mid"],
 			"rc":      d2["reply_count"],
-			"did":     0,
+			"did":     index.DID,
 			"zan_len": d2["zan_len"],
 		}
 		mc.Table(model.CommentQuestionRoot{}.Table()).Where(bson.M{"_id": d2["_id"]}).UpdateOneIsEmptyNewInsert(member)

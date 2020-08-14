@@ -8,7 +8,7 @@ import (
 	"v2ex/config"
 )
 
-const IMGHTML = "{{--img--}}"
+const IMGHTML = "{{img}}"
 const SelfLoadTag = "asdffertesdgdsgergdgs"
 
 func RestorePicture(s string, t string, img []string) string {

@@ -35,10 +35,9 @@ func main() {
 
 			if reflect.TypeOf(d2["avatar"]).String() == "string" {
 				if strings.HasPrefix(d2["avatar"].(string), "head-") {
-					mc.Table(model.Member{}.Table()).Where(bson.M{"_id": d2["_id"]}).UpdateOneIsEmptyNewInsert(bson.M{"avatar": d2["avatar"].(string)})
+					mc.Table(model.Member{}.Table()).Where(bson.M{"_id": d2["_id"]}).UpdateOneIsEmptyNewInsert(bson.M{"avatar": "/_avatar/" + d2["avatar"].(string)})
 				}
 			}
 		}
-
 	}
 }

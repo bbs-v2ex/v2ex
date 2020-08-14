@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"v2ex/app/api"
 	api_question "v2ex/app/api/manage/question"
 	"v2ex/app/view"
 	"v2ex/app/view/controller"
@@ -27,14 +28,27 @@ func Question(c *gin.Context) {
 
 	did, _ := strconv.Atoi(c.Param("did"))
 	t_list := []string{}
-	if did == 0 {
+	q_where := bson.M{"did": did}
+
+	qid_len := len(c.Param("did"))
+	switch {
+	case qid_len == 24:
+		hex, err := primitive.ObjectIDFromHex(c.Param("did"))
+		if err != nil {
+			view.R404(c, view.ViewError{Message: "问题不存在"})
+			return
+		}
+		q_where = bson.M{"_id": hex}
+		break
+	case did == 0:
 		view.R404(c, view.ViewError{Message: "问题不存在"})
 		return
 	}
+	q_where["d_type"] = model.DTYPEQuestion
 	//查询数据库
 	question := model.DataQuestion{}
 	index := model.DataIndex{}
-	err := mc.Table(index.Table()).Where(bson.M{"did": did}).FindOne(&index)
+	err := mc.Table(index.Table()).Where(q_where).FindOne(&index)
 	if err != nil {
 		view.R404(c, view.ViewError{Message: "问题不存在111"})
 		return
@@ -50,6 +64,7 @@ func Question(c *gin.Context) {
 		return
 	}
 	index.InfoQuestion = question
+	index.InfoQuestion.Content = api.RestorePicture(index.InfoQuestion.Content, index.T, index.InfoQuestion.Imgs)
 	//渲染数据
 	_ht := defaultData(c)
 	_ht["index"] = index

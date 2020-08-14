@@ -62,7 +62,7 @@ func Index(c *gin.Context) {
 		c.JSON(200, result_json)
 		return
 	}
-	if len(list) <= 1 {
+	if len(list) <= 0 {
 		c.Redirect(301, "/last_activity")
 	}
 	//加载热门文章
