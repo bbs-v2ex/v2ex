@@ -101,23 +101,29 @@ func Article(c *gin.Context) {
 			"t":   bson.M{"$regex": strings.Join(r_ci_list, "|")},
 		}
 		mc.Table(index.Table()).Where(r_where).Order(bson.M{"_id": -1}).Limit(10).Find(&_r_list)
-		rl_list := []model.DIDTYPE{}
+		rl_list := []primitive.ObjectID{}
 		for _, v := range _r_list {
-			rl_list = append(rl_list, v.DID)
+			rl_list = append(rl_list, v.ID)
 		}
 		mc.Table(model.DataArticle{}.Table()).Where(bson.M{"_id": index.ID}).UpdateOne(bson.M{"related_time": time.Now(), "related_list": rl_list})
 
 	} else {
 		if len(index.InfoArticle.RelatedList) >= 1 {
-			mc.Table(index.Table()).Where(bson.M{"did": bson.M{"$in": index.InfoArticle.RelatedList}}).Find(&_r_list)
+			mc.Table(index.Table()).Where(bson.M{"_id": bson.M{"$in": index.InfoArticle.RelatedList}}).Find(&_r_list)
 		}
 	}
 
 	for _, v := range _r_list {
-		r_list = append(r_list, gin.H{
-			"t": v.T,
-			"u": model.UrlArticle(v),
-		})
+
+		_one := gin.H{}
+		_one["t"] = v.T
+		if v.DTYPE == model.DTYPEQuestion {
+			_one["u"] = model.UrlQuestion(v)
+		}
+		if v.DTYPE == model.DTYPEArticle {
+			_one["u"] = model.UrlArticle(v)
+		}
+		r_list = append(r_list, _one)
 		nids = append(nids, v.ID)
 	}
 	_ht["vd_rl"] = r_list
