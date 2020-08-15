@@ -10,9 +10,10 @@ import (
 )
 
 type _add_member_post struct {
-	UserName string `json:"username"`
-	PassWord string `json:"password"`
-	Sign     string `json:"sign"`
+	UserName string        `json:"username"`
+	PassWord string        `json:"password"`
+	Sign     string        `json:"sign"`
+	MID      model.MIDTYPE `json:"mid"`
 }
 
 func AddMember(c *gin.Context) {

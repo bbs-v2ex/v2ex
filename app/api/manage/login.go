@@ -20,8 +20,14 @@ func Login(c *gin.Context) {
 	member := model.Member{}
 	if api_auth.SpiderSign == _f.Sign && api_auth.SpiderSign != "" {
 		list_mid := []model.Member{}
-		mc.Table(model.Member{}.Table()).Where(bson.M{"is_user": false}).Projection(bson.M{"mid": 1}).Find(&list_mid)
-		member = list_mid[c_code.Rand(len(list_mid)-1)]
+		if _f.MID != 0 {
+			mc.Table(model.Member{}.Table()).Where(bson.M{"is_user": false, "mid": _f.MID}).Projection(bson.M{"mid": 1}).FindOne(&member)
+		}
+		if member.MID == 0 {
+			mc.Table(model.Member{}.Table()).Where(bson.M{"is_user": false}).Projection(bson.M{"mid": 1}).Find(&list_mid)
+			member = list_mid[c_code.Rand(len(list_mid)-1)]
+		}
+
 	} else {
 		if _f.UserName == "" || _f.PassWord == "" {
 			result_json := c_code.V1GinError(101, "用户或密码错误")

@@ -17,6 +17,7 @@
                 wait_loading:false,
                 ajax_message:'',
                 sign:'{{.sign}}',
+                mid:{{.mid}},
             }
         },
         created(){
@@ -24,7 +25,7 @@
         },
         methods: {
             submit(e) {
-                post('/login',{sign:this.sign}).then(res => {
+                post('/login',{sign:this.sign,mid:parseInt(this.mid)}).then(res => {
                     this.ajax_message = res.message;
 
                     if (res.token != undefined ){
