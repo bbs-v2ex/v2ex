@@ -10,6 +10,7 @@ import (
 	"io/ioutil"
 	"os"
 	"regexp"
+	"strings"
 	"time"
 	"v2ex/model"
 	"v2ex/until"
@@ -28,11 +29,12 @@ func UpdateSiteMap(c *gin.Context) {
 		c.String(200, "不更新")
 		return
 	}
+	//os.RemoveAll(sitemap_dir)
 	index_list := []string{}
 	//进行更新sitemap 地图
 	//先查询所有文章页
 	client := model.DataIndex{}
-	page_size := int64(10)
+	page_size := int64(3000)
 	order := bson.M{"_id": -1}
 
 	//文章
@@ -42,16 +44,17 @@ func UpdateSiteMap(c *gin.Context) {
 
 	for {
 		a := []model.DataIndex{}
-		where := bson.M{}
-		if pid.Hex() != mc.Empty {
-			where = bson.M{"_id": bson.M{"$lt": pid}}
+		where := bson.M{
+			"d_type": model.DTYPEArticle,
 		}
-		mc.Table(client.Table()).Projection(bson.M{"_id": 1, "did": 1, "d_type": model.DTYPEArticle, "t": 1}).Where(where).Limit(page_size).Order(order).Find(&a)
+		if pid.Hex() != mc.Empty {
+			where["_id"] = bson.M{"$lt": pid}
+		}
+		mc.Table(client.Table()).Where(where).Projection(bson.M{"_id": 1, "did": 1, "d_type": 1, "t": 1}).Limit(page_size).Order(order).Find(&a)
 
 		if len(a) == 0 {
 			break
 		}
-		f_index++
 		for _, v := range a {
 			mc.Table(v.InfoArticle.Table()).Where(bson.M{"_id": v.ID}).FindOne(&v.InfoArticle)
 			link_list = append(link_list, map[string]string{
@@ -90,23 +93,25 @@ func UpdateSiteMap(c *gin.Context) {
 
 	for {
 		a := []model.DataIndex{}
-		where := bson.M{}
-		if pid.Hex() != mc.Empty {
-			where = bson.M{"_id": bson.M{"$lt": pid}}
+		where := bson.M{
+			"d_type": model.DTYPEQuestion,
 		}
-		mc.Table(client.Table()).Projection(bson.M{"_id": 1, "did": 1, "d_type": model.DTYPEQuestion, "t": 1}).Where(where).Limit(page_size).Order(order).Find(&a)
+		if pid.Hex() != mc.Empty {
+			where["_id"] = bson.M{"$lt": pid}
+		}
+		mc.Table(client.Table()).Where(where).Projection(bson.M{"_id": 1, "did": 1, "d_type": 1, "t": 1}).Limit(page_size).Order(order).Find(&a)
 
 		if len(a) == 0 {
 			break
 		}
-		f_index++
+
 		for _, v := range a {
-			mc.Table(v.InfoArticle.Table()).Where(bson.M{"_id": v.ID}).FindOne(&v.InfoArticle)
+			mc.Table(v.InfoQuestion.Table()).Where(bson.M{"_id": v.ID}).FindOne(&v.InfoQuestion)
 			link_list = append(link_list, map[string]string{
 				"t":          v.T,
 				"loc":        site + model.UrlQuestion(v),
 				"priority":   "0.3",
-				"lastmod":    v.InfoArticle.ReleaseTime.In(until.CST).Format("2006-01-02 15:04:05"),
+				"lastmod":    v.InfoQuestion.ReleaseTime.In(until.CST).Format("2006-01-02 15:04:05"),
 				"changefreq": "weekly",
 			})
 			pid = v.ID
@@ -178,5 +183,24 @@ func UpdateSiteMap(c *gin.Context) {
 		ioutil.WriteFile(sitemap_dir+"/"+f_name+".html", []byte(content), 0666)
 		link_list = []map[string]string{}
 	}
-
+	//创建索引文件
+	dir, err := ioutil.ReadDir(sitemap_dir)
+	if err != nil {
+		return
+	}
+	index_list = []string{}
+	for _, v := range dir {
+		if v.Name() == "index.xml" {
+			continue
+		}
+		if strings.HasSuffix(v.Name(), ".xml") {
+			index_list = append(index_list, fmt.Sprintf("%s/site_map_check/%s", site, v.Name()))
+		}
+	}
+	content := RenderGetContent("sitemap/xml_index.html", gin.H{"list": index_list})
+	content = regexp.MustCompile(`^&lt;\?`).ReplaceAllString(content, "<?")
+	ioutil.WriteFile(sitemap_dir+"/index.xml", []byte(content), 0666)
+	//更新时间
+	model.SiteConfig{}.SetUpdateSiteMap()
+	c.String(200, "更新完成")
 }

@@ -106,5 +106,10 @@ func RegisterRoute(r *gin.Engine) {
 
 	v_member.GET("/:mid/:_type",
 		setParam(view.ViewTypeMember), member.Member)
+	//更新网站地图接口
 	r.GET("/update_site_map", view.UpdateSiteMap)
+	//sitemap 文件位置
+	r.Static("/site_map_check", "./__sitemap")
+	//最新的 1000 条数据
+	r.GET("/last_data_1000", view.LastData1000)
 }
