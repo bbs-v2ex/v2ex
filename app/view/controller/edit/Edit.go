@@ -16,5 +16,14 @@ func Edit(c *gin.Context) {
 	c.Bind(&_f)
 	_ht := defaultData(c)
 	_ht["f1"] = _f
-	view.Render(c, "edit/"+_f.Type, _ht)
+	tpl_name := ""
+	switch _f.Type {
+	case "question", "article":
+		tpl_name = "main"
+		break
+	case "question_answer":
+		tpl_name = "reply"
+		break
+	}
+	view.Render(c, "edit/"+tpl_name, _ht)
 }

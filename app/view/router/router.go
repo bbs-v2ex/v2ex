@@ -90,9 +90,6 @@ func RegisterRoute(r *gin.Engine) {
 	v_question.GET(fmt.Sprintf("/:did"),
 		setParam(view.ViewTypeQuestion), question.Question)
 
-	v_question.GET(fmt.Sprintf("/:did/edit_answer"),
-		setParam(view.ViewTypeQuestionEdit), question.QuestionEditAnswer)
-
 	v_question.GET(fmt.Sprintf("/:did/%s/:rid", model.UrlTagQuestionReply),
 		setParam(view.ViewTypeQuestion), question.Question)
 

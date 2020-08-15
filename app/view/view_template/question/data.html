@@ -21,7 +21,8 @@
             <div class="content mt-4">
                 {{.index.InfoQuestion.Content|html}}
                 <div class="content-footer">
-                    <div class="collect-btn" :class="{'collect-btn-active':collect.status}" v-html="collect.txt" @click="collect_toggle"> 收藏 </div>
+                    <div class="collect-btn  float-left  mr-3" :class="{'collect-btn-active':collect.status}" v-html="collect.txt" @click="collect_toggle"> 收藏 </div>
+                    <div v-if="edit" class="collect-btn float-left" style="color: #b9b0b0;border-color: #b9b0b0" @click="go_edit">编辑</div>
                     <div v-html="collect.ajax_txt"></div>
                 </div>
             </div>
@@ -126,7 +127,7 @@
 <script src="{{st "/highlight/highlight.js"}}"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <script src="{{st "/btv5/popper.min.js"}}" type="application/javascript"></script>
-<script>let comment = JSON.parse('{{.comment|json}}');let DID={{.index.DID}}; const UploadServer = "{{.___upload_server}}";</script>
+<script>let comment = JSON.parse('{{.comment|json}}');let DID={{.index.DID}};let MID={{.index.MID}}</script>
 <script src="{{st "/js/question.js"}}"></script>
 <script> app.edit_root.did =DID;var discuss_modal  =  new bootstrap.Modal(document.querySelector('#puper-view'),{ keyboard: false});</script>
 <script type="application/javascript" src="{{st "/wangEditor-3.1.1/wangEditor.min.js"}}"></script>

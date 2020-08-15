@@ -6,6 +6,7 @@ var app = new Vue({
 
     data() {
         return {
+            edit: false,
             collect: {
                 status: false,
                 txt: '收藏',
@@ -54,7 +55,7 @@ var app = new Vue({
         post(`/${___now_type}/is_root_edit`, {did: DID}).then(res => {
             if (res.code === 1){
                 if (!res.data){
-                    this.edit_1 =   `你已回答了此问题可选择 <span class="link-info " onclick="window.location.href='?type=edit_answer'">编辑</span>`;
+                    this.edit_1 =   `你已回答了此问题可选择 <span class="link-info " onclick="window.location.href='/edit/edit?type=question_answer&did=${DID}'">编辑</span>`;
                 }
             }
         });
@@ -66,9 +67,13 @@ var app = new Vue({
         });
         setTimeout(function () {
             post('/show',{did: DID})
-        },1500)
+        },1500);
+        this.edit = this.user_info.mid === MID ? true : false;
     },
     methods: {
+        go_edit(){
+            window.location.href=`/edit/edit?type=question&did=${DID}`
+        },
         collect_toggle() {
             if (this.collect.status) {
                 console.log("取消收藏");
