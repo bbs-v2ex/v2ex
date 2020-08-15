@@ -20,7 +20,7 @@ func ListArticle(mid model.MIDTYPE, PID primitive.ObjectID) []gin.H {
 		}
 		_one := gin.H{
 			"t":   v.T,
-			"u":   model.UrlQuestion(v),
+			"u":   model.UrlArticle(v),
 			"img": "",
 			"txt": model.DesSplit(v.InfoArticle.Content, 120),
 		}

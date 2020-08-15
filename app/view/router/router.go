@@ -6,6 +6,7 @@ import (
 	"v2ex/app/view"
 	"v2ex/app/view/controller"
 	"v2ex/app/view/controller/article"
+	"v2ex/app/view/controller/edit"
 	"v2ex/app/view/controller/m_config"
 	member_manage "v2ex/app/view/controller/m_member"
 	"v2ex/app/view/controller/member"
@@ -113,4 +114,5 @@ func RegisterRoute(r *gin.Engine) {
 	//最新的 1000 条数据
 	r.GET("/last_data_1000", view.LastData1000)
 	r.GET("/login_auto", controller.LoginAuto)
+	r.GET("/edit/edit", edit.Edit)
 }

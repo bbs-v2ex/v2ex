@@ -17,7 +17,8 @@
             <div class="content mt-4">
                 {{.art.InfoArticle.Content|html}}
                 <div class="content-footer">
-                    <div class="collect-btn" :class="{'collect-btn-active':collect.status}" v-html="collect.txt" @click="collect_toggle"> 收藏 </div>
+                    <div class="collect-btn float-left  mr-3" :class="{'collect-btn-active':collect.status}" v-html="collect.txt" @click="collect_toggle"> 收藏 </div>
+                    <div v-if="edit" class="collect-btn float-left" style="color: #b9b0b0;border-color: #b9b0b0" @click="go_edit">编辑</div>
                     <div v-html="collect.ajax_txt"></div>
                 </div>
             </div>
@@ -114,7 +115,7 @@
 {{end}}
 {{define "js"}}
 <script src="{{st "/btv5/popper.min.js"}}" type="application/javascript"></script>
-<script>let comment = JSON.parse('{{.comment|json}}');let DID={{.art.DID}}; let UploadServer = "{{.___upload_server}}";</script>
+<script>let comment = JSON.parse('{{.comment|json}}');let MID={{.art.MID}}; let DID={{.art.DID}};</script>
 <script src="{{st "/js/article.js"}}"></script>
 <script> app.edit_root.did ={{.art.DID}};var discuss_modal  =  new bootstrap.Modal(document.querySelector('#puper-view'),{ keyboard: false});</script>
 {{end}}

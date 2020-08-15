@@ -4,6 +4,7 @@ var app = new Vue({
 
     data() {
         return {
+            edit: false,
             collect: {
                 status: false,
                 txt: '收藏',
@@ -51,11 +52,14 @@ var app = new Vue({
             }
         });
         setTimeout(function () {
-            post('/show',{did: DID})
-        },1500)
+            post('/show', {did: DID})
+        }, 1500);
+        this.edit = this.user_info.mid === MID ? true : false;
     },
     methods: {
-
+        go_edit(){
+            window.location.href=`/edit/edit?type=article&did=${DID}`
+        },
         collect_toggle() {
             if (this.collect.status) {
                 console.log("取消收藏")

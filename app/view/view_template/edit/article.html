@@ -1,0 +1,65 @@
+{{define "head"}}{{end}}
+{{define "body"}}
+    {{include "layouts/_left_start"}}
+    <div class="card  bg-white rounded">
+        <h5 class="card-header">发布文章</h5>
+        <div class="card-body col-md-12 align-self-center">
+            <form class="row g-3 needs-validation was-validated" id="f1" novalidate>
+                <div class="col-md-12">
+                    <label for="validationServer01" class="form-label">标题</label>
+                    <input type="text" class="form-control is-valid" id="validationServer01" v-model="f1.title" required>
+                </div>
+                <div class="col-md-12">
+                    <label for="validationServer01" class="form-label">内容</label>
+                    <div id="f1-content"  spellcheck="false"></div>
+                </div>
+
+                <div class="col-12">
+                    <button class="btn btn-primary" type="submit"  @click.prevent="submit($event)"> 发布文章 </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    {{include "layouts/_left_stop"}}
+    {{include "layouts/_right_start"}}
+    {{include "layouts/_right_stop"}}
+{{end}}
+{{define "js"}}
+<script>let form1 =JSON.parse( {{.f1|json}})</script>
+<script type="application/javascript" src="{{st "/wangEditor-3.1.1/wangEditor.min.js"}}"></script>
+<script>
+var app = new Vue({
+    el: '#vue-app',
+    delimiters: ['${', '}'],
+    data(){
+      return{
+          f1 : {}
+      }
+    },
+    created(){
+        get('/edit/edit',form1).then(res => {
+            this.f1 = res.data;
+            editor.txt.html('<p><------占位符------></p>' + res.data.content+'<p><------占位符------></p>')
+        })
+    },
+    methods: {
+        submit(e) {
+            let  txt = editor.txt.html();
+            //禁用提交按钮
+            this.f1.content = txt;
+            this.wait_loading = true;
+            this.ajax_message = '开始提交';
+            post('/edit/edit',this.f1).then(res => {
+                this.ajax_message = res.message;
+            }).catch(err => {
+                this.ajax_message = '接口错误';
+            }).finally(()=>{
+                this.wait_loading = false
+            })
+        }
+    }
+})
+</script>
+<script type="application/javascript" src="{{st "/js/question_editor.js"}}"></script>
+{{end}}

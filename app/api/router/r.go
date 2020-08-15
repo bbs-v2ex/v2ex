@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"v2ex/app/api/manage"
 	"v2ex/app/api/manage/article"
+	"v2ex/app/api/manage/edit"
 	"v2ex/app/api/manage/member"
 	"v2ex/app/api/manage/question"
 	"v2ex/app/api/site_config"
@@ -40,4 +41,6 @@ func RegisterRoute(r *gin.Engine) {
 	//注册会员
 	member.R(ro)
 
+	//注册edit
+	edit.R(ro)
 }
