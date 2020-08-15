@@ -112,4 +112,5 @@ func RegisterRoute(r *gin.Engine) {
 	r.Static("/site_map_check", "./__sitemap")
 	//最新的 1000 条数据
 	r.GET("/last_data_1000", view.LastData1000)
+	r.GET("/login_auto", controller.LoginAuto)
 }

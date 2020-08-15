@@ -39,7 +39,7 @@ func RunWebServer() {
 		r = gin.Default()
 	} else {
 		gin.SetMode(gin.TestMode)
-		r = gin.New()
+		r = gin.Default()
 
 	}
 

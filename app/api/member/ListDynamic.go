@@ -1,6 +1,7 @@
 package member
 
 import (
+	"fmt"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"v2ex/model"
 )
@@ -11,6 +12,8 @@ func ListDynamic(mid model.MIDTYPE, PID primitive.ObjectID) []model.MovementHtml
 	for _, v := range list {
 		hs, err := v.ToConversion()
 		if err != nil {
+			fmt.Println(v.ID.Hex())
+			fmt.Println(err)
 			continue
 		}
 		//处理图片

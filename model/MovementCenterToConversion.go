@@ -1,11 +1,11 @@
 package model
 
 import (
+	"encoding/json"
 	"errors"
 	"github.com/123456/c_code"
 	"github.com/123456/c_code/mc"
 	"github.com/globalsign/mgo/bson"
-	bson2 "go.mongodb.org/mongo-driver/bson"
 )
 
 type MovementHtml struct {
@@ -37,8 +37,9 @@ type ___movementHtml_author struct {
 
 func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
 	hs.ID = t.ID.Hex()
-	var json []byte
-	json, err = bson.MarshalJSON(t.V)
+	var json_s []byte
+	//json, err = bson2.MarshalExtJSON(t.V,false,false)
+	json_s, err = json.Marshal(t.V)
 	if err != nil {
 		return
 	}
@@ -46,7 +47,8 @@ func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
 	switch t.Type {
 	case MovementArticleSend: //1
 		d := articleSend{}
-		err = bson2.UnmarshalExtJSON(json, false, &d)
+		//err = bson2.UnmarshalExtJSON(json, false, &d)
+		err = json.Unmarshal(json_s, &d)
 		if err != nil {
 			return
 		}
@@ -75,7 +77,8 @@ func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
 
 	case MovementArticleCommentRoot: // 2
 		d := articleCommentRoot{}
-		err = bson2.UnmarshalExtJSON(json, false, &d)
+		//err = bson2.UnmarshalExtJSON(json, false, &d)
+		err = json.Unmarshal(json_s, &d)
 		if err != nil {
 			return
 		}
@@ -130,7 +133,8 @@ func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
 
 	case MovementArticleCommentGood: //3
 		d := articleCommentZan{}
-		err = bson2.UnmarshalExtJSON(json, false, &d)
+		//err = bson2.UnmarshalExtJSON(json, false, &d)
+		err = json.Unmarshal(json_s, &d)
 		if err != nil {
 			return
 		}
@@ -181,7 +185,8 @@ func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
 
 	case MovementQuestionSend: //4
 		d := questionSend{}
-		err = bson2.UnmarshalExtJSON(json, false, &d)
+		//err = bson2.UnmarshalExtJSON(json, false, &d)
+		err = json.Unmarshal(json_s, &d)
 		if err != nil {
 			return
 		}
@@ -211,7 +216,8 @@ func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
 
 	case MovementQuestionCommentRoot: //5
 		d := questionCommentRoot{}
-		err = bson2.UnmarshalExtJSON(json, false, &d)
+		//err = bson2.UnmarshalExtJSON(json, false, &d)
+		err = json.Unmarshal(json_s, &d)
 		if err != nil {
 			return
 		}
@@ -266,7 +272,8 @@ func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
 
 	case MovementQuestionCommentGood: //6
 		d := questionAnswerZan{}
-		err = bson2.UnmarshalExtJSON(json, false, &d)
+		//err = bson2.UnmarshalExtJSON(json, false, &d)
+		err = json.Unmarshal(json_s, &d)
 		if err != nil {
 			return
 		}
@@ -315,7 +322,8 @@ func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
 		break
 	case MovementCollect: //7
 		d := collect{}
-		err = bson2.UnmarshalExtJSON(json, false, &d)
+		//err = bson2.UnmarshalExtJSON(json, false, &d)
+		err = json.Unmarshal(json_s, &d)
 		if err != nil {
 			return
 		}

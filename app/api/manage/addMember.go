@@ -12,6 +12,7 @@ import (
 type _add_member_post struct {
 	UserName string `json:"username"`
 	PassWord string `json:"password"`
+	Sign     string `json:"sign"`
 }
 
 func AddMember(c *gin.Context) {

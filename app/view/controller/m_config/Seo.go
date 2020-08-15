@@ -7,5 +7,6 @@ import (
 
 func Index(c *gin.Context) {
 	_ht := defaultData(c)
-	view.Render(c, "m_config/"+c.Param("seo"), _ht)
+	file_tpl := "m_config" + c.Param("seo")
+	view.Render(c, file_tpl, _ht)
 }
