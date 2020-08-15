@@ -15,6 +15,7 @@ type Member struct {
 	MemberType int                `json:"member_type" bson:"member_type"`
 	UserName   string             `json:"user_name" bson:"user_name"`
 	Avatar     string             `json:"avatar" bson:"avatar"`
+	IsUser     bool               `json:"is_user" bson:"is_user"`
 	More       MemberMore         `json:"-" bson:"-"`
 }
 

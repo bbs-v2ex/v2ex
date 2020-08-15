@@ -72,8 +72,6 @@ func Article(c *gin.Context) {
 
 	_ht["comment"] = api_article.CommentRootList(model.DIDTYPE(did), rid, true)
 
-	//加载相关文章
-
 	nids := []primitive.ObjectID{
 		index.ID,
 	}
@@ -98,8 +96,11 @@ func Article(c *gin.Context) {
 		if len(r_ci_list) == 0 {
 			r_ci_list = []string{"问", "文"}
 		}
-
-		mc.Table(index.Table()).Where(bson.M{"_id": bson.M{"$nin": nids}, "t": bson.M{"$regex": "/" + strings.Join(r_ci_list, "|") + "/"}}).Order(bson.M{"_id": -1}).Limit(10).Find(&_r_list)
+		r_where := bson.M{
+			"_id": bson.M{"$nin": nids},
+			"t":   bson.M{"$regex": strings.Join(r_ci_list, "|")},
+		}
+		mc.Table(index.Table()).Where(r_where).Order(bson.M{"_id": -1}).Limit(10).Find(&_r_list)
 		rl_list := []model.DIDTYPE{}
 		for _, v := range _r_list {
 			rl_list = append(rl_list, v.DID)

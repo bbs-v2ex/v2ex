@@ -13,6 +13,13 @@
                         </div>
                     </div>
 
+                    <div class="col-md-12">
+                        <div>
+                            <label class="form-label">爬虫签名</label>
+                            <input type="text" class="form-control is-valid" v-model="seo.spider_sign" required>
+                        </div>
+                    </div>
+
                     <div v-if="ajax_message != ''">${ajax_message}</div>
 
                     <div class="col-12">

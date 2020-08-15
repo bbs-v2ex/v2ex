@@ -1,6 +1,7 @@
 package question
 
 import (
+	"fmt"
 	"github.com/123456/c_code/mc"
 	"github.com/gin-gonic/gin"
 	"github.com/globalsign/mgo/bson"
@@ -112,14 +113,19 @@ func Question(c *gin.Context) {
 	r_list := []gin.H{}
 	_r_list := []model.DataIndex{}
 	if index.InfoQuestion.RelatedTime.Unix() < until.DataTimeDifference(-7).Unix() {
+		//if true {
 		//需要更新相关数列表
 		r_ci_list := strings.Split(k, "，")
 		if len(r_ci_list) == 0 {
-			r_ci_list = []string{"问", "文"}
+			r_ci_list = []string{"的", "问"}
 		}
-
-		mc.Table(index.Table()).Where(bson.M{"_id": bson.M{"$nin": nids}, "t": bson.M{"$regex": "/" + strings.Join(r_ci_list, "|") + "/"}}).Order(bson.M{"_id": -1}).Limit(10).Find(&_r_list)
+		r_where := bson.M{
+			"_id": bson.M{"$nin": nids},
+			"t":   bson.M{"$regex": strings.Join(r_ci_list, "|")},
+		}
+		mc.Table(index.Table()).Where(r_where).Order(bson.M{"_id": -1}).Limit(10).Find(&_r_list)
 		rl_list := []model.DIDTYPE{}
+		fmt.Println(r_where)
 		for _, v := range _r_list {
 			rl_list = append(rl_list, v.DID)
 		}

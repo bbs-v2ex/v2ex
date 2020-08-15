@@ -5,14 +5,13 @@ import (
 	"github.com/globalsign/mgo/bson"
 	"v2ex"
 	"v2ex/model"
-	"v2ex/until"
 )
 
 func main() {
 	v2ex.ConnectMongodb()
 	list := []model.Member{}
-	mc.Table(model.Member{}.Table()).Where(bson.M{"avatar": ""}).Find(&list)
+	mc.Table(model.Member{}.Table()).Where(bson.M{}).Find(&list)
 	for _, v := range list {
-		mc.Table(v.Table()).Where(bson.M{"_id": v.ID}).UpdateOne(bson.M{"avatar": until.RandomAvatar()})
+		mc.Table(v.Table()).Where(bson.M{"_id": v.ID}).UpdateOne(bson.M{"is_user": false})
 	}
 }

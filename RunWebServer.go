@@ -35,15 +35,13 @@ func RunWebServer() {
 	debug := cg.Run.Debug
 
 	//设置 gin 启动参数
-	//if debug {
-	//	r = gin.Default()
-	//} else {
-	//	gin.SetMode(gin.ReleaseMode)
-	//	r = gin.New()
-	//
-	//}
-	r = gin.Default()
-	gin.SetMode(gin.TestMode)
+	if debug {
+		r = gin.Default()
+	} else {
+		gin.SetMode(gin.TestMode)
+		r = gin.New()
+
+	}
 
 	//处理静态文件
 	if debug {

@@ -19,7 +19,7 @@ func RegisterRoute(r *gin.Engine) {
 	ro.POST("/login", manage.Login)
 	ro.POST("/loginout", manage.LoginOut)
 	ro.POST("/show", manage.Show)
-
+	ro.Use(api_send())
 	ro.Use(checkLogin)
 	ro.POST("/reload_token", manage.ReloadToken)
 	site_config.R(ro)
