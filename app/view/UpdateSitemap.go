@@ -30,7 +30,7 @@ func UpdateSiteMap(c *gin.Context) {
 		return
 	}
 	//os.RemoveAll(sitemap_dir)
-	index_list := []string{}
+
 	//进行更新sitemap 地图
 	//先查询所有文章页
 	client := model.DataIndex{}
@@ -67,7 +67,7 @@ func UpdateSiteMap(c *gin.Context) {
 			pid = v.ID
 		}
 		f_name := fmt.Sprintf("/a_%d", f_index)
-		index_list = append(index_list, f_name)
+
 		f_index++
 
 		//xml
@@ -117,7 +117,6 @@ func UpdateSiteMap(c *gin.Context) {
 			pid = v.ID
 		}
 		f_name := fmt.Sprintf("/q_%d", f_index)
-		index_list = append(index_list, f_name)
 		f_index++
 
 		//xml
@@ -152,7 +151,6 @@ func UpdateSiteMap(c *gin.Context) {
 		if len(a) == 0 {
 			break
 		}
-		f_index++
 		for _, v := range a {
 
 			link_list = append(link_list, map[string]string{
@@ -165,7 +163,6 @@ func UpdateSiteMap(c *gin.Context) {
 			pid = v.ID
 		}
 		f_name := fmt.Sprintf("/member_%d", f_index)
-		index_list = append(index_list, f_name)
 		f_index++
 
 		//xml
@@ -188,18 +185,23 @@ func UpdateSiteMap(c *gin.Context) {
 	if err != nil {
 		return
 	}
-	index_list = []string{}
+	index_list := []map[string]string{}
 	for _, v := range dir {
 		if v.Name() == "index.xml" {
 			continue
 		}
 		if strings.HasSuffix(v.Name(), ".xml") {
-			index_list = append(index_list, fmt.Sprintf("%s/site_map_check/%s", site, v.Name()))
+			index_list = append(index_list, map[string]string{
+				"loc": fmt.Sprintf("%s/site_map_check/%s", site, v.Name()),
+			})
 		}
 	}
 	content := RenderGetContent("sitemap/xml_index.html", gin.H{"list": index_list})
 	content = regexp.MustCompile(`^&lt;\?`).ReplaceAllString(content, "<?")
 	ioutil.WriteFile(sitemap_dir+"/index.xml", []byte(content), 0666)
+
+	content = RenderGetContent("sitemap/text.html", gin.H{"list": index_list})
+	ioutil.WriteFile(sitemap_dir+"/index.txt", []byte(content), 0666)
 	//更新时间
 	model.SiteConfig{}.SetUpdateSiteMap()
 	c.String(200, "更新完成")

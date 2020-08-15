@@ -63,6 +63,7 @@
                             //设置token
                             user_client.setToken(res.token);
                             if (user_client.check() === true){
+                                debugger
                                 window.location.href = "/";
                                 return
                             }

@@ -144,8 +144,12 @@ var user_client = new class {
                         time: timeOffset(),
                     }));
                 }
-            })
+
+
+            });
+
         } catch (e) {
+
             return false
         }
         return true
