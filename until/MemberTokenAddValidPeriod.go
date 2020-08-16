@@ -14,6 +14,13 @@ func MemberTokenAddValidPeriod() string {
 	//fmt.Println(add.String())
 	return add.Format("20060102150405")
 }
+func MemberTokenAdd() string {
+
+	//fmt.Println(time.Now().In(cstZone).Add(time.Minute * 30).Format("2006-01-02 15:04:05"))
+	add := time.Now().In(cstZone)
+	//fmt.Println(add.String())
+	return add.Format("20060102150405")
+}
 
 /**
 首页加载的 最热数据时差

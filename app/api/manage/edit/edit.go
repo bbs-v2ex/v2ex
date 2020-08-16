@@ -49,7 +49,7 @@ func edit(c *gin.Context) {
 			c.JSON(200, result_json)
 			return
 		}
-		res.Content = api.RestorePicture(data_index.InfoArticle.Content, "", data_index.InfoArticle.Imgs)
+		res.Content = api.RestorePicture(data_index.InfoArticle.Content, "", data_index.InfoArticle.Imgs, "300")
 		result_json := c_code.V1GinSuccess(res)
 		c.JSON(200, result_json)
 		return
@@ -69,7 +69,7 @@ func edit(c *gin.Context) {
 			c.JSON(200, result_json)
 			return
 		}
-		res.Content = api.RestorePicture(data_index.InfoQuestion.Content, "", data_index.InfoQuestion.Imgs)
+		res.Content = api.RestorePicture(data_index.InfoQuestion.Content, "", data_index.InfoQuestion.Imgs, "300")
 		result_json := c_code.V1GinSuccess(res)
 		c.JSON(200, result_json)
 		return
@@ -84,7 +84,7 @@ func edit(c *gin.Context) {
 		}
 
 		mc.Table(answer.Text.Table()).Where(bson.M{"_id": answer.ID}).FindOne(&answer.Text)
-		res.Content = api.RestorePicture(answer.Text.Text, "", answer.Text.Img)
+		res.Content = api.RestorePicture(answer.Text.Text, "", answer.Text.Img, "300")
 
 		result_json := c_code.V1GinSuccess(res)
 		c.JSON(200, result_json)

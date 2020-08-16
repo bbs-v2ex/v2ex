@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"io/ioutil"
 	"log"
+	"net/url"
 	"os"
 	"regexp"
 	"time"
@@ -46,7 +47,14 @@ func DownloadTempImg(c *gin.Context) {
 		}
 
 	} else {
-		err := c_code.DownloadFile(u, tmp_dir+_img_name)
+		pu, err := url.Parse(u)
+		if err != nil {
+			result_json := c_code.V1GinError(100, "下载文件失败"+err.Error())
+			c.JSON(200, result_json)
+			return
+		}
+		u2 := pu.Scheme + "://" + pu.Host + pu.Path
+		err = c_code.DownloadFile(u2, tmp_dir+_img_name)
 		if err != nil {
 			result_json := c_code.V1GinError(101, "下载文件失败"+err.Error())
 			c.JSON(200, result_json)

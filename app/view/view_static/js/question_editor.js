@@ -48,8 +48,9 @@ async function check() {
     let list = document.querySelectorAll('#f1-content img');
 
     for (item of  list){
-        let src = item.currentSrc;
+        let src = item.src;
         if (src === ""){
+
             item.remove();
             continue
         }
@@ -62,9 +63,11 @@ async function check() {
                 if (data.code === 1){
                     item.src = data.data;
                 }else {
+
                     item.remove();
                 }
             }catch (e) {
+
                 item.remove();
             }
             continue
@@ -88,12 +91,14 @@ async function check() {
                 if (data.code === 1){
                     item.outerHTML = `<img src="${UploadServer}/${data.url}"/>`
                 }else{
+
                     item.remove();
                 }
             }catch (e) {
                 console.log(e);
+
                 item.remove();
-                debugger
+
             }
         }
     }

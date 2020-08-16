@@ -66,8 +66,14 @@ func SeparatePicture(_html string) (html string, imgs []string, err error) {
 	doc.Find("img").Each(func(i int, selection *goquery.Selection) {
 		src, _ := selection.Attr("src")
 		if strings.HasPrefix(src, _con.Run.UploadServer) {
+
+			p_url, err := url.Parse(src)
+			if err != nil {
+				selection.Remove()
+			}
 			selection.ReplaceWithHtml(IMGHTML)
-			imgs = append(imgs, strings.ReplaceAll(src, _con.Run.UploadServer, ""))
+			imgs = append(imgs, p_url.Path)
+			//imgs = append(imgs, strings.ReplaceAll(src, _con.Run.UploadServer, ""))
 		} else {
 			selection.Remove()
 		}

@@ -18,6 +18,10 @@ func main() {
 	nc.Init()
 
 	fmt.Println(config.GetConfig().Dump())
+
+	//系统定时任务
+	v2ex.CornRun()
+
 	//启动 web 服务器
 	v2ex.RunWebServer()
 	//打印配置
