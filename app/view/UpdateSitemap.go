@@ -12,13 +12,15 @@ import (
 	"regexp"
 	"strings"
 	"time"
+	"v2ex/config"
 	"v2ex/model"
 	"v2ex/until"
 )
 
 func UpdateSiteMap(c *gin.Context) {
 	update := model.SiteConfig{}.GetUpdateSiteMap()
-	site := "https://www.studyseo.net"
+	_con := config.GetConfig()
+	site := _con.Run.SiteMapUrlPreFix
 	sitemap_dir := "./__sitemap/"
 	isdir, _ := c_code.IsDir(sitemap_dir)
 	if !isdir {

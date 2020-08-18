@@ -45,10 +45,7 @@ func Article(c *gin.Context) {
 	//渲染数据
 	_ht := defaultData(c)
 	//图片归位
-	for k, _ := range index.InfoArticle.Imgs {
-		index.InfoArticle.Imgs[k] += "?h=500"
-	}
-	index.InfoArticle.Content = api.RestorePicture(index.InfoArticle.Content, index.T, index.InfoArticle.Imgs)
+	index.InfoArticle.Content = api.RestorePicture(index.InfoArticle.Content, index.T, index.InfoArticle.Imgs, "500")
 	_ht["art"] = index
 
 	t_list = append(t_list, index.T)

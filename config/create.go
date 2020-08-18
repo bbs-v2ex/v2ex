@@ -28,12 +28,14 @@ func (conf SConfig) Dump() string {
 }
 
 func CreateConfigFile() {
+
 	ctoml := SConfig{
 		Run: run{
-			Debug:        true,
-			LocaIP:       "127.0.0.1",
-			Port:         8777,
-			UploadServer: "http://127.0.0.1:8181",
+			Debug:            true,
+			LocaIP:           "127.0.0.1",
+			Port:             8777,
+			UploadServer:     "http://127.0.0.1:8181",
+			SiteMapUrlPreFix: "https://studuyseo.net",
 		},
 		DB: db{
 			IP:       "127.0.0.1",

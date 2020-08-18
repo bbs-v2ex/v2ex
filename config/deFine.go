@@ -19,6 +19,8 @@ type run struct {
 	Port   int    `toml:"程序启动端口"`
 
 	UploadServer string `toml:"图片服务器接口"`
+
+	SiteMapUrlPreFix string `toml:"网站地图URL前缀"`
 }
 
 //数据量配置

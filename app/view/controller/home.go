@@ -121,7 +121,7 @@ func Home(c *gin.Context) {
 	for _, v := range _q {
 		q = append(q, gin.H{
 			"t": v.T,
-			"u": model.UrlArticle(v),
+			"u": model.UrlQuestion(v),
 		})
 		aids = append(aids, v.ID)
 	}

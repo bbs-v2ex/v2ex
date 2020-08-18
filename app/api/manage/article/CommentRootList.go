@@ -54,7 +54,7 @@ func CommentRootList(did model.DIDTYPE, rid primitive.ObjectID, keep_self bool) 
 				"mid":    comment_list[k].MID,
 				"des":    user_info.More.Des,
 			},
-			"txt":      api.RestorePicture(comment_list[k].Text.Text, "", comment_list[k].Text.Img),
+			"txt":      api.RestorePicture(comment_list[k].Text.Text, "", comment_list[k].Text.Img, "450"),
 			"zan":      comment_list[k].ZanLen,
 			"zan_user": comment_list[k].Text.Zan,
 			"rc":       comment_list[k].RC,
