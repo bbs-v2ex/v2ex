@@ -57,7 +57,7 @@ async function check() {
         if (src.startsWith(UploadServer) ){
             continue;
         }
-        if (src.indexOf("/static/tmp/") === -1 || src.startsWith('data:image/')){
+        if (src.indexOf("/tmp/") === -1 || src.startsWith('data:image/')){
             try {
                 let  data  =  await post('/download_temp_img',{u:src});
                 if (data.code === 1){

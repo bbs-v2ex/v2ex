@@ -33,7 +33,7 @@ func add(c *gin.Context) {
 		return
 	}
 	//插入数据表
-	did, err := model.AutoID{}.DataID()
+	did, err := model.AutoID{}.QAID()
 	if err != nil && did == 0 {
 		result_json := c_code.V1GinError(102, "ID 生成失败")
 		c.JSON(200, result_json)
@@ -89,7 +89,7 @@ func add(c *gin.Context) {
 		return
 	}
 	result_json := c_code.V1GinSuccess("", "添加成功", fmt.Sprintf("/q/%d", did))
-	model.AutoID{}.DataAdd()
+	model.AutoID{}.QAAdd()
 	model.Movement(user.MID, 0).AddQuestionSend(index)
 	c.JSON(200, result_json)
 	return

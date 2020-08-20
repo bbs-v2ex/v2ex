@@ -36,6 +36,7 @@ func CreateConfigFile() {
 			Port:             8777,
 			UploadServer:     "http://127.0.0.1:8181",
 			SiteMapUrlPreFix: "https://studuyseo.net",
+			TempUploadDir:    "./tmp/",
 		},
 		DB: db{
 			IP:       "127.0.0.1",

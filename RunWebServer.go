@@ -43,13 +43,19 @@ func RunWebServer() {
 
 	}
 
+	r.Static("/tmp", cg.Run.TempUploadDir)
 	//处理静态文件
 	if debug {
 		r.Static("/static", "./app/view/view_static")
+
 	} else {
 		box := rice.MustFindBox("app/view/view_static")
 		cssFileServer := http.StripPrefix("/static", http.FileServer(box.HTTPBox()))
 		r.GET("/static/*a", gin.WrapH(cssFileServer))
+
+		//box2 := rice.MustFindBox("tmp")
+		//cssFileServer2 := http.StripPrefix("/tmp", http.FileServer(box2.HTTPBox()))
+		//r.GET("/tmp/*a", gin.WrapH(cssFileServer2))
 	}
 
 	//加载全局模板函数

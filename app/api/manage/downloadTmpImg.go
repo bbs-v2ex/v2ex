@@ -21,7 +21,8 @@ func DownloadTempImg(c *gin.Context) {
 	_f := _download_temp_img{}
 	c.BindJSON(&_f)
 	u := _f.U
-	tmp_dir := _con.ExecPath + "/app/" + "view/view_static/tmp/"
+	//tmp_dir := _con.ExecPath + "/app/" + "view/view_static/tmp/"
+	tmp_dir := _con.Run.TempUploadDir
 	err2 := os.MkdirAll(tmp_dir, 0666)
 	if err2 != nil {
 		log.Println(err2)
@@ -61,7 +62,7 @@ func DownloadTempImg(c *gin.Context) {
 			return
 		}
 	}
-	result_json := c_code.V1GinSuccess("/static/tmp/" + _img_name)
+	result_json := c_code.V1GinSuccess("/tmp/" + _img_name)
 	c.JSON(200, result_json)
 	return
 }

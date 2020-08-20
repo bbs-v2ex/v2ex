@@ -18,6 +18,9 @@ type run struct {
 	LocaIP string `toml:"监听地址"`
 	Port   int    `toml:"程序启动端口"`
 
+	//临时上传目录
+	TempUploadDir string `toml:"临时上传目录"`
+
 	UploadServer string `toml:"图片服务器接口"`
 
 	SiteMapUrlPreFix string `toml:"网站地图URL前缀"`

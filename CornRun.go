@@ -71,7 +71,7 @@ func del_tmp_files() {
 	}
 	for _, f := range dir {
 		f.ModTime().Unix()
-		//fmt.Println(f.ModTime().Add(1 * time.Hour).Format("2006-01-02 15:04:05"))
+		fmt.Println(f.ModTime().Add(1 * time.Hour).Format("2006-01-02 15:04:05"))
 		if f.ModTime().Add(1*time.Hour).Unix() < time.Now().Unix() {
 			os.Remove(_tmp_dir + f.Name())
 		}
