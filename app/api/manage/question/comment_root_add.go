@@ -14,8 +14,8 @@ import (
 
 type _comment_root_add struct {
 	DID  model.DIDTYPE `json:"did" validate:"gt=0" comment:"文章ID"`
-	Txt  string        `json:"txt" validate:"min=10,max=1000" comment:"数据"`
-	Text string        `validate:"min=10,max=1000" comment:"数据"`
+	Txt  string        `json:"txt"`
+	Text string        `validate:"min=10,max=100000000" comment:"数据"`
 }
 
 func comment_root_add(c *gin.Context) {

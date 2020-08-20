@@ -63,7 +63,7 @@ func UpdateSiteMap(c *gin.Context) {
 				"t":          v.T,
 				"loc":        site + model.UrlArticle(v),
 				"priority":   "0.3",
-				"lastmod":    v.InfoArticle.ReleaseTime.In(until.CST).Format("2006-01-02 15:04:05"),
+				"lastmod":    v.InfoArticle.ReleaseTime.In(until.CST).Format("2006-01-02"),
 				"changefreq": "weekly",
 			})
 			pid = v.ID
@@ -113,7 +113,7 @@ func UpdateSiteMap(c *gin.Context) {
 				"t":          v.T,
 				"loc":        site + model.UrlQuestion(v),
 				"priority":   "0.3",
-				"lastmod":    v.InfoQuestion.ReleaseTime.In(until.CST).Format("2006-01-02 15:04:05"),
+				"lastmod":    v.InfoQuestion.ReleaseTime.In(until.CST).Format("2006-01-02"),
 				"changefreq": "weekly",
 			})
 			pid = v.ID
@@ -159,7 +159,7 @@ func UpdateSiteMap(c *gin.Context) {
 				"t":          v.UserName,
 				"loc":        site + model.UrlMember(v),
 				"priority":   "0.3",
-				"lastmod":    time.Now().In(until.CST).Format("2006-01-02 15:04:05"),
+				"lastmod":    time.Now().In(until.CST).Format("2006-01-02"),
 				"changefreq": "weekly",
 			})
 			pid = v.ID

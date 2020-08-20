@@ -72,7 +72,7 @@ async function check() {
             }
             continue
         }
-        if (src.indexOf('/static/tmp/') > -1  ){
+        if (src.indexOf('/tmp/') > -1  ){
             //上传到服务器
             try {
 
