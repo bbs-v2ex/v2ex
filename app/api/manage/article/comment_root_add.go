@@ -39,7 +39,7 @@ func comment_root_add(c *gin.Context) {
 	//全部验证通过，入库
 	//检测did 是否存在
 	index := model.DataIndex{}
-	mc.Table(index.Table()).Where(bson.M{"did": _f.DID}).FindOne(&index)
+	mc.Table(index.Table()).Where(bson.M{"did": _f.DID, "d_type": model.DTYPEArticle}).FindOne(&index)
 	if index.DID == 0 {
 		result_json := c_code.V1GinError(103, "系统中并没有这个文章")
 		c.JSON(200, result_json)
@@ -83,7 +83,7 @@ func comment_root_add(c *gin.Context) {
 	result_json := c_code.V1GinSuccess(comment_root.ID, "添加成功", _u)
 	//评论字段加 1
 	//mc.Table(index.Table()).Where(bson.M{"did": index.DID}).FieldAddOrDel("rc", +1)
-	mc.Table(index.Table()).Where(bson.M{"did": index.DID}).UpdateOne(bson.M{"rc": index.RC + 1, "ct": time.Now().Unix()})
+	mc.Table(index.Table()).Where(bson.M{"_id": index.ID}).UpdateOne(bson.M{"rc": index.RC + 1, "ct": time.Now().Unix()})
 	//添加进通知中心
 	model.Movement(user_info.MID, index.MID).AddArticleCommentRoot(comment_root)
 

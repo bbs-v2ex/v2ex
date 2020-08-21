@@ -60,7 +60,7 @@ func comment_root_add(c *gin.Context) {
 
 	//检测did 是否存在
 	index := model.DataIndex{}
-	mc.Table(index.Table()).Where(bson.M{"did": _f.DID}).FindOne(&index)
+	mc.Table(index.Table()).Where(bson.M{"did": _f.DID, "d_type": model.DTYPEQuestion}).FindOne(&index)
 	if index.DID == 0 {
 		result_json := c_code.V1GinError(106, "未找到该问题")
 		c.JSON(200, result_json)
@@ -103,7 +103,7 @@ func comment_root_add(c *gin.Context) {
 	_u += "/" + model.UrlTagQuestionReply + "/" + comment_root.ID.Hex()
 	result_json := c_code.V1GinSuccess(comment_root.ID, "添加成功", _u)
 	//评论字段加 1
-	mc.Table(index.Table()).Where(bson.M{"did": index.DID}).UpdateOne(bson.M{"rc": index.RC + 1, "ct": time.Now().Unix()})
+	mc.Table(index.Table()).Where(bson.M{"_id": index.ID}).UpdateOne(bson.M{"rc": index.RC + 1, "ct": time.Now().Unix()})
 
 	model.Movement(user_info.MID, index.MID).AddQuestionCommentRoot(comment_root)
 

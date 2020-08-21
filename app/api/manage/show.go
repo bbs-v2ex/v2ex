@@ -24,7 +24,7 @@ func Show(c *gin.Context) {
 		where["d_type"] = model.DTYPEArticle
 		break
 	case "question":
-		where["d_type"] = model.DTYPEArticle
+		where["d_type"] = model.DTYPEQuestion
 	}
 	mc.Table(model.DataIndex{}.Table()).Where(where).FieldAddOrDel("show", +1)
 }
