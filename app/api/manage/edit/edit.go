@@ -64,7 +64,7 @@ func edit(c *gin.Context) {
 		}
 		res.Title = data_index.T
 		mc.Table(data_index.InfoQuestion.Table()).Where(bson.M{"_id": data_index.ID}).FindOne(&data_index.InfoQuestion)
-		if data_index.InfoQuestion.Content == "" {
+		if data_index.InfoQuestion.ID.Hex() == mc.Empty {
 			result_json := c_code.V1GinError(102, "查询失败")
 			c.JSON(200, result_json)
 			return

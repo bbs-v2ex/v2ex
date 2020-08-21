@@ -55,7 +55,7 @@ func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
 
 		//直接组装html
 		index := DataIndex{}
-		mc.Table(index.Table()).Where(bson.M{"did": d.DID}).FindOne(&index)
+		mc.Table(index.Table()).Where(bson.M{"did": d.DID, "d_type": DTYPEArticle}).FindOne(&index)
 		if index.DID == 0 {
 			err = errors.New("文章丢失")
 			return
@@ -111,7 +111,7 @@ func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
 
 		//获取文章数据
 		index := DataIndex{}
-		mc.Table(index.Table()).Where(bson.M{"did": comment_article_root.DID}).FindOne(&index)
+		mc.Table(index.Table()).Where(bson.M{"did": comment_article_root.DID, "d_type": DTYPEArticle}).FindOne(&index)
 		if index.ID.Hex() == mc.Empty {
 			err = errors.New("文章丢失")
 			return
@@ -154,7 +154,7 @@ func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
 
 		//获取文章数据
 		index := DataIndex{}
-		mc.Table(index.Table()).Where(bson.M{"did": comment_article_root.DID}).FindOne(&index)
+		mc.Table(index.Table()).Where(bson.M{"did": comment_article_root.DID, "d_type": DTYPEArticle}).FindOne(&index)
 		if index.ID.Hex() == mc.Empty {
 			err = errors.New("文章丢失")
 			return
@@ -192,7 +192,7 @@ func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
 		}
 		//直接组装html
 		index := DataIndex{}
-		mc.Table(index.Table()).Where(bson.M{"did": d.DID}).FindOne(&index)
+		mc.Table(index.Table()).Where(bson.M{"did": d.DID, "d_type": DTYPEQuestion}).FindOne(&index)
 		if index.DID == 0 {
 			err = errors.New("提问丢失")
 			return
@@ -250,7 +250,7 @@ func (t MovementCenter) ToConversion() (hs MovementHtml, err error) {
 
 		//获取回答数据
 		index := DataIndex{}
-		mc.Table(index.Table()).Where(bson.M{"did": comment_question_root.DID}).FindOne(&index)
+		mc.Table(index.Table()).Where(bson.M{"did": comment_question_root.DID, "d_type": DTYPEQuestion}).FindOne(&index)
 		if index.ID.Hex() == mc.Empty {
 			err = errors.New("文章丢失")
 			return

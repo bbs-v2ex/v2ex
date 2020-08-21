@@ -8,7 +8,8 @@ import (
 )
 
 type _show struct {
-	DID model.DIDTYPE `json:"did" validate:"gt=0" comment:"文章ID"`
+	DID  model.DIDTYPE `json:"did" validate:"gt=0" comment:"文章ID"`
+	Type string        `json:"type"`
 }
 
 func Show(c *gin.Context) {
@@ -17,5 +18,13 @@ func Show(c *gin.Context) {
 	if _f.DID == 0 {
 		return
 	}
-	mc.Table(model.DataIndex{}.Table()).Where(bson.M{"did": _f.DID}).FieldAddOrDel("show", +1)
+	where := bson.M{"did": _f.DID}
+	switch _f.Type {
+	case "article":
+		where["d_type"] = model.DTYPEArticle
+		break
+	case "question":
+		where["d_type"] = model.DTYPEArticle
+	}
+	mc.Table(model.DataIndex{}.Table()).Where(where).FieldAddOrDel("show", +1)
 }

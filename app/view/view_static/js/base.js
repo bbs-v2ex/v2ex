@@ -114,7 +114,7 @@ var user_client = new class {
         try {
             user_info = JSON.parse(localStorage.getItem(APITOKEN));
         }catch (e) {
-
+            console.log(e)
         }
         return  user_info
     }
@@ -173,15 +173,18 @@ var login_app = new Vue({
     },
     created() {
         try {
-            this.user_info = user_client.get().user_info;
+           let u_info = user_client.get().user_info;
+           if (typeof u_info != "undefined")
+               this.user_info = u_info
         }catch (e) {
-
+            console.log(e)
         }
+        console.log(this.user_info);
         if (this.user_info.mid == undefined) {
             this.user_info.mid = 0
         }
 
-        console.log(this.user_info);
+
         document.querySelectorAll('.seo-html').forEach(function (z, i) {
             // console.dir(z)
             z.style.display = "none";

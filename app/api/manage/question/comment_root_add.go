@@ -99,8 +99,8 @@ func comment_root_add(c *gin.Context) {
 		return
 	}
 	ref := c.GetHeader("Referer")
-	_u := regexp.MustCompile(`/r/[\w|\s]{24}`).ReplaceAllString(ref, "")
-	_u += "/answer/" + comment_root.ID.Hex()
+	_u := regexp.MustCompile(`/`+model.UrlTagQuestionReply+`/[\w|\s]{24}`).ReplaceAllString(ref, "")
+	_u += "/" + model.UrlTagQuestionReply + "/" + comment_root.ID.Hex()
 	result_json := c_code.V1GinSuccess(comment_root.ID, "添加成功", _u)
 	//评论字段加 1
 	mc.Table(index.Table()).Where(bson.M{"did": index.DID}).UpdateOne(bson.M{"rc": index.RC + 1, "ct": time.Now().Unix()})

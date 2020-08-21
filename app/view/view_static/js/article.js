@@ -52,7 +52,7 @@ var app = new Vue({
             }
         });
         setTimeout(function () {
-            post('/show', {did: DID})
+            post('/show', {did: DID,type:"article"})
         }, 1500);
         this.edit = this.user_info.mid === MID ? true : false;
     },

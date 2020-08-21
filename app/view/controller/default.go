@@ -17,7 +17,7 @@ func DefaultData(c *gin.Context) (_ht gin.H) {
 	_ht["_______API"] = "/api/manage"
 	_ht["___upload_server"] = _con.Run.UploadServer
 	//初始化tdk
-
+	_ht["_debug"] = _con.Run.Debug
 	_ht["t"] = seoconfig.T
 	_ht["d"] = seoconfig.D
 	_ht["k"] = seoconfig.K
