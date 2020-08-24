@@ -133,7 +133,7 @@ var user_client = new class {
         this.session.setItem(APITOKEN,JSON.stringify({token:token}))
     }
 
-    check() {
+     check() {
         try {
             var token = JSON.parse(this.session.getItem(APITOKEN)).token;
             post('/get_user_info').then(res => {
@@ -144,20 +144,19 @@ var user_client = new class {
                         time: timeOffset(),
                     }));
                 }
-
-
             });
-
+            return true
         } catch (e) {
 
             return false
         }
-        return true
+
     }
     clear() {
         post('/loginout').then(res => {
             this.session.removeItem(APITOKEN);
-            window.location.href = "?"
+            // window.location.reload();
+            login_app.user_info = {};
         })
     }
 };

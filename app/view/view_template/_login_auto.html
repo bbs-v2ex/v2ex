@@ -32,9 +32,12 @@
                         this.ajax_message = '登录成功';
 
                         user_client.setToken(res.token);
+                        console.log(user_client.check());
                         if (user_client.check() === true){
                             // window.location.href = "/_/member/z/";
-                            window.history.back();
+                            setTimeout(function () {
+                                window.history.back();
+                            },300);
                             return
                         }
                         this.ajax_message = '鉴权失败';
