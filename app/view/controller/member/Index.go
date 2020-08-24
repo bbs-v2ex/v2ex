@@ -25,7 +25,7 @@ func Index(c *gin.Context) {
 
 	_insert_hd_member := []model.Member{}
 	insert_hd_member := []gin.H{}
-	mc.Table(model.Member{}.Table()).Where(bson.M{"mid": bson.M{"$nin": mids}}).Find(&_insert_hd_member)
+	mc.Table(model.Member{}.Table()).Where(bson.M{"mid": bson.M{"$nin": mids}}).Order(bson.M{"_id": -1}).Limit(30).Find(&_insert_hd_member)
 	for _, v := range _insert_hd_member {
 		insert_hd_member = append(insert_hd_member, gin.H{
 			"t":      v.UserName,
