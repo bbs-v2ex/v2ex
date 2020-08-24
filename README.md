@@ -11,7 +11,8 @@
 [studyseo社区](https://studyseo.net/)
 
 # 功能模块
-
+- [x] 自动生成xml txt html 网站地图
+- [x] 生成网站索引地图
 - [x] 爬虫接口
 - [x] 爬虫签名
 - [x] 自动登录
