@@ -57,7 +57,17 @@ func SeparatePicture(_html string) (html string, imgs []string, err error) {
 		}
 
 		if strings.HasPrefix(href, "http://") || strings.HasPrefix(href, "https://") {
-			selection.ReplaceWithHtml(fmt.Sprintf(`<a href="/jump-address?u=%s" rel="nofollow"  target="_blank" >%s</a>`, href, selection.Text()))
+
+			parse, err := url.Parse("http://127.0.0.1" + href)
+			if err != nil {
+				return
+			}
+			if strings.Contains(parse.Host, "studyseo.net") {
+				selection.ReplaceWithHtml(fmt.Sprintf(`<a href="%s">%s</a>`, parse.String(), selection.Text()))
+			} else {
+				selection.ReplaceWithHtml(fmt.Sprintf(`<a href="/jump-address?u=%s" rel="nofollow"  target="_blank" >%s</a>`, href, selection.Text()))
+			}
+
 		} else {
 			selection.ReplaceWithHtml(selection.Text())
 		}
@@ -78,6 +88,17 @@ func SeparatePicture(_html string) (html string, imgs []string, err error) {
 			selection.Remove()
 		}
 	})
+	if doc.Find("p").Size() <= 2 {
+		doc.Find("div").Each(func(i int, selection *goquery.Selection) {
+			ret, e := selection.Html()
+			if e != nil {
+				selection.Remove()
+				return
+			}
+			selection.ReplaceWithHtml("<p>" + ret + "</p>")
+		})
+	}
+
 	//删除 javascript 标签
 	doc.Find("script").Remove()
 	//删除为空的p标签
@@ -99,6 +120,7 @@ func SeparatePicture(_html string) (html string, imgs []string, err error) {
 		}
 		selection.ReplaceWithHtml("<p>" + ret + "</p>")
 	})
+
 	html, err = doc.Find(SelfLoadTag).Html()
 	return
 }
