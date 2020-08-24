@@ -58,7 +58,7 @@ func SeparatePicture(_html string) (html string, imgs []string, err error) {
 
 		if strings.HasPrefix(href, "http://") || strings.HasPrefix(href, "https://") {
 
-			parse, err := url.Parse("http://127.0.0.1" + href)
+			parse, err := url.Parse(href)
 			if err != nil {
 				return
 			}
