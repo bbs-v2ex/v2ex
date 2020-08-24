@@ -1,2 +1,3 @@
 User-agent: *
 Disallow:/_/
+Disallow:/jump-address
