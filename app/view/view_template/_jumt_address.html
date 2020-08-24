@@ -1,0 +1,49 @@
+{{define "head"}}
+    <style>
+        .-box2 {
+            padding-bottom: 25px;
+        }
+
+        .-box2 .-title {
+            font-size: 1.8888888888em;
+        }
+
+        .-box2 .-tip {
+            color: #919493;
+            margin-bottom: 30px;
+        }
+
+        .-box2 .link-warning {
+            border: 1px solid;
+            display: inline;
+            padding: 15px;
+            cursor: pointer;
+        }
+
+        .-box2 .link-success {
+            display: inline;
+            cursor: pointer;
+        }
+    </style>
+{{end}}
+{{define "body"}}
+    <div class="row">
+        <div class="-box2 col-12  mt-lg-5 col-md-12 col-lg-8 m-auto text-center">
+            <div class="-title">即将跳转到外部网站</div>
+            <div class="-tip">安全性未知，是否继续</div>
+            <div class="link-warning" onclick="g()">{{._u}}</div>
+            <div class=" mt-4" onclick="g()">
+                <div class="link-success">
+                    >> 继续前往 <<
+                </div>
+            </div>
+        </div>
+    </div>
+{{end}}
+{{define "js"}}
+    <script>
+        function g() {
+            window.location.href = "{{._u}}"
+        }
+    </script>
+{{end}}

@@ -21,7 +21,7 @@ func Login(c *gin.Context) {
 	if api_auth.SpiderSign == _f.Sign && api_auth.SpiderSign != "" {
 		list_mid := []model.Member{}
 		if _f.MID != 0 {
-			mc.Table(model.Member{}.Table()).Where(bson.M{"is_user": false, "mid": _f.MID}).Projection(bson.M{"mid": 1}).FindOne(&member)
+			mc.Table(model.Member{}.Table()).Where(bson.M{"mid": _f.MID}).Projection(bson.M{"mid": 1}).FindOne(&member)
 		}
 		if member.MID == 0 {
 			mc.Table(model.Member{}.Table()).Where(bson.M{"is_user": false}).Projection(bson.M{"mid": 1}).Find(&list_mid)

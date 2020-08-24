@@ -10,6 +10,7 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+	"unicode/utf8"
 	"v2ex/app/api/member"
 	"v2ex/app/nc"
 	"v2ex/app/view"
@@ -18,6 +19,7 @@ import (
 )
 
 func Member(c *gin.Context) {
+	seoconfig := nc.GetSeoConfig()
 	_ht := defaultData(c)
 	mid, _ := strconv.Atoi(c.Param("mid"))
 
@@ -153,6 +155,9 @@ func Member(c *gin.Context) {
 	if _ht["d"].(string) == "" {
 		seoconfig := nc.GetSeoConfig()
 		_ht["d"] = strings.Join(t_list, "、") + seoconfig.D
+	}
+	if utf8.RuneCountInString(_ht["d"].(string)) < 20 {
+		_ht["d"] = _ht["d"].(string) + "、" + seoconfig.D
 	}
 	_ht["sp_t"] = user_info.UserName
 

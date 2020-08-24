@@ -8,6 +8,7 @@ import (
 )
 
 const (
+	ViewTypeJumtAadress  = "jump_address"
 	ViewTypeHome         = "home"
 	ViewTypeLastActivity = "last_activity"
 	ViewTypeRegistered   = "registered"

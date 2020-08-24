@@ -24,6 +24,9 @@ func RegisterRoute(r *gin.Engine) {
 	//robots 文件
 	r.StaticFile("/robots.txt", "./000_robots.txt")
 
+	r.GET("/jump-address",
+		setParam(view.ViewTypeJumtAadress), controller.JumtAddress)
+
 	r.GET("/",
 		setParam(view.ViewTypeHome), controller.Home,
 	)
