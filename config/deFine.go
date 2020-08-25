@@ -24,6 +24,9 @@ type run struct {
 	UploadServer string `toml:"图片服务器接口"`
 
 	SiteMapUrlPreFix string `toml:"网站地图URL前缀"`
+	SiteUrlPreFix    string `toml:"网站URL前缀"`
+	SiteHost         string `toml:"-"`
+	SiteHostRoot     string `toml:"-"`
 }
 
 //数据量配置

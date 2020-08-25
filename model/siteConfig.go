@@ -27,6 +27,7 @@ type SiteConfigSeo struct {
 	Activity            _____tdk `json:"activity" bson:"activity"`
 	Question            _____tdk `json:"question" bson:"question"`
 	Article             _____tdk `json:"article" bson:"article"`
+	WX                  string   `json:"wx" bson:"wx"`
 }
 type _____tdk struct {
 	T string `json:"t" bson:"t"`

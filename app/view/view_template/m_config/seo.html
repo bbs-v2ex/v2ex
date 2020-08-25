@@ -83,6 +83,10 @@
                     <label  class="form-label">ICP 备案</label>
                     <input type="text" class="form-control " v-model="seo.icp" required>
                 </div>
+                <div class="col-12">
+                    <label  class="form-label">微信</label>
+                    <input type="text" class="form-control " v-model="seo.wx" required>
+                </div>
 
                 <div v-if="ajax_message != ''">${ajax_message}</div>
 

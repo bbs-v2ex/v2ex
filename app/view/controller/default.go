@@ -13,7 +13,7 @@ func DefaultData(c *gin.Context) (_ht gin.H) {
 	_con := config.GetConfig()
 	_ht = gin.H{}
 	//页面类型
-
+	_ht["_con"] = _con
 	_ht["_______API"] = "/api/manage"
 	_ht["___upload_server"] = _con.Run.UploadServer
 	//初始化tdk
@@ -56,9 +56,7 @@ func DefaultData(c *gin.Context) (_ht gin.H) {
 		},
 	}
 	//公示信息
-	_ht["gsinfo"] = gin.H{
-		"icp": seoconfig.ICP,
-	}
+	_ht["seoconfig"] = seoconfig
 	return
 }
 

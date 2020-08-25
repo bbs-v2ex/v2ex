@@ -29,6 +29,7 @@ func RestorePicture(s string, t string, img []string, size ...string) string {
 }
 
 func SeparatePicture(_html string) (html string, imgs []string, err error) {
+
 	_html = fmt.Sprintf("<%s>%s</%s>", SelfLoadTag, _html, SelfLoadTag)
 	_con := config.GetConfig()
 	doc, err := goquery.NewDocumentFromReader(strings.NewReader(_html))
@@ -62,7 +63,7 @@ func SeparatePicture(_html string) (html string, imgs []string, err error) {
 			if err != nil {
 				return
 			}
-			if strings.Contains(parse.Host, "studyseo.net") {
+			if strings.Contains(parse.Host, _con.Run.SiteHost) {
 				selection.ReplaceWithHtml(fmt.Sprintf(`<a href="%s">%s</a>`, parse.String(), selection.Text()))
 			} else {
 				selection.ReplaceWithHtml(fmt.Sprintf(`<a href="/jump-address?u=%s" rel="nofollow"  target="_blank" >%s</a>`, href, selection.Text()))

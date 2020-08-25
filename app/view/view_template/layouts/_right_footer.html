@@ -1,6 +1,7 @@
 <div class="-right-footer">
-  <div> <a target="_blank" rel="noopener noreferrer" href="https://tsm.miit.gov.cn/dxxzsp/">{{.gsinfo.icp}}</a> </div>
-  <div> 微信: studyseonet</div>
-  <div>© 2019-现在 www.studyseo.net</div>
+{{/*  {{.seoconfig}}*/}}
+  <div> <a target="_blank" rel="noopener noreferrer" href="https://tsm.miit.gov.cn/dxxzsp/">{{.seoconfig.ICP}}</a> </div>
+  {{if ne .seoconfig.WX ""}}<div> 微信: {{.seoconfig.WX}}</div>{{end}}
+  <div>© 2019-现在 {{._con.Run.SiteHost}}</div>
   <div> <a href="{{u "/"}}">{{.t_}}</a> 版权所有</div>
 </div>

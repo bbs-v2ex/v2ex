@@ -4,8 +4,10 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/123456/c_code"
 	"github.com/BurntSushi/toml"
 	"io/ioutil"
+	"net/url"
 	"os"
 	"path/filepath"
 )
@@ -36,6 +38,7 @@ func CreateConfigFile() {
 			Port:             8777,
 			UploadServer:     "http://127.0.0.1:8181",
 			SiteMapUrlPreFix: "https://studuyseo.net",
+			SiteUrlPreFix:    "https://studyseo.net",
 			TempUploadDir:    "./tmp/",
 		},
 		DB: db{
@@ -62,11 +65,17 @@ func LoadingConfigSourceFile() (_tmp SConfig, err error) {
 				return
 			}
 			_tmp.ExecPath = filepath.Dir(abs)
+
+			site_url, _ := url.Parse(_tmp.Run.SiteUrlPreFix)
+			_tmp.Run.SiteHost = site_url.Host
+			_tmp.Run.SiteHostRoot = c_code.DomainRootName(site_url.Host)
+
 			config = &_tmp
 			err = nil
 			break
 		}
 	}
+
 	return
 }
 
