@@ -1,4 +1,4 @@
-{{define "head"}} <link href="{{st "/css/article.css"}}" rel="stylesheet"/>{{end}}
+{{define "head"}}<link rel="stylesheet" href="{{st "/highlight/styles/monokai-sublime.css"}}"><link href="{{st "/css/article.css"}}" rel="stylesheet"/>{{end}}
 {{define "body"}}
     {{include "layouts/_left_start"}}
         <div  id="article">
@@ -114,6 +114,8 @@
     {{include "layouts/_comment_modal"}}
 {{end}}
 {{define "js"}}
+<script src="{{st "/highlight/highlight.js"}}"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 <script src="{{st "/btv5/popper.min.js"}}" type="application/javascript"></script>
 <script>let comment = JSON.parse('{{.comment|json}}');let MID={{.art.MID}}; let DID={{.art.DID}};</script>
 <script src="{{st "/js/article.js"}}"></script>
