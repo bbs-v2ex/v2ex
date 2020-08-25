@@ -36,11 +36,12 @@ func TempFunc() template.FuncMap {
 		marshal, _ := json.Marshal(s)
 		return string(marshal)
 	}
-	f["st"] = func(urls ...string) string {
-		u := strings.Join(urls, "/")
-		return "/static/" + strings.TrimLeft(u, "/")
-	}
+	f["st"] = ST
 	f["u"] = model.Url
 	f["imgu"] = model.UrlImage
 	return f
+}
+func ST(urls ...string) string {
+	u := strings.Join(urls, "/")
+	return "/static/" + strings.TrimLeft(u, "/")
 }

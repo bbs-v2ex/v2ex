@@ -17,6 +17,7 @@ import (
 )
 
 func Article(c *gin.Context) {
+
 	did, _ := strconv.Atoi(c.Param("did"))
 	t_list := []string{}
 	if did == 0 {
