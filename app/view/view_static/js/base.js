@@ -90,68 +90,74 @@ function bodyScrollLoad(h = 0) {
 
 var user_client = new class {
     session = localStorage;
+
     ref() {
         console.log(this.getTime() < time());
-        if (this.getTime() ===0 ){
+        if (this.getTime() === 0) {
             return
         }
-       if  (this.getTime() < time()  ){
-           post('/reload_token',).then(res => {
-                if (res.code === 1){
+        if (this.getTime() < time()) {
+            post('/reload_token',).then(res => {
+                if (res.code === 1) {
                     var u = this.get();
                     u.time = timeOffset();
                     this.set(u)
-                }else{
+                } else {
                     this.clear()
                 }
-           }).catch(err => {
+            }).catch(err => {
                 this.clear()
-           })
-       }
+            })
+        }
     }
-    get(){
+
+    get() {
         var user_info = {};
         try {
             user_info = JSON.parse(localStorage.getItem(APITOKEN));
-        }catch (e) {
+        } catch (e) {
             console.log(e)
         }
-        return  user_info
+        return user_info
     }
-    getTime(){
+
+    getTime() {
         try {
             return JSON.parse(this.session.getItem(APITOKEN)).time
-        }catch (e) {
-            return  0
-        }
-
-    }
-    set(user_info ={}){
-        this.session.setItem(APITOKEN,JSON.stringify(user_info))
-    }
-    setToken(token = ""){
-        this.session.setItem(APITOKEN,JSON.stringify({token:token}))
-    }
-
-     check() {
-        try {
-            var token = JSON.parse(this.session.getItem(APITOKEN)).token;
-            post('/get_user_info').then(res => {
-                if (res.code === 1) {
-                    localStorage.setItem(APITOKEN, JSON.stringify({
-                        token: token,
-                        user_info: res.data,
-                        time: timeOffset(),
-                    }));
-                }
-            });
-            return true
         } catch (e) {
-
-            return false
+            return 0
         }
 
     }
+
+    set(user_info = {}) {
+        this.session.setItem(APITOKEN, JSON.stringify(user_info))
+    }
+
+    setToken(token = "") {
+        this.session.setItem(APITOKEN, JSON.stringify({token: token}))
+    }
+
+    check() {
+        return new Promise((resolve, reject) => {
+            try {
+                var token = JSON.parse(this.session.getItem(APITOKEN)).token;
+                post('/get_user_info').then(res => {
+                    if (res.code === 1) {
+                        localStorage.setItem(APITOKEN, JSON.stringify({
+                            token: token,
+                            user_info: res.data,
+                            time: timeOffset(),
+                        }));
+                    }
+                    resolve(true)
+                });
+            } catch (e) {
+                reject(false)
+            }
+        });
+    }
+
     clear() {
         post('/loginout').then(res => {
             this.session.removeItem(APITOKEN);
@@ -172,10 +178,10 @@ var login_app = new Vue({
     },
     created() {
         try {
-           let u_info = user_client.get().user_info;
-           if (typeof u_info != "undefined")
-               this.user_info = u_info
-        }catch (e) {
+            let u_info = user_client.get().user_info;
+            if (typeof u_info != "undefined")
+                this.user_info = u_info
+        } catch (e) {
             console.log(e)
         }
         console.log(this.user_info);

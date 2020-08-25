@@ -5,6 +5,7 @@ import (
 	"github.com/123456/c_code/mc"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"time"
 	"v2ex/app/nc"
 	"v2ex/model"
 	"v2ex/until"
@@ -50,8 +51,9 @@ func AddMemberNoUser(c *gin.Context) {
 	}
 	//写入内容表
 	member_more := model.MemberMore{
-		ID:       member.ID,
-		PassWord: "",
+		ID:           member.ID,
+		PassWord:     "",
+		RegisterTime: time.Now(),
 	}
 	err = mc.Table(member_more.Table()).Insert(member_more)
 	if err != nil {

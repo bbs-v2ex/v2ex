@@ -21,6 +21,7 @@ func setParam(view_type string) gin.HandlerFunc {
 }
 
 func RegisterRoute(r *gin.Engine) {
+
 	//robots 文件
 	r.StaticFile("/robots.txt", "./000_robots.txt")
 

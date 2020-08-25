@@ -3,11 +3,14 @@ package v2ex
 import (
 	"flag"
 	"fmt"
+	"github.com/123456/c_code/mc"
 	rice "github.com/GeertJohan/go.rice"
 	"github.com/foolin/goview"
 	"github.com/foolin/goview/supports/ginview"
 	"github.com/foolin/goview/supports/gorice"
 	"github.com/gin-gonic/gin"
+	"github.com/globalsign/mgo/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"log"
 	"net/http"
 	"v2ex/app/api/manage"
@@ -15,6 +18,8 @@ import (
 	"v2ex/app/view"
 	view_router "v2ex/app/view/router"
 	"v2ex/config"
+	"v2ex/model"
+	"v2ex/until"
 	"v2ex/view_func"
 )
 
@@ -90,6 +95,28 @@ func RunWebServer() {
 
 	//注册普通路由一般用于页面展示
 	view_router.RegisterRoute(r)
+
+	//检测是否存在超级管理员 如果没有则直接创建
+	root_member := model.Member{}
+	mc.Table(root_member.Table()).Where(bson.M{"member_type": 1}).FindOne(&root_member)
+
+	if root_member.ID.Hex() == mc.Empty {
+		member := model.Member{
+			ID:         primitive.NewObjectID(),
+			MID:        9999999999,
+			UserName:   "root",
+			MemberType: 1,
+			Avatar:     until.RandomAvatar(),
+			IsUser:     false,
+		}
+		mc.Table(member.Table()).Insert(member)
+		//写入内容表
+		member_more := model.MemberMore{
+			ID:       member.ID,
+			PassWord: member.EncryptionPassWord("root"),
+		}
+		err = mc.Table(member_more.Table()).Insert(member_more)
+	}
 
 	err = r.Run(fmt.Sprintf("%s:%d", cg.Run.LocaIP, cg.Run.Port))
 	if err != nil {

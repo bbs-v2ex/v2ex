@@ -50,6 +50,7 @@ func Login(c *gin.Context) {
 			c.JSON(200, result_json)
 			return
 		}
+		fmt.Println(member.EncryptionPassWord(_f.PassWord), member_more.PassWord)
 		if member.EncryptionPassWord(_f.PassWord) != member_more.PassWord {
 			result_json := c_code.V1GinError(104, "用户或密码错误")
 			c.JSON(200, result_json)
