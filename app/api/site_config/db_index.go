@@ -14,13 +14,6 @@ type _db_index_list struct {
 }
 
 func db_index(c *gin.Context) {
-	//var r1 bson.M
-	//err := mc.Client().RunCommand(mc.TimeOut(),  bson.M{"collStats":"member"}).Decode(&r1)
-	//if err != nil {
-	//	log.Fatal()
-	//	return
-	//}
-	//c.JSON(200,r1["indexSizes"])
 
 	l := []gin.H{}
 	coll_names, err := mc.Client().ListCollectionNames(mc.TimeOut(), bson.M{})

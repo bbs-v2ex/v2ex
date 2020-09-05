@@ -16,6 +16,9 @@ func RestorePicture(s string, t string, img []string, size ...string) string {
 	if len(size) > 0 {
 		si = "?w=" + size[0]
 	}
+
+	t = strings.ReplaceAll(t, "\"", "")
+
 	_con := config.GetConfig()
 	for k, v := range img {
 		v = _con.Run.UploadServer + v
