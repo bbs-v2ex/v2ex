@@ -8,9 +8,6 @@ const AutoIDData = 1
 //问答自增ID 需要登录才可以回答
 const AutoIDQA = 2
 
-//讨论 需要登录才可以回答
-const AutoIDDiscuss = 3
-
 const AutoIDMember = 4
 
 type AutoID struct {
