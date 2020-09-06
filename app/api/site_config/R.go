@@ -4,6 +4,7 @@ import (
 	"github.com/123456/c_code"
 	"github.com/gin-gonic/gin"
 	"v2ex/app/api"
+	"v2ex/model"
 )
 
 func R(r *gin.RouterGroup) {
@@ -20,7 +21,7 @@ func R(r *gin.RouterGroup) {
 
 func isok(c *gin.Context) {
 	user := api.GetNowUserInfo(c)
-	if user.MemberType != 1 {
+	if user.MemberType != model.MemberTypeRoot {
 		result := c_code.V1GinError(500, "没权限啊")
 		c.JSON(200, result)
 		c.Abort()

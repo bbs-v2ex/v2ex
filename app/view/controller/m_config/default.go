@@ -6,5 +6,7 @@ import (
 )
 
 func defaultData(c *gin.Context) gin.H {
-	return controller.DefaultData(c)
+	data := controller.DefaultData(c)
+	data["ID"] = c.Query("id")
+	return data
 }

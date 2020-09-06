@@ -5,6 +5,7 @@ import (
 	"github.com/123456/c_code"
 	"github.com/gin-gonic/gin"
 	"v2ex/app/api"
+	"v2ex/model"
 )
 
 func MemberNav(c *gin.Context) {
@@ -28,8 +29,12 @@ func MemberNav(c *gin.Context) {
 			"t": "个人资料",
 			"u": u2 + "/user_info",
 		},
+		{
+			"t": "审核中的内容",
+			"u": u2 + "/data_check",
+		},
 	}
-	if user_info.MemberType == 1 {
+	if user_info.MemberType == model.MemberTypeRoot {
 		u := "/_/config/"
 		list = append(list, []gin.H{
 			{

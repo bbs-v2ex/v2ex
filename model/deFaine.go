@@ -20,3 +20,10 @@ const (
 	//添加文章
 	DataCheckTypeAddArticle = 1
 )
+
+//会员类型 如果为负 则为异常状态 并限制操作
+const (
+	//超级管理员
+	MemberTypeRoot    = 1
+	MemberTypeAverage = 0
+)

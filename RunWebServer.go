@@ -98,14 +98,14 @@ func RunWebServer() {
 
 	//检测是否存在超级管理员 如果没有则直接创建
 	root_member := model.Member{}
-	mc.Table(root_member.Table()).Where(bson.M{"member_type": 1}).FindOne(&root_member)
+	mc.Table(root_member.Table()).Where(bson.M{"member_type": model.MemberTypeRoot}).FindOne(&root_member)
 
 	if root_member.ID.Hex() == mc.Empty {
 		member := model.Member{
 			ID:         primitive.NewObjectID(),
 			MID:        9999999999,
 			UserName:   "root",
-			MemberType: 1,
+			MemberType: model.MemberTypeRoot,
 			Avatar:     until.RandomAvatar(),
 			IsUser:     false,
 		}

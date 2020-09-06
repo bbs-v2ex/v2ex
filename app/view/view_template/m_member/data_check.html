@@ -1,0 +1,36 @@
+{{define "head"}}
+    <link href="{{st "/css/manage.css"}}" rel="stylesheet">
+{{end}}
+{{define "body"}}
+    <div class="row member-manage">
+        <ul class="nav nav-tabs row">
+            <li class="nav-item" v-for="item in list">
+                <div> <span style="min-width: 350px;display: inline-block" >时间: ${item.time} --> 标题:  ${item.title}  </span> <a :href="cz.u" v-for=" cz in item.cz"> ${cz.t}</a> </div> <br>
+            </li>
+        </ul>
+        <div class="p-2">
+
+            <a type="button" class="btn btn-primary m-2"  v-for=" item in  view_data"  :href="item.u">${item.t}</a>
+        </div>
+    </div>
+{{end}}
+{{define "js"}}
+    <script>
+        var app = new Vue({
+            el: '#vue-app',
+            delimiters:['${','}'],
+            data() {
+                return {
+                  list : []
+                }
+            },
+            created(){
+                post("/member/data_check").then(res => {
+                    if (res.code === 1){
+                       this.list = res.data
+                    }
+                })
+            }
+        })
+    </script>
+{{end}}

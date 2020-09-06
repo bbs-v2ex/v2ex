@@ -1,0 +1,37 @@
+{{define "head"}}
+    <link href="{{st "/css/manage.css"}}" rel="stylesheet">
+{{end}}
+{{define "body"}}
+    <div class="row member-manage">
+        <div>---------- title ------------ </div>
+        <div v-html="d.title"></div>
+        <div>---------- title ------------ </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div>------------ content -------------</div>
+        <div v-html="d.content"></div>
+        <div>------------ content -------------</div>
+    </div>
+{{end}}
+{{define "js"}}
+    <script>
+        var app = new Vue({
+            el: '#vue-app',
+            delimiters:['${','}'],
+            data() {
+                return {
+                    d : []
+                }
+            },
+            created(){
+                post("/member/data_check_view?id={{.ID}}").then(res => {
+                    if (res.code === 1){
+                        this. d= res.data
+                    }
+                })
+            }
+        })
+    </script>
+{{end}}

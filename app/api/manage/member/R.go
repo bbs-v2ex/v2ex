@@ -1,9 +1,7 @@
 package member
 
 import (
-	"github.com/123456/c_code"
 	"github.com/gin-gonic/gin"
-	"v2ex/app/api"
 )
 
 func R(r *gin.RouterGroup) {
@@ -13,14 +11,7 @@ func R(r *gin.RouterGroup) {
 	r1.POST("/collect_add", collect_add)
 	r1.POST("/collect_del", collect_del)
 	r1.POST("/is_collect", is_collect)
-}
-
-func isok(c *gin.Context) {
-	user := api.GetNowUserInfo(c)
-	if user.MemberType != 1 {
-		result := c_code.V1GinError(500, "没权限啊")
-		c.JSON(200, result)
-		c.Abort()
-		return
-	}
+	//内容审核
+	r1.POST("/data_check", data_check)
+	r1.POST("/data_check_view", data_check_view)
 }

@@ -1,5 +1,6 @@
 {{define "head"}}{{end}}
 {{define "body"}}
+
     <ul class="nav nav-tabs">
         <li class="nav-item" v-for="item in view_nav">
             <a class="nav-link" :class="{active:item.active}" aria-current="page" :href="item.u" v-if="item.active">${item.t}</a>
