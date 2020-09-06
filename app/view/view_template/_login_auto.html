@@ -9,37 +9,39 @@
 <script>
     var app = new Vue({
         el: '#vue-app',
-        delimiters:['${','}'],
+        delimiters: ['${', '}'],
         data() {
             return {
                 username: '',
                 password: '',
-                wait_loading:false,
-                ajax_message:'',
-                sign:'{{.sign}}',
+                wait_loading: false,
+                ajax_message: '',
+                sign: '{{.sign}}',
                 mid:{{.mid}},
             }
         },
-        created(){
+        created() {
             this.submit()
         },
         methods: {
             submit(e) {
-                post('/login',{sign:this.sign,mid:parseInt(this.mid)}).then(res => {
+                post('/login', {sign: this.sign, mid: parseInt(this.mid)}).then(res => {
                     this.ajax_message = res.message;
 
-                    if (res.token != undefined ){
+                    if (res.token != undefined) {
                         this.ajax_message = '登录成功';
 
                         user_client.setToken(res.token);
-                        console.log(user_client.check());
-                        if (user_client.check() === true){
-                            // window.location.href = "/_/member/z/";
-                            setTimeout(function () {
-                                window.history.back();
-                            },300);
-                            return
-                        }
+                        console.log('233', user_client.check());
+                        debugger
+                        user_client.check().then(function (success, err) {
+                            if (success) {
+                                setTimeout(function () {
+                                    window.history.back();
+                                }, 300);
+                            }
+                        });
+
                         this.ajax_message = '鉴权失败';
                     }
                     this.wait_loading = false;

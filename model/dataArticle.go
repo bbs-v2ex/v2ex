@@ -26,3 +26,8 @@ type DataArticle struct {
 func (t DataArticle) Table() string {
 	return "data_article"
 }
+
+//添加文章
+func (t DataArticle) Add(title, content string, insert_time time.Time) {
+
+}

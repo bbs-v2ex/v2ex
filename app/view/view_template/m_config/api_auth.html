@@ -20,6 +20,68 @@
                         </div>
                     </div>
 
+                    <div class="col-md-12">
+                        <div>
+                            <label class="form-label"></label>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault111" v-model="seo.send_article" :checked="seo.send_article">
+                                <label class="form-check-label" for="flexSwitchCheckDefault111">审核 [ 发布文章 ]</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div>
+                            <label class="form-label"></label>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault111" v-model="seo.article_comment_root" :checked="seo.article_comment_root">
+                                <label class="form-check-label" for="flexSwitchCheckDefault111">审核 [ 发布文章Root ]</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div>
+                            <label class="form-label"></label>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault111" v-model="seo.article_comment_child" :checked="seo.article_comment_child">
+                                <label class="form-check-label" for="flexSwitchCheckDefault111">审核 [ 发布文章Child ]</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div>
+                            <label class="form-label"></label>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault111" v-model="seo.send_question" :checked="seo.send_question">
+                                <label class="form-check-label" for="flexSwitchCheckDefault111">审核 [ 发布提问 ]</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div>
+                            <label class="form-label"></label>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault111" v-model="seo.question_comment_root" :checked="seo.question_comment_root">
+                                <label class="form-check-label" for="flexSwitchCheckDefault111">审核 [ 发布提问Root ]</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div>
+                            <label class="form-label"></label>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault111" v-model="seo.question_comment_child" :checked="seo.question_comment_child">
+                                <label class="form-check-label" for="flexSwitchCheckDefault111">审核 [ 发布提问Child ]</label>
+                            </div>
+                        </div>
+                    </div>
+
+
+
                     <div v-if="ajax_message != ''">${ajax_message}</div>
 
                     <div class="col-12">

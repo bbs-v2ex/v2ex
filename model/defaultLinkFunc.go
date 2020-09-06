@@ -8,14 +8,6 @@ import (
 	"v2ex/config"
 )
 
-const (
-	UrlTagArticle       = "a"
-	UrlTagArticleReply  = "r"
-	UrlTagQuestion      = "q"
-	UrlTagQuestionReply = "answer"
-	UrlTagMember        = "member"
-)
-
 func Avatar(u string) string {
 	_con := config.GetConfig()
 	return _con.Run.UploadServer + u

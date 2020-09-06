@@ -11,7 +11,7 @@ type SiteConfigApiAuth struct {
 	//爬虫签名
 	SpiderSign string `json:"spider_sign" bson:"spider_sign"`
 	//发布文章
-	SendArticle bool `json:"send_article" json:"send_article"`
+	SendArticle bool `json:"send_article" bson:"send_article"`
 	//文章评论Root
 	ArticleCommentRoot bool `json:"article_comment_root" bson:"article_comment_root"`
 	//文章评论Child
