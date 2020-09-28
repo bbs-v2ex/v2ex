@@ -16,7 +16,7 @@ type _set_user_info struct {
 	DesDetailed string `json:"des_detailed" bson:"des_detailed"`
 }
 
-func set_user_info(c *gin.Context) {
+func setUserInfo(c *gin.Context) {
 	_f := _set_user_info{}
 	c.BindJSON(&_f)
 

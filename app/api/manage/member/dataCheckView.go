@@ -9,10 +9,14 @@ import (
 	"v2ex/model"
 )
 
-func data_check_view(c *gin.Context) {
+func dataCheckView(c *gin.Context) {
 	id, _ := primitive.ObjectIDFromHex(c.Query("id"))
 	data_check := model.DataCheck{}
 	mc.Table(data_check.Table()).Where(bson.M{"_id": id}).FindOne(&data_check)
-	c.JSON(200, c_code.V1GinSuccess(data_check.D))
+
+	result_data := data_check.D
+	result_data["_id"] = data_check.ID
+
+	c.JSON(200, c_code.V1GinSuccess(result_data))
 	return
 }

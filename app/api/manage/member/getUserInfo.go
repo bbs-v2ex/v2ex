@@ -7,7 +7,7 @@ import (
 	"v2ex/model"
 )
 
-func get_user_info(c *gin.Context) {
+func getUserInfo(c *gin.Context) {
 	mid := api.GetMID(c)
 
 	user_info := model.Member{}.GetUserInfo(mid, true)

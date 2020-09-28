@@ -8,8 +8,10 @@
         </li>
     </ul>
     <div class="p-2">
-
-        <a type="button" class="btn btn-primary m-2"  v-for=" item in  view_data"  :href="item.u">${item.t}</a>
+        <a type="button" class="btn btn-primary m-2"  v-for=" item in  view_data.xxx"  :href="item.u">${item.t}</a>
+    </div>
+    <div class="p-2">
+        <a type="button" class="btn btn-danger m-2"  v-for=" item in  view_data.root"  :href="item.u">${item.t}</a>
     </div>
 
 {{end}}
@@ -27,7 +29,7 @@ var app = new Vue({
     created(){
         post("/member_nav").then(res => {
             if (res.code === 1){
-                this.view_data.push(...res.data)
+                this.view_data = res.data;
             }
         })
     }

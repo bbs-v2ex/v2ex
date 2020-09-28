@@ -13,6 +13,11 @@
         <div>------------ content -------------</div>
         <div v-html="d.content"></div>
         <div>------------ content -------------</div>
+        <div>------------ ------- -------------</div>
+        <div style="width: 450px">
+                <div> <button class="btn btn-primary m-2" style="width: 100%" @click="pass">通过 </button> </div>
+        </div>
+
     </div>
 {{end}}
 {{define "js"}}
@@ -31,6 +36,13 @@
                         this. d= res.data
                     }
                 })
+            },
+            methods:{
+                pass(){
+                    post('',{type:'pass',_id:this.d._id}).then(res => {
+                        console.log(res)
+                    });
+                }
             }
         })
     </script>

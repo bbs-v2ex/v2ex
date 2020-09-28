@@ -29,14 +29,11 @@ func MemberNav(c *gin.Context) {
 			"t": "个人资料",
 			"u": u2 + "/user_info",
 		},
-		{
-			"t": "审核中的内容",
-			"u": u2 + "/data_check",
-		},
 	}
+	root_list := []gin.H{}
 	if user_info.MemberType == model.MemberTypeRoot {
 		u := "/_/config/"
-		list = append(list, []gin.H{
+		root_list = append(root_list, []gin.H{
 			{
 				"t": "SEO设置",
 				"u": u + "seo",
@@ -57,13 +54,26 @@ func MemberNav(c *gin.Context) {
 				"t": "数据管理",
 				"u": u + "data_manage",
 			},
+			{
+				"t": "数据审核",
+				"u": u2 + "/data_check",
+			},
 		}...)
 
 	} else {
-
+		list = append(list, gin.H{
+			"t": "审核中的内容",
+			"u": u2 + "/data_check",
+		})
 	}
+
+	h := gin.H{
+		"xxx":  list,
+		"root": root_list,
+	}
+
 	//登录成功
-	result_json := c_code.V1GinSuccess(list)
+	result_json := c_code.V1GinSuccess(h)
 	c.JSON(200, result_json)
 	return
 }

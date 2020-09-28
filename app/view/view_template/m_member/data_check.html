@@ -8,10 +8,6 @@
                 <div> <span style="min-width: 350px;display: inline-block" >时间: ${item.time} --> 标题:  ${item.title}  </span> <a target="_blank" :href="cz.u" v-for=" cz in item.cz"> ${cz.t}</a> </div> <br>
             </li>
         </ul>
-        <div class="p-2">
-
-            <a type="button" class="btn btn-primary m-2"  v-for=" item in  view_data"  :href="item.u">${item.t}</a>
-        </div>
     </div>
 {{end}}
 {{define "js"}}

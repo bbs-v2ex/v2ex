@@ -218,7 +218,11 @@ function post(url, data, params = {}, nofix = false) {
         } catch (e) {
 
         }
-        var _url = API + url;
+        var _url =  url;
+        if ( url !== ''){
+             _url = API + url;
+        }
+
         if (nofix) {
             _url = url
         }

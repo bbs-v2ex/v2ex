@@ -14,7 +14,7 @@ type _collect_add struct {
 	DID model.DIDTYPE `json:"did"`
 }
 
-func collect_add(c *gin.Context) {
+func collectAdd(c *gin.Context) {
 	_f := _collect_add{}
 	c.BindJSON(&_f)
 	index := model.DataIndex{}
