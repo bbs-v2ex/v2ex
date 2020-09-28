@@ -8,6 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"time"
 	"v2ex/app/api"
+	"v2ex/app/nc"
 	"v2ex/model"
 )
 
@@ -47,7 +48,6 @@ func add(c *gin.Context) {
 
 	user := api.GetNowUserInfo(c)
 	//如果需要审核则进入审核
-	api_auth.WaitCheck(user)
 
 	if api_auth.WaitCheck(user) {
 		//添加进审核表
@@ -67,11 +67,10 @@ func add(c *gin.Context) {
 			c.JSON(200, result_json)
 			return
 		}
-		result_json := c_code.V1GinSuccess(200, "已进入后台审核,通过后会展示", "/_/member/c/data_check_view?id="+data_check.ID.Hex())
+		result_json := c_code.V1GinSuccess(200, "已进入后台审核,通过后会展示")
 		c.JSON(200, result_json)
 		return
 	}
-
-	model.DataArticle{}.Add(user.MID, _f.Title, _f.Html, time.Now())
+	c.JSON(200, nc.AddArticle(user.MID, _f.Title, _f.Html, time.Now(), false))
 	return
 }

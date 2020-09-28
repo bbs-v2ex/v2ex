@@ -39,7 +39,7 @@
             },
             methods:{
                 pass(){
-                    post('/data_check',{type:'pass',_id:this.d._id}).then(res => {
+                    post('/config/data_check',{type:'pass',_id:this.d._id}).then(res => {
                         console.log(res)
                     });
                 }

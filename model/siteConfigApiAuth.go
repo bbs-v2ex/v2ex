@@ -33,3 +33,10 @@ func (t SiteConfig) SetApiAuth(sc SiteConfigApiAuth) error {
 	err := mc.Table(t.Table()).Where(bson.M{"key": _site_api_auth}).UpdateOneIsEmptyNewInsert(&sc)
 	return err
 }
+
+func (t SiteConfigApiAuth) WaitCheck(user Member) bool {
+	if t.SendArticle && user.MemberType != MemberTypeRoot && user.IsUser {
+		return true
+	}
+	return false
+}
