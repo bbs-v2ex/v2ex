@@ -49,6 +49,14 @@ func MemberNav(c *gin.Context) {
 				"t": "索引查看",
 				"u": u + "db_index",
 			},
+			{
+				"t": "数据审核",
+				"u": u + "data_check",
+			},
+			{
+				"t": "数据管理",
+				"u": u + "data_manage",
+			},
 		}...)
 
 	} else {

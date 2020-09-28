@@ -1,0 +1,38 @@
+{{define "head"}}{{end}}
+{{define "body"}}
+
+{{end}}
+{{define "js"}}
+    <script>
+        var app = new Vue({
+            el: '#vue-app',
+            delimiters:['${','}'],
+            data() {
+                return {
+                    view_data:JSON.parse("{{.send_list|json}}"),
+                    seo:{},
+                    html_err:'',
+                    ajax_message:'',
+                }
+            },
+            created(){
+                get("/config/api_auth").then(res => {
+                    if (res.code === 1){
+                        this.seo  = res.data
+                    }else{
+                        this.html_err = '刷新重新加载数据'
+                    }
+                })
+            },
+            methods: {
+                submit(e) {
+                    this.ajax_message= '开始提交';
+                    post('/config/api_auth',this.seo).then(res =>{
+                        this.ajax_message = res.message;
+                        console.log(res)
+                    })
+                }
+            }
+        })
+    </script>
+{{end}}
