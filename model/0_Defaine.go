@@ -13,6 +13,12 @@ const (
 	UrlTagQuestion      = "q"
 	UrlTagQuestionReply = "answer"
 	UrlTagMember        = "member"
+
+	//Url 普通管理界面的Url前缀
+	UrlViewMemberConfig = "/_/member/c"
+
+	//Url 普通管理界面的 管理 Url前缀
+	UrlViewMemberManage = "/_/config"
 )
 
 //数据审核类型

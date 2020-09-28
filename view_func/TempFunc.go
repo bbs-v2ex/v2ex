@@ -39,6 +39,10 @@ func TempFunc() template.FuncMap {
 	f["st"] = ST
 	f["u"] = model.Url
 	f["imgu"] = model.UrlImage
+
+	//f["u_manage_config"] = model.UrlManageConfig
+	//f["u_manage_root"] = model.UrlManageRoot
+
 	return f
 }
 func ST(urls ...string) string {

@@ -5,12 +5,13 @@ import (
 	"github.com/123456/c_code"
 	"github.com/gin-gonic/gin"
 	"v2ex/app/api"
+
 	"v2ex/model"
 )
 
 func MemberNav(c *gin.Context) {
 	user_info := api.GetNowUserInfo(c)
-	u2 := "/_/member/c"
+	u2 := model.UrlViewMemberConfig
 	list := []gin.H{
 		{
 			"t": "我的主页",
@@ -32,7 +33,7 @@ func MemberNav(c *gin.Context) {
 	}
 	root_list := []gin.H{}
 	if user_info.MemberType == model.MemberTypeRoot {
-		u := "/_/config/"
+		u := model.UrlViewMemberManage
 		root_list = append(root_list, []gin.H{
 			{
 				"t": "SEO设置",

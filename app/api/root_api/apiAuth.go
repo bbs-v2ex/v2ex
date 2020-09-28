@@ -1,4 +1,4 @@
-package site_config
+package root_api
 
 import (
 	"github.com/123456/c_code"
@@ -7,11 +7,11 @@ import (
 	"v2ex/model"
 )
 
-func api_auth(c *gin.Context) {
+func apiAuth(c *gin.Context) {
 	result_json := c_code.V1GinSuccess(model.SiteConfig{}.GetApiAuth())
 	c.JSON(200, result_json)
 }
-func api_auth_post(c *gin.Context) {
+func apiAuthPost(c *gin.Context) {
 	sc := model.SiteConfigApiAuth{}
 	c.BindJSON(&sc)
 

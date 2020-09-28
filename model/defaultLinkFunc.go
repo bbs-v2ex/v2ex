@@ -54,3 +54,22 @@ func UrlImage(string2 ...string) string {
 
 	return fmt.Sprintf("%s%s", _con.Run.UploadServer, u)
 }
+
+//
+//func UrlManageConfig(string2 ...string) string {
+//	u := strings.Join(string2, "/")
+//	if !strings.HasPrefix(u, "/") {
+//		return u
+//	}
+//
+//	return fmt.Sprintf("%s%s", define.DUrlMemberConfig, u)
+//}
+//
+//func UrlManageRoot(string2 ...string) string {
+//	u := strings.Join(string2, "/")
+//	if !strings.HasPrefix(u, "/") {
+//		return u
+//	}
+//
+//	return fmt.Sprintf("%s%s", define.DUrlMemberManage, u)
+//}

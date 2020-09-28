@@ -1,4 +1,4 @@
-package site_config
+package root_api
 
 import (
 	"fmt"
@@ -13,7 +13,7 @@ type _db_index_list struct {
 	Key string `json:"key"`
 }
 
-func db_index(c *gin.Context) {
+func dbIndex(c *gin.Context) {
 
 	l := []gin.H{}
 	coll_names, err := mc.Client().ListCollectionNames(mc.TimeOut(), bson.M{})

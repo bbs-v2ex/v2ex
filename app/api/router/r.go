@@ -7,7 +7,7 @@ import (
 	"v2ex/app/api/manage/edit"
 	"v2ex/app/api/manage/member"
 	"v2ex/app/api/manage/question"
-	"v2ex/app/api/site_config"
+	"v2ex/app/api/root_api"
 )
 
 func RegisterRoute(r *gin.Engine) {
@@ -24,7 +24,7 @@ func RegisterRoute(r *gin.Engine) {
 	ro.Use(api_send())
 	ro.Use(checkLogin)
 	ro.POST("/reload_token", manage.ReloadToken)
-	site_config.R(ro)
+	root_api.R(ro)
 	//获取用户信息
 	ro.POST("/get_user_info", manage.GetUserInfo)
 

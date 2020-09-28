@@ -16,6 +16,7 @@ func AddMemberNoUser(c *gin.Context) {
 	_f := _add_member_post{}
 	c.BindJSON(&_f)
 
+	//检测签名
 	if _f.Sign != api_auth.SpiderSign && api_auth.SpiderSign != "" {
 		result_json := c_code.V1GinError(100, "网站关闭注册")
 		c.JSON(200, result_json)

@@ -1,4 +1,4 @@
-package site_config
+package root_api
 
 import (
 	"github.com/123456/c_code"
@@ -11,7 +11,7 @@ func seo(c *gin.Context) {
 	result_json := c_code.V1GinSuccess(model.SiteConfig{}.GetSeo())
 	c.JSON(200, result_json)
 }
-func seopost(c *gin.Context) {
+func seoPost(c *gin.Context) {
 	sc := model.SiteConfigSeo{}
 	c.BindJSON(&sc)
 

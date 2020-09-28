@@ -1,4 +1,4 @@
-package site_config
+package root_api
 
 import (
 	"context"
@@ -7,7 +7,7 @@ import (
 	"v2ex/model"
 )
 
-func create_index(c *gin.Context) {
+func createIndex(c *gin.Context) {
 	mc.Coll(model.MovementCenter{}.Table()).Indexes().CreateMany(context.Background(), model.MovementCenter{}.IndexList())
 	mc.Coll(model.CommentChild{}.Table()).Indexes().CreateMany(context.Background(), model.CommentChild{}.IndexList())
 	mc.Coll(model.CommentRoot{}.Table()).Indexes().CreateMany(context.Background(), model.CommentRoot{}.IndexList())
