@@ -91,9 +91,6 @@ func Home(c *gin.Context) {
 		c.JSON(200, result_json)
 		return
 	}
-	if len(list) <= 1 {
-		c.Redirect(301, "/")
-	}
 	_ht["dt"] = list
 
 	//渲染最热数据 获取数据设置的时差

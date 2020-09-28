@@ -5,7 +5,7 @@
     <div class="row member-manage">
         <ul class="nav nav-tabs row">
             <li class="nav-item" v-for="item in list">
-                <div> <span style="min-width: 350px;display: inline-block" >时间: ${item.time} --> 标题:  ${item.title}  </span> <a :href="cz.u" v-for=" cz in item.cz"> ${cz.t}</a> </div> <br>
+                <div> <span style="min-width: 350px;display: inline-block" >时间: ${item.time} --> 标题:  ${item.title}  </span> <a target="_blank" :href="cz.u" v-for=" cz in item.cz"> ${cz.t}</a> </div> <br>
             </li>
         </ul>
         <div class="p-2">
