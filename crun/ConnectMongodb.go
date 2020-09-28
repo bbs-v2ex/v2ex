@@ -1,4 +1,4 @@
-package v2ex
+package crun
 
 import (
 	"fmt"
@@ -10,11 +10,8 @@ import (
 )
 
 func ConnectMongodb() {
-	cg, err := config.LoadingConfigSourceFile()
-	if err != nil {
-		log.Fatal("加载配置文件失败", err)
-		return
-	}
+
+	cg := config.GetConfig()
 	//生成 协议链接
 	con := fmt.Sprintf("mongodb://%s:%d", cg.DB.IP, cg.DB.Port)
 	//开始处理参数

@@ -1,5 +1,7 @@
 package config
 
+var BuildStaticAndTemplate bool
+
 //定义 系统基础设置
 type SConfig struct {
 

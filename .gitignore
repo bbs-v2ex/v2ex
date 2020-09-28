@@ -8,4 +8,10 @@
 /rice-box.go
 /_example/run/webServe
 /__sitemap/
-/tmp/
+*/tmp/
+/_example/tmp/
+*.exe
+/_example/build/run.go
+/build/run.go
+/build/linux/
+*/rice-box.go

@@ -56,6 +56,7 @@ func CreateConfigFile() {
 }
 
 func LoadingConfigSourceFile() (_tmp SConfig, err error) {
+
 	for _, f := range []string{"./", "./../../"} {
 		//_tmp := SConfig{}
 		_, err = toml.DecodeFile(f+config_file_name, &_tmp)

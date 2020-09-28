@@ -1,7 +1,6 @@
-package v2ex
+package crun
 
 import (
-	"flag"
 	"fmt"
 	"github.com/123456/c_code/mc"
 	rice "github.com/GeertJohan/go.rice"
@@ -24,16 +23,9 @@ import (
 )
 
 func RunWebServer() {
+	var err error
 
-	debug_str := ""
-	flag.StringVar(&debug_str, "debug", "", "debug 模式")
-
-	fmt.Println(debug_str)
-	cg, err := config.LoadingConfigSourceFile()
-	if err != nil {
-		log.Fatal("加载配置文件失败", err)
-		return
-	}
+	cg := config.GetConfig()
 	manage.Init()
 	r := &gin.Engine{}
 
@@ -41,26 +33,20 @@ func RunWebServer() {
 
 	//设置 gin 启动参数
 	if debug {
-		r = gin.Default()
+		r = gin.New()
 	} else {
 		//gin.SetMode(gin.TestMode)
 		r = gin.Default()
-
 	}
 
 	r.Static("/tmp", cg.Run.TempUploadDir)
 	//处理静态文件
-	if debug {
+	if !config.BuildStaticAndTemplate {
 		r.Static("/static", "./app/view/view_static")
-
 	} else {
-		box := rice.MustFindBox("app/view/view_static")
+		box := rice.MustFindBox("../app/view/view_static")
 		cssFileServer := http.StripPrefix("/static", http.FileServer(box.HTTPBox()))
 		r.GET("/static/*a", gin.WrapH(cssFileServer))
-
-		//box2 := rice.MustFindBox("tmp")
-		//cssFileServer2 := http.StripPrefix("/tmp", http.FileServer(box2.HTTPBox()))
-		//r.GET("/tmp/*a", gin.WrapH(cssFileServer2))
 	}
 
 	//加载全局模板函数
@@ -68,7 +54,7 @@ func RunWebServer() {
 
 	//模板文件是否 打包
 
-	if debug {
+	if !config.BuildStaticAndTemplate {
 		_view_config := goview.DefaultConfig
 		_view_config.Root = cg.ExecPath + "/app/view/view_template"
 		_view_config.Funcs = tempFunc
@@ -77,7 +63,7 @@ func RunWebServer() {
 		view.ViewEngine = engine
 		r.HTMLRender = engine
 	} else {
-		basic := gorice.NewWithConfig(rice.MustFindBox("app/view/view_template"), goview.Config{
+		basic := gorice.NewWithConfig(rice.MustFindBox("../app/view/view_template"), goview.Config{
 			Root:         "view_template",
 			Extension:    ".html",
 			Master:       "layouts/master",
