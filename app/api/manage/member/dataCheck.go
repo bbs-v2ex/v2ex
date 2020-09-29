@@ -44,6 +44,9 @@ func dataCheck(c *gin.Context) {
 		case model.DataCheckTypeArticleCommentRootAdd:
 			c_title += "ArticleCommentRootAdd"
 			break
+		case model.DataCheckTypeArticleCommentChildAdd:
+			c_title += "ArticleCommentChildAdd"
+			break
 		}
 		_one["title"] = c_title
 		_one["cz"] = _cz

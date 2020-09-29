@@ -3,20 +3,17 @@
 {{end}}
 {{define "body"}}
     <div class="row member-manage">
-        <div>---------- title ------------</div>
-        <div v-html="d.title"></div>
-        <div>---------- title ------------</div>
-        <br>
-        <br>
-        <br>
-        <br>
-        <div>------------ content -------------</div>
-        <div v-html="d.content"></div>
-        <div>------------ content -------------</div>
+
+        <div v-for=" (item,index) in d" :key="index">
+            <div>---------- ${index} ------------</div>
+            <div v-html="item"></div>
+            <div>---------- ${index} ------------</div>
+
+        </div>
 
         <div v-if="r_message != ''" v-html="r_message" style="color: #fff;background: red"></div>
 
-        <div>------------ ------- -------------</div>
+        <div style="padding: 30px 0 ">------------ ------- -------------</div>
 
         <div class="row">
             <div style="width: 450px">
