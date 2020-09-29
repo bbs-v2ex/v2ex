@@ -65,6 +65,16 @@ func MemberNav(c *gin.Context) {
 	}
 
 	h := gin.H{
+		"nav": []gin.H{
+			{
+				"t": "我的文章",
+				"u": model.UrlViewMemberConfig + "/article",
+			},
+			{
+				"t": "我的提问",
+				"u": model.UrlViewMemberConfig + "/question",
+			},
+		},
 		"xxx":  list,
 		"root": root_list,
 	}

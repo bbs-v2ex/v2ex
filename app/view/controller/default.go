@@ -29,7 +29,7 @@ func DefaultData(c *gin.Context) (_ht gin.H) {
 	}
 	_ht["mu"] = model.UrlMember
 	_ht["au"] = model.UrlArticle
-
+	_ht["member_centre"] = model.UrlViewMemberConfig
 	_ht["mumid"] = func(mid model.MIDTYPE) string {
 		return fmt.Sprintf("/%s/%d", model.UrlTagMember, mid)
 	}

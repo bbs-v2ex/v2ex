@@ -1,35 +1,33 @@
 {{define "head"}}
+    <link rel="stylesheet" href="{{st "/css/manage.css"}}">
 {{end}}
 {{define "body"}}
-    <div class="card  bg-white rounded">
-        <h5 class="card-header">用户信息</h5>
-        <div class="card-body col-md-12 align-self-center">
-            <form class="row g-3 col-sm-6 m-auto needs-validation was-validated" id="f1" novalidate>
-                <div class="col-md-12">
-                    <label for="validationServer01" class="form-label">姓名</label>
-                    <input type="text" class="form-control is-valid" id="validationServer01" v-model="f1.user_name" required>
-                </div>
-                <div class="col-md-12">
-                    <label for="validationServer01" class="form-label">简要描述</label>
-                    <textarea  class="form-control is-valid" v-model="f1.des" required></textarea>
-                </div>
-                <div class="col-md-12">
-                    <label for="validationServer01" class="form-label">详细描述</label>
-                    <textarea  class="form-control is-valid" v-model="f1.des_detailed" required style="height: 150px"></textarea>
-                </div>
-
-                <div v-if="ajax_message != ''">${ajax_message}</div>
-
-                <div class="col-12">
-                    <button class="btn btn-primary" type="button" disabled v-if="wait_loading">
-                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        Loading...
-                    </button>
-                    <button class="btn btn-primary" type="submit"  v-else  @click.prevent="submit($event)"> 提交并修改 </button>
-                </div>
-            </form>
-        </div>
+{{include "m_member/_0_left"}}
+<form class="row g-3 col-sm-6 m-auto needs-validation was-validated" id="f1" novalidate>
+    <div class="col-md-12">
+        <label for="validationServer01" class="form-label">姓名</label>
+        <input type="text" class="form-control is-valid" disabled id="validationServer01" v-model="f1.user_name" required>
     </div>
+    <div class="col-md-12">
+        <label for="validationServer01" class="form-label">简要描述</label>
+        <textarea  class="form-control is-valid" v-model="f1.des" required></textarea>
+    </div>
+    <div class="col-md-12">
+        <label for="validationServer01" class="form-label">详细描述</label>
+        <textarea  class="form-control is-valid" v-model="f1.des_detailed" required style="height: 150px"></textarea>
+    </div>
+
+    <div v-if="ajax_message != ''">${ajax_message}</div>
+
+    <div class="col-12">
+        <button class="btn btn-primary" type="button" disabled v-if="wait_loading">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Loading...
+        </button>
+        <button class="btn btn-primary" type="submit"  v-else  @click.prevent="submit($event)"> 提交并修改 </button>
+    </div>
+</form>
+{{include "m_member/_0_right"}}
 {{end}}
 {{define "js"}}
     <script type="application/javascript" src="{{st "/wangEditor-3.1.1/wangEditor.min.js"}}"></script>
@@ -39,6 +37,7 @@
             delimiters:['${','}'],
             data() {
                 return {
+                    view_data:{xxx:[], root:[],},
                     ajax_message:'',
                     wait_loading:false,
                     f1:{
@@ -47,7 +46,12 @@
                 }
             },
             created(){
-                this.get_user_info()
+                this.get_user_info();
+                post("/member_nav").then(res => {
+                    if (res.code === 1){
+                        this.view_data = res.data;
+                    }
+                })
             },
             methods: {
                 get_user_info(){

@@ -1,103 +1,100 @@
-{{define "head"}}{{end}}
+{{define "head"}}
+    <link rel="stylesheet" href="{{st "/css/manage.css"}}">
+{{end}}
 {{define "body"}}
-<div v-if="html_err != ''">${html_err}</div>
-<div v-else>
-    <div class="card  bg-white rounded">
-        <h5 class="card-header">SEO设置</h5>
-        <div class="card-body col-md-8 align-self-center">
-            <form id="f1" novalidate="novalidate" class="row g-3 needs-validation was-validated">
-                <div class="col-md-12">
-                    <label class="form-label">Title</label>
-                    <textarea class="form-control  is-invalid" rows="3" v-model="seo.t" required></textarea>
-                </div>
-
-                <div class="col-md-12">
-                    <label  class="form-label">KeyWords</label>
-                    <textarea class="form-control  is-invalid" rows="3" v-model="seo.k" required></textarea>
-                </div>
-                <div class="col-md-12">
-                    <label  class="form-label">Description</label>
-                    <textarea class="form-control  is-invalid" rows="3" v-model="seo.d" required></textarea>
-                </div>
-
-                <div>
-                    <label class="form-label">短标题</label>
-                    <input type="text" class="form-control is-valid" v-model="seo.t_" required>
-                </div>
-                <div>
-                    <label class="form-label">导航栏首页标题</label>
-                    <input type="text" class="form-control is-valid" v-model="seo.navigation_home_title" required>
-                </div>
-
-                <div>
-                    <label class="form-label">标题分隔符</label>
-                    <input type="text" class="form-control is-valid" v-model="seo.title_delimiter" required>
-                </div>
-
-                <div class="col-12">
-                    <label  class="form-label">动态-Title</label>
-                    <textarea class="form-control  is-invalid" rows="3" v-model="seo.activity.t" required></textarea>
-                </div>
-
-                <div class="col-12">
-                    <label  class="form-label">动态-Keywords</label>
-                    <textarea class="form-control  is-invalid" rows="3" v-model="seo.activity.k" required></textarea>
-                </div>
-
-                <div class="col-12">
-                    <label  class="form-label">动态-Description</label>
-                    <textarea class="form-control  is-invalid" rows="3" v-model="seo.activity.d" required></textarea>
-                </div>
-
-                <div class="col-12">
-                    <label  class="form-label">提问-Title</label>
-                    <textarea class="form-control  is-invalid" rows="3" v-model="seo.question.t" required></textarea>
-                </div>
-
-                <div class="col-12">
-                    <label  class="form-label">提问-Keywords</label>
-                    <textarea class="form-control  is-invalid" rows="3" v-model="seo.question.k" required></textarea>
-                </div>
-
-                <div class="col-12">
-                    <label  class="form-label">提问-Description</label>
-                    <textarea class="form-control  is-invalid" rows="3" v-model="seo.question.d" required></textarea>
-                </div>
-
-                <div class="col-12">
-                    <label  class="form-label">文章-Title</label>
-                    <textarea class="form-control  is-invalid" rows="3" v-model="seo.article.t" required></textarea>
-                </div>
-
-                <div class="col-12">
-                    <label  class="form-label">文章-Keywords</label>
-                    <textarea class="form-control  is-invalid" rows="3" v-model="seo.article.k" required></textarea>
-                </div>
-
-                <div class="col-12">
-                    <label  class="form-label">文章-Description</label>
-                    <textarea class="form-control  is-invalid" rows="3" v-model="seo.article.d" required></textarea>
-                </div>
-
-                <div class="col-12">
-                    <label  class="form-label">ICP 备案</label>
-                    <input type="text" class="form-control " v-model="seo.icp" required>
-                </div>
-                <div class="col-12">
-                    <label  class="form-label">微信</label>
-                    <input type="text" class="form-control " v-model="seo.wx" required>
-                </div>
-
-                <div v-if="ajax_message != ''">${ajax_message}</div>
-
-                <div class="col-12">
-                    <button type="submit" class="btn btn-primary"  @click.prevent="submit($event)">提交修改</button>
-                </div>
-
-            </form>
+{{include "m_member/_0_left"}}
+    <form id="f1" novalidate="novalidate" class="row g-3 needs-validation was-validated">
+        <div class="col-md-12">
+            <label class="form-label">Title</label>
+            <textarea class="form-control  is-invalid" rows="3" v-model="seo.t" required></textarea>
         </div>
-    </div>
-</div>
+
+        <div class="col-md-12">
+            <label  class="form-label">KeyWords</label>
+            <textarea class="form-control  is-invalid" rows="3" v-model="seo.k" required></textarea>
+        </div>
+        <div class="col-md-12">
+            <label  class="form-label">Description</label>
+            <textarea class="form-control  is-invalid" rows="3" v-model="seo.d" required></textarea>
+        </div>
+
+        <div>
+            <label class="form-label">短标题</label>
+            <input type="text" class="form-control is-valid" v-model="seo.t_" required>
+        </div>
+        <div>
+            <label class="form-label">导航栏首页标题</label>
+            <input type="text" class="form-control is-valid" v-model="seo.navigation_home_title" required>
+        </div>
+
+        <div>
+            <label class="form-label">标题分隔符</label>
+            <input type="text" class="form-control is-valid" v-model="seo.title_delimiter" required>
+        </div>
+
+        <div class="col-12">
+            <label  class="form-label">动态-Title</label>
+            <textarea class="form-control  is-invalid" rows="3" v-model="seo.activity.t" required></textarea>
+        </div>
+
+        <div class="col-12">
+            <label  class="form-label">动态-Keywords</label>
+            <textarea class="form-control  is-invalid" rows="3" v-model="seo.activity.k" required></textarea>
+        </div>
+
+        <div class="col-12">
+            <label  class="form-label">动态-Description</label>
+            <textarea class="form-control  is-invalid" rows="3" v-model="seo.activity.d" required></textarea>
+        </div>
+
+        <div class="col-12">
+            <label  class="form-label">提问-Title</label>
+            <textarea class="form-control  is-invalid" rows="3" v-model="seo.question.t" required></textarea>
+        </div>
+
+        <div class="col-12">
+            <label  class="form-label">提问-Keywords</label>
+            <textarea class="form-control  is-invalid" rows="3" v-model="seo.question.k" required></textarea>
+        </div>
+
+        <div class="col-12">
+            <label  class="form-label">提问-Description</label>
+            <textarea class="form-control  is-invalid" rows="3" v-model="seo.question.d" required></textarea>
+        </div>
+
+        <div class="col-12">
+            <label  class="form-label">文章-Title</label>
+            <textarea class="form-control  is-invalid" rows="3" v-model="seo.article.t" required></textarea>
+        </div>
+
+        <div class="col-12">
+            <label  class="form-label">文章-Keywords</label>
+            <textarea class="form-control  is-invalid" rows="3" v-model="seo.article.k" required></textarea>
+        </div>
+
+        <div class="col-12">
+            <label  class="form-label">文章-Description</label>
+            <textarea class="form-control  is-invalid" rows="3" v-model="seo.article.d" required></textarea>
+        </div>
+
+        <div class="col-12">
+            <label  class="form-label">ICP 备案</label>
+            <input type="text" class="form-control " v-model="seo.icp" required>
+        </div>
+        <div class="col-12">
+            <label  class="form-label">微信</label>
+            <input type="text" class="form-control " v-model="seo.wx" required>
+        </div>
+
+        <div v-if="ajax_message != ''">${ajax_message}</div>
+
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary"  @click.prevent="submit($event)">提交修改</button>
+        </div>
+
+    </form>
+
+    {{include "m_member/_0_right"}}
 {{end}}
 {{define "js"}}
 <script>
@@ -106,7 +103,7 @@
         delimiters:['${','}'],
         data() {
             return {
-                view_data:JSON.parse("{{.send_list|json}}"),
+                view_data:{},
                 seo:{},
                 html_err:'',
                 ajax_message:'',
@@ -118,6 +115,11 @@
                     this.seo  = res.data
                 }else{
                     this.html_err = '刷新重新加载数据'
+                }
+            });
+            post("/member_nav").then(res => {
+                if (res.code === 1){
+                    this.view_data = res.data;
                 }
             })
         },

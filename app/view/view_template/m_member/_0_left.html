@@ -1,0 +1,21 @@
+<div class="row menage-bkc">
+    <div class="col-3 menage-bkc-left">
+        <div class="row">
+            <div class="col-6" v-for="item in view_data.nav">
+                <a :href="item.u"> <button class="btn btn-danger">${item.t} </button></a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6" v-for="item in view_data.xxx">
+                <a :href="item.u"> <button class="btn btn-success">${item.t} </button></a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6" v-for="item in view_data.root">
+                <a :href="item.u"> <button class="btn btn-warning">${item.t} </button></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-8">

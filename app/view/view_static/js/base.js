@@ -204,7 +204,7 @@ var login_app = new Vue({
             })
         },
         goMemberCentre() {
-            window.location.href = "/_/member/z/";
+            window.location.href = MemberCentre;
         }
     }
 });

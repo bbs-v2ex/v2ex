@@ -60,9 +60,13 @@ func RegisterRoute(r *gin.Engine) {
 	member_center := _manage.Group("/member")
 
 	//会员首页
-	member_center.GET("/z/", member_manage.Index)
-	member_center.GET("/z/:_type/:_cz", member_manage.Index)
-	member_center.GET("/z/:_type", member_manage.Index)
+	//member_center.GET("/z/", member_manage.Index)
+	//
+	//member_center.GET("/z/:_type/:_cz", member_manage.Index)
+	//
+	//member_center.GET("/z/:_type", member_manage.Index)
+
+	member_center.GET("/c/", member_manage.CRouter)
 	member_center.GET("/c/:_type", member_manage.CRouter)
 
 	//超级管理员权限页面

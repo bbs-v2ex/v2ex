@@ -1,52 +1,28 @@
 {{define "head"}}
-<link rel="stylesheet" href="{{st "/css/manage.css"}}">
+    <link rel="stylesheet" href="{{st "/css/manage.css"}}">
 {{end}}
 {{define "body"}}
-
-<div class="row menage-bkc">
-    <div class="col-3 menage-bkc-left">
-        <div class="row">
-            <div class="col-6" v-for="item in view_nav">
-                <a :href="item.u"> <button class="btn btn-danger">${item.t} </button></a>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-6" v-for="item in view_data.xxx">
-                <a :href="item.u"> <button class="btn btn-success">${item.t} </button></a>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-6" v-for="item in view_data.root">
-                <a :href="item.u"> <button class="btn btn-warning">${item.t} </button></a>
-            </div>
-        </div>
-
-    </div>
-    <div class="col-8">
-
-    </div>
-</div>
+{{include "m_member/_0_left"}}
+123213423435
+{{include "m_member/_0_right"}}
 {{end}}
 {{define "js"}}
-<script>
-var app = new Vue({
-    el: '#vue-app',
-    delimiters:['${','}'],
-    data() {
-        return {
-            view_data:JSON.parse("{{.send_list|json}}"),
-            view_nav:JSON.parse("{{._member_mav|json}}"),
-        }
-    },
-    created(){
-        post("/member_nav").then(res => {
-            if (res.code === 1){
-                this.view_data = res.data;
+    <script>
+        var app = new Vue({
+            el: '#vue-app',
+            delimiters:['${','}'],
+            data() {
+                return {
+                    view_data:{xxx:[], root:[],nav:[]},
+                }
+            },
+            created(){
+                post("/member_nav").then(res => {
+                    if (res.code === 1){
+                        this.view_data = res.data;
+                    }
+                })
             }
         })
-    }
-})
-</script>
+    </script>
 {{end}}

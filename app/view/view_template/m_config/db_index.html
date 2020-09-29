@@ -1,16 +1,17 @@
-{{define "head"}}{{end}}
+{{define "head"}}
+    <link rel="stylesheet" href="{{st "/css/manage.css"}}">
+{{end}}
 {{define "body"}}
-    <div v-if="html_err != ''">${html_err}</div>
-    <div v-else>
-        <div class="card  bg-white rounded">
-            <div @click="create_index"> 点击创建索引 </div>
-            <table>
-                <tr  v-for="item in seo">
-                    <td> ${item.coll}</td> <td>${item.index}</td>
-                </tr>
-            </table>
-        </div>
+    {{include "m_member/_0_left"}}
+    <div class="card  bg-white rounded">
+        <div @click="create_index"> 点击创建索引 </div>
+        <table>
+            <tr  v-for="item in seo">
+                <td> ${item.coll}</td> <td>${item.index}</td>
+            </tr>
+        </table>
     </div>
+    {{include "m_member/_0_right"}}
 {{end}}
 {{define "js"}}
     <script>
@@ -19,7 +20,7 @@
             delimiters:['${','}'],
             data() {
                 return {
-                    view_data:JSON.parse("{{.send_list|json}}"),
+                    view_data:{xxx:[], root:[],nav:[]},
                     seo:[],
                     html_err:'',
                     ajax_message:'',
@@ -32,7 +33,14 @@
                     }else{
                         this.html_err = '刷新重新加载数据'
                     }
+                });
+
+                post("/member_nav").then(res => {
+                    if (res.code === 1){
+                        this.view_data = res.data;
+                    }
                 })
+
             },
             methods: {
                 submit(e) {

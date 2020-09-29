@@ -79,7 +79,7 @@ func setNavigation(c *gin.Context, _ht gin.H) (n []gin.H) {
 		_navigation = append(_navigation, []gin.H{
 			{
 				"t":   "管理",
-				"u":   "/_/member/z/",
+				"u":   model.UrlViewMemberConfig,
 				"tag": false,
 			},
 		}...)

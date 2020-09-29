@@ -64,7 +64,7 @@
                             var  check = user_client.check();
                             console.log(check);
                             check.then(res => {
-                                window.location.href = "/_/member/z/";
+                                window.location.href = "{{.login_success}}";
                             },err =>{
                                 this.ajax_message = '鉴权失败';
                             })
