@@ -1,19 +1,33 @@
-{{define "head"}}{{end}}
+{{define "head"}}
+<link rel="stylesheet" href="{{st "/css/manage.css"}}">
+{{end}}
 {{define "body"}}
 
-    <ul class="nav nav-tabs">
-        <li class="nav-item" v-for="item in view_nav">
-            <a class="nav-link" :class="{active:item.active}" aria-current="page" :href="item.u" v-if="item.active">${item.t}</a>
-            <a class="nav-link"  :href="item.u" v-else >${item.t}</a>
-        </li>
-    </ul>
-    <div class="p-2">
-        <a type="button" class="btn btn-primary m-2"  v-for=" item in  view_data.xxx"  :href="item.u">${item.t}</a>
-    </div>
-    <div class="p-2">
-        <a type="button" class="btn btn-danger m-2"  v-for=" item in  view_data.root"  :href="item.u">${item.t}</a>
-    </div>
+<div class="row menage-bkc">
+    <div class="col-3 menage-bkc-left">
+        <div class="row">
+            <div class="col-6" v-for="item in view_nav">
+                <a :href="item.u"> <button class="btn btn-danger">${item.t} </button></a>
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col-6" v-for="item in view_data.xxx">
+                <a :href="item.u"> <button class="btn btn-success">${item.t} </button></a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6" v-for="item in view_data.root">
+                <a :href="item.u"> <button class="btn btn-warning">${item.t} </button></a>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-8">
+
+    </div>
+</div>
 {{end}}
 {{define "js"}}
 <script>

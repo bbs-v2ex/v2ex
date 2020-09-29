@@ -3,3 +3,13 @@
   background: $body-main-background-color;
   padding: 10px;
 }
+.menage-bkc{
+  background: $body-main-background-color;
+  .menage-bkc-left{
+    .btn{
+      margin-bottom:15px ;
+      width: 100%;
+
+    }
+  }
+}

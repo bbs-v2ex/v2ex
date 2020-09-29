@@ -18,6 +18,10 @@ func MemberNav(c *gin.Context) {
 			"u": fmt.Sprintf("/member/%d", user_info.MID),
 		},
 		{
+			"t": "个人资料",
+			"u": u2 + "/user_info",
+		},
+		{
 			"t": "发文章",
 			"u": u2 + "/send_article",
 		},
@@ -25,10 +29,6 @@ func MemberNav(c *gin.Context) {
 		{
 			"t": "发提问",
 			"u": u2 + "/send_question",
-		},
-		{
-			"t": "个人资料",
-			"u": u2 + "/user_info",
 		},
 	}
 	root_list := []gin.H{}

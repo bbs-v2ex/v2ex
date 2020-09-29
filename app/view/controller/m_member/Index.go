@@ -12,11 +12,6 @@ func Index(c *gin.Context) {
 	_ht := defaultData(c)
 	_member_mav := []gin.H{
 		{
-			"t":      "默认选中",
-			"u":      u + "/index",
-			"active": false,
-		},
-		{
 			"t":      "我的文章",
 			"u":      u + "/article",
 			"active": false,

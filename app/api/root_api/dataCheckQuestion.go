@@ -63,3 +63,18 @@ func _question_comment_root_edit(c *gin.Context, _f *_dataCheck, _data *model.Da
 	c.JSON(200, c_code.V1GinSuccess("ok"))
 	return
 }
+
+func _question_comment_child_add(c *gin.Context, _f *_dataCheck, _data *model.DataCheck) {
+
+	rid, _ := primitive.ObjectIDFromHex(_data.D["rid"].(string))
+	pid, _ := primitive.ObjectIDFromHex(_data.D["pid"].(string))
+
+	err := nc.QuestionCommentChildAdd(rid, pid, _data.D["txt"].(string), _data.MID, _data.Itime, primitive.NewObjectID())
+	if err != nil {
+		c.JSON(200, c_code.V1GinError(10000, err.Error()))
+		return
+	}
+	mc.Table(model.DataCheck{}.Table()).Where(bson.M{"_id": _f.ID}).DelOne()
+	c.JSON(200, c_code.V1GinSuccess("ok"))
+	return
+}
