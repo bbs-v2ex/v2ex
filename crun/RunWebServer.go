@@ -33,10 +33,9 @@ func RunWebServer() {
 
 	//设置 gin 启动参数
 	if debug {
-		r = gin.New()
-	} else {
-		//gin.SetMode(gin.TestMode)
 		r = gin.Default()
+	} else {
+		r = gin.New()
 	}
 
 	r.Static("/tmp", cg.Run.TempUploadDir)

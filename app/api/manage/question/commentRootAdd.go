@@ -18,7 +18,7 @@ type _comment_root_add struct {
 	Text string        `validate:"min=10,max=100000000" comment:"数据"`
 }
 
-func comment_root_add(c *gin.Context) {
+func commentRootAdd(c *gin.Context) {
 	//获取用户信息
 	user_info := api.GetNowUserInfo(c)
 	if user_info.MID == 0 {

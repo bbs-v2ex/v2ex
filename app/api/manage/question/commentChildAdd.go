@@ -17,7 +17,7 @@ type _comment_child_add struct {
 	Txt string             `json:"txt" validate:"min=10,max=1000" comment:"数据"`
 }
 
-func comment_child_add(c *gin.Context) {
+func commentChildAdd(c *gin.Context) {
 	//获取用户信息
 	user_info := api.GetNowUserInfo(c)
 	if user_info.MID == 0 {

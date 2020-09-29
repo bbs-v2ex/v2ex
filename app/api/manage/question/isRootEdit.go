@@ -13,7 +13,7 @@ type _is_root_edit struct {
 	DID model.DIDTYPE `json:"did" validate:"gt=0" comment:"文章ID"`
 }
 
-func is_root_edit(c *gin.Context) {
+func isRootEdit(c *gin.Context) {
 	_f := _is_root_edit{}
 	c.BindJSON(&_f)
 	//验证是否回答过此问题
