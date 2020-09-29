@@ -45,6 +45,12 @@ func dataCheck(c *gin.Context) {
 		case model.DataCheckTypeQuestionEdit:
 			_question_edit(c, &_f, &_data)
 			return
+		case model.DataCheckTypeQuestionCommentRootAdd:
+			_question_comment_root_add(c, &_f, &_data)
+			return
+		case model.DataCheckTypeQuestionCommentRootEdit:
+			_question_comment_root_edit(c, &_f, &_data)
+			return
 		}
 		break
 	case "deny":
