@@ -25,11 +25,11 @@ func dataCheck(c *gin.Context) {
 		//先判断是什么类型
 		switch _data.Type {
 		//添加文章
-		case model.DataCheckTypeAddArticle:
+		case model.DataCheckTypeArticleAdd:
 			_article_add(c, &_f, &_data)
 			return
 		//修改文章
-		case model.DataCheckTypeEditArticle:
+		case model.DataCheckTypeArticleEdit:
 			_article_edit(c, &_f, &_data)
 			return
 		}

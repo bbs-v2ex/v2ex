@@ -35,11 +35,14 @@ func dataCheck(c *gin.Context) {
 		}
 		c_title := ""
 		switch v.Type {
-		case model.DataCheckTypeAddArticle:
+		case model.DataCheckTypeArticleAdd:
 			c_title += "发布文章"
 			break
-		case model.DataCheckTypeEditArticle:
+		case model.DataCheckTypeArticleEdit:
 			c_title += "修改文章 " + fmt.Sprintf("[%d]", v.DID)
+			break
+		case model.DataCheckTypeArticleCommentRootAdd:
+			c_title += "ArticleCommentRootAdd"
 			break
 		}
 		_one["title"] = c_title

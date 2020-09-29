@@ -233,8 +233,9 @@ function post(url, data, params = {}, nofix = false) {
             headers: {'____token': token},
             params: params,
         }).then(res => {
-            resolve(res.data)
+            resolve(res.data);
             let data = res.data;
+
             if (data.u != "" && data.u != undefined) {
                 window.location.href = data.u;
             }

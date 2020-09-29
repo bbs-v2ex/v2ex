@@ -24,28 +24,43 @@
                         <div>
                             <label class="form-label"> 文章审核 </label>
                             <div class="row">
-                                <div class=" col-sm-3">
+                                <div class=" col-sm-4">
                                     <div class="form-check form-switch">
                                         <input class="form-check-input" type="checkbox" id="f_a_send" v-model="seo.article_check.send" :checked="seo.article_check.send">
                                         <label class="form-check-label" for="f_a_send">发布</label>
                                     </div>
                                 </div>
-                                <div class=" col-sm-3">
+                                <div class=" col-sm-4">
                                     <div class="form-check form-switch">
                                         <input class="form-check-input" type="checkbox" id="f_a_edit" v-model="seo.article_check.edit" :checked="seo.article_check.edit">
                                         <label class="form-check-label" for="f_a_edit">编辑</label>
                                     </div>
                                 </div>
-                                <div class=" col-sm-3">
+                                <div class=" col-sm-4">
                                     <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" id="f_a_c_root" v-model="seo.article_check.c_root" :checked="seo.article_check.c_root">
-                                        <label class="form-check-label" for="f_a_c_root">评论root</label>
+                                        <input class="form-check-input" type="checkbox" id="f_a_c_root_add" v-model="seo.article_check.c_root_add" :checked="seo.article_check.c_root_add">
+                                        <label class="form-check-label" for="f_a_c_root_add">评论roo添加</label>
                                     </div>
                                 </div>
-                                <div class=" col-sm-3">
+
+                                <div class=" col-sm-4">
                                     <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" id="f_a_c_child" v-model="seo.article_check.c_child" :checked="seo.article_check.c_child">
-                                        <label class="form-check-label" for="f_a_c_child">评论child</label>
+                                        <input class="form-check-input" type="checkbox" id="f_a_c_root_edit" v-model="seo.article_check.c_root_edit" :checked="seo.article_check.c_root_edit">
+                                        <label class="form-check-label" for="f_a_c_root_edit">评论roo编辑</label>
+                                    </div>
+                                </div>
+
+                                <div class=" col-sm-4">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="f_a_c_child_add" v-model="seo.article_check.c_child_add" :checked="seo.article_check.c_child_add">
+                                        <label class="form-check-label" for="f_a_c_child_add">评论child添加</label>
+                                    </div>
+                                </div>
+
+                                <div class=" col-sm-4">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="f_a_c_child_edit" v-model="seo.article_check.c_child_edit" :checked="seo.article_check.c_child_edit">
+                                        <label class="form-check-label" for="f_a_c_child_edit">评论child编辑</label>
                                     </div>
                                 </div>
                             </div>
@@ -56,28 +71,43 @@
                         <div>
                             <label class="form-label"> 问题审核 </label>
                             <div class="row">
-                                <div class=" col-sm-3">
+                                <div class=" col-sm-4">
                                     <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" id="q_a_send" v-model="seo.question_check.send" :checked="seo.question_check.send">
-                                        <label class="form-check-label" for="q_a_send">发布</label>
+                                        <input class="form-check-input" type="checkbox" id="1f_a_send" v-model="seo.question_check.send" :checked="seo.question_check.send">
+                                        <label class="form-check-label" for="1f_a_send">发布</label>
                                     </div>
                                 </div>
-                                <div class=" col-sm-3">
+                                <div class=" col-sm-4">
                                     <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" id="q_a_edit" v-model="seo.question_check.edit" :checked="seo.question_check.edit">
-                                        <label class="form-check-label" for="q_a_edit">编辑</label>
+                                        <input class="form-check-input" type="checkbox" id="1f_a_edit" v-model="seo.question_check.edit" :checked="seo.question_check.edit">
+                                        <label class="form-check-label" for="1f_a_edit">编辑</label>
                                     </div>
                                 </div>
-                                <div class=" col-sm-3">
+                                <div class=" col-sm-4">
                                     <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" id="q_a_c_root" v-model="seo.question_check.c_root" :checked="seo.question_check.c_root">
-                                        <label class="form-check-label" for="q_a_c_root">评论root</label>
+                                        <input class="form-check-input" type="checkbox" id="1f_a_c_root_add" v-model="seo.question_check.c_root_add" :checked="seo.question_check.c_root_add">
+                                        <label class="form-check-label" for="1f_a_c_root_add">评论roo添加</label>
                                     </div>
                                 </div>
-                                <div class=" col-sm-3">
+
+                                <div class=" col-sm-4">
                                     <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" id="q_a_c_child" v-model="seo.question_check.c_child" :checked="seo.question_check.c_child">
-                                        <label class="form-check-label" for="q_a_c_child">评论child</label>
+                                        <input class="form-check-input" type="checkbox" id="1f_a_c_root_edit" v-model="seo.question_check.c_root_edit" :checked="seo.question_check.c_root_edit">
+                                        <label class="form-check-label" for="1f_a_c_root_edit">评论roo编辑</label>
+                                    </div>
+                                </div>
+
+                                <div class=" col-sm-4">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="1f_a_c_child_add" v-model="seo.question_check.c_child_add" :checked="seo.question_check.c_child_add">
+                                        <label class="form-check-label" for="1f_a_c_child_add">评论child添加</label>
+                                    </div>
+                                </div>
+
+                                <div class=" col-sm-4">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="1f_a_c_child_edit" v-model="seo.question_check.c_child_edit" :checked="seo.question_check.c_child_edit">
+                                        <label class="form-check-label" for="1f_a_c_child_edit">评论child编辑</label>
                                     </div>
                                 </div>
                             </div>

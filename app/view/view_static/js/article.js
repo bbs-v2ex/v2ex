@@ -62,7 +62,7 @@ var app = new Vue({
         },
         collect_toggle() {
             if (this.collect.status) {
-                console.log("取消收藏")
+                console.log("取消收藏");
                 post('/member/collect_del', {did: DID}).then(res => {
                     if (res.code === 1) {
 

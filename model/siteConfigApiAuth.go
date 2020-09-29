@@ -25,9 +25,11 @@ type check struct {
 	Edit bool `json:"edit" bson:"edit"`
 
 	//评论root
-	CRoot bool `json:"c_root" bson:"c_root"`
+	CRootAdd  bool `json:"c_root_add" bson:"c_root_add"`
+	CRootEdit bool `json:"c_root_edit" bson:"c_root_edit"`
 	//评论child
-	CChild bool `json:"c_child" bson:"c_child"`
+	CChildAdd  bool `json:"c_child_add" bson:"c_child_add"`
+	CChildEdit bool `json:"c_child_edit" bson:"c_child_edit"`
 }
 
 func (t SiteConfig) GetApiAuth() (sc SiteConfigApiAuth) {
@@ -48,14 +50,18 @@ func (t SiteConfigApiAuth) WaitCheck(user Member, cint int) bool {
 	}
 
 	switch cint {
-	case DataCheckTypeAddArticle:
+	case DataCheckTypeArticleAdd:
 		return t.ArticleCheck.Send
-	case DataCheckTypeEditArticle:
+	case DataCheckTypeArticleEdit:
 		return t.ArticleCheck.Edit
-	case DataCheckTypeCommentRootArticle:
-		return t.ArticleCheck.CRoot
-	case DataCheckTypeCommentChildArticle:
-		return t.ArticleCheck.CChild
+	case DataCheckTypeArticleCommentRootAdd:
+		return t.ArticleCheck.CRootAdd
+	case DataCheckTypeArticleCommentRootEdit:
+		return t.ArticleCheck.CRootEdit
+	case DataCheckTypeArticleCommentChildAdd:
+		return t.ArticleCheck.CChildAdd
+	case DataCheckTypeArticleCommentChildEdit:
+		return t.ArticleCheck.CChildEdit
 	}
 	return false
 }

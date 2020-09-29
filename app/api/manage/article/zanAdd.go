@@ -5,11 +5,17 @@ import (
 	"github.com/123456/c_code/mc"
 	"github.com/gin-gonic/gin"
 	"github.com/globalsign/mgo/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"v2ex/app/api"
 	"v2ex/model"
 )
 
-func zan_del(c *gin.Context) {
+//点赞
+type _zan struct {
+	ID primitive.ObjectID `json:"_id" validate:"len=12"`
+}
+
+func zanAdd(c *gin.Context) {
 	_f := _zan{}
 	c.BindJSON(&_f)
 	validator := api.VerifyValidator(_f)
@@ -18,7 +24,6 @@ func zan_del(c *gin.Context) {
 		c.JSON(200, result_json)
 		return
 	}
-
 	//查询数据
 	comment_root := model.CommentRoot{}
 	mc.Table(comment_root.Table()).Where(bson.M{"_id": _f.ID}).FindOne(&comment_root)
@@ -27,7 +32,6 @@ func zan_del(c *gin.Context) {
 		c.JSON(200, result_json)
 		return
 	}
-	//查询数据
 	comment_text := comment_root.Text
 	mc.Table(comment_text.Table()).Where(bson.M{"_id": _f.ID}).FindOne(&comment_text)
 	if comment_text.ID.Hex() == mc.Empty {
@@ -42,13 +46,12 @@ func zan_del(c *gin.Context) {
 		zan = append(zan, int(v))
 	}
 
-	if !c_code.InArrayInt(int(mid), zan) {
-		result_json := c_code.V1GinError(102, "未赞过")
+	if c_code.InArrayInt(int(mid), zan) {
+		result_json := c_code.V1GinError(102, "已点过")
 		c.JSON(200, result_json)
 		return
 	}
-
-	_zan := c_code.RemoveArrayInt(int(mid), zan)
+	_zan := append(comment_text.Zan, mid)
 	//更新字段
 	err := mc.Table(comment_text.Table()).Where(bson.M{"_id": _f.ID}).UpdateOne(bson.M{"zan": _zan})
 	if err != nil {
@@ -62,9 +65,9 @@ func zan_del(c *gin.Context) {
 		c.JSON(200, result_json)
 		return
 	}
-	result_json := c_code.V1GinSuccess(_zan)
 	//添加进通知中心
-	model.Movement(mid, comment_root.MID).DelArticleCommentZan(comment_root)
+	model.Movement(mid, comment_root.MID).AddArticleCommentZan(comment_root)
+	result_json := c_code.V1GinSuccess(_zan)
 	c.JSON(200, result_json)
 	return
 }

@@ -13,7 +13,7 @@ type _comment_root_list struct {
 	RID primitive.ObjectID `json:"rid" validate:"len=12" comment:"评论ID"`
 }
 
-func comment_root_list(c *gin.Context) {
+func commentRootList(c *gin.Context) {
 	_f := _comment_root_list{}
 	c.BindJSON(&_f)
 	validator := api.VerifyValidator(_f)

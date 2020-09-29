@@ -49,11 +49,11 @@ func add(c *gin.Context) {
 	user := api.GetNowUserInfo(c)
 	//如果需要审核则进入审核
 
-	if api_auth.WaitCheck(user, model.DataCheckTypeAddArticle) {
+	if api_auth.WaitCheck(user, model.DataCheckTypeArticleAdd) {
 		//添加进审核表
 		data_check := model.DataCheck{
 			ID:    primitive.NewObjectID(),
-			Type:  model.DataCheckTypeAddArticle,
+			Type:  model.DataCheckTypeArticleAdd,
 			Itime: time.Now(),
 			MID:   user.MID,
 			D: gin.H{

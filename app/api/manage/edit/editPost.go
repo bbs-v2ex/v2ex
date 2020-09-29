@@ -48,10 +48,10 @@ func editPost(c *gin.Context) {
 			return
 		}
 		//判断是否进入审核阶段
-		if api_auth.WaitCheck(user, model.DataCheckTypeEditArticle) {
+		if api_auth.WaitCheck(user, model.DataCheckTypeArticleEdit) {
 
 			//检测是否已存在提交但是未审核的
-			cwhere := bson.M{"type": model.DataCheckTypeEditArticle, "mid": user.MID, "did": _f.DID}
+			cwhere := bson.M{"type": model.DataCheckTypeArticleEdit, "mid": user.MID, "did": _f.DID}
 
 			_check := model.DataCheck{}
 			mc.Table(_check.Table()).Where(cwhere).FindOne(&_check)
@@ -63,7 +63,7 @@ func editPost(c *gin.Context) {
 
 			edit_article := model.DataCheck{
 				ID:    primitive.NewObjectID(),
-				Type:  model.DataCheckTypeEditArticle,
+				Type:  model.DataCheckTypeArticleEdit,
 				MID:   user.MID,
 				DID:   _f.DID,
 				D:     gin.H{"did": _f.DID, "title": _f.Title, "content": _f.Content},

@@ -24,13 +24,15 @@ const (
 //数据审核类型
 const (
 	//添加文章
-	DataCheckTypeAddArticle = 1
+	DataCheckTypeArticleAdd = 1
 	//编辑文章
-	DataCheckTypeEditArticle = 2
-	//评论Root
-	DataCheckTypeCommentRootArticle = 3
-	//评论Child
-	DataCheckTypeCommentChildArticle = 4
+	DataCheckTypeArticleEdit = 2
+	//评论Root Add
+	DataCheckTypeArticleCommentRootAdd = 3
+	//评论Root Add
+	DataCheckTypeArticleCommentRootEdit  = 4
+	DataCheckTypeArticleCommentChildAdd  = 5
+	DataCheckTypeArticleCommentChildEdit = 6
 )
 
 //会员类型 如果为负 则为异常状态 并限制操作
