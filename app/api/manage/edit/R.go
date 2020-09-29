@@ -7,5 +7,5 @@ import (
 func R(r *gin.RouterGroup) {
 	r1 := r.Group("/edit")
 	r1.GET("/edit", edit)
-	r1.POST("/edit", editpost)
+	r1.POST("/edit", editPost)
 }

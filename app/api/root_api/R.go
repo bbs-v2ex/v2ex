@@ -24,7 +24,7 @@ func R(r *gin.RouterGroup) {
 func isRootAuth(c *gin.Context) {
 	user := api.GetNowUserInfo(c)
 	if user.MemberType != model.MemberTypeRoot {
-		result := c_code.V1GinError(500, "没权限啊")
+		result := c_code.V1GinError(5000, "没权限啊")
 		c.JSON(200, result)
 		c.Abort()
 		return

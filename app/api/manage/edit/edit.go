@@ -20,6 +20,7 @@ type _edit_result struct {
 	Content string `json:"content"`
 }
 
+//查询接口
 func edit(c *gin.Context) {
 	_f := _edit{}
 	err := c.Bind(&_f)
@@ -35,6 +36,7 @@ func edit(c *gin.Context) {
 	mid := api.GetMID(c)
 	switch _f.Type {
 	case "article":
+		// 先验证数据是否错误
 		data_index := model.DataIndex{}
 		mc.Table(data_index.Table()).Where(bson.M{"did": _f.DID, "d_type": model.DTYPEArticle, "mid": mid}).FindOne(&data_index)
 		if data_index.MID == 0 {

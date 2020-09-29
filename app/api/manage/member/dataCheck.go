@@ -32,20 +32,6 @@ func dataCheck(c *gin.Context) {
 				"ajax": false,
 			},
 		}
-		//if member.MemberType == model.MemberTypeRoot {
-		//	_cz = append(_cz, []gin.H{
-		//		{
-		//			"t":    "通过",
-		//			"u":    "data_check_view?id=" + v.ID.Hex() + "&p=pass",
-		//			"ajax": false,
-		//		},
-		//		{
-		//			"t":    "拒绝",
-		//			"u":    "data_check_view?id=" + v.ID.Hex() + "&p=deny",
-		//			"ajax": false,
-		//		},
-		//	}...)
-		//}
 		switch v.Type {
 		case model.DataCheckTypeAddArticle:
 			_one["tip"] = "发布文章"

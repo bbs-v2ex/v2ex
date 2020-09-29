@@ -3,9 +3,9 @@
 {{end}}
 {{define "body"}}
     <div class="row member-manage">
-        <div>---------- title ------------ </div>
+        <div>---------- title ------------</div>
         <div v-html="d.title"></div>
-        <div>---------- title ------------ </div>
+        <div>---------- title ------------</div>
         <br>
         <br>
         <br>
@@ -13,9 +13,25 @@
         <div>------------ content -------------</div>
         <div v-html="d.content"></div>
         <div>------------ content -------------</div>
+
+        <div v-if="r_message != ''" v-html="r_message" style="color: #fff;background: red"></div>
+
         <div>------------ ------- -------------</div>
-        <div style="width: 450px">
-                <div> <button class="btn btn-primary m-2" style="width: 100%" @click="pass">通过 </button> </div>
+
+        <div class="row">
+            <div style="width: 450px">
+                <div>
+                    <button class="btn btn-primary m-2" style="width: 100%" @click="pass">通过</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div style="width: 450px">
+                <div>
+                    <button class="btn btn-danger m-2" style="width: 100%" @click="deny">拒绝</button>
+                </div>
+            </div>
         </div>
 
     </div>
@@ -24,23 +40,35 @@
     <script>
         var app = new Vue({
             el: '#vue-app',
-            delimiters:['${','}'],
+
+            delimiters: ['${', '}'],
             data() {
                 return {
-                    d : []
+                    d: [],
+                    r_message: '',
                 }
             },
-            created(){
+            created() {
                 post("/member/data_check_view?id={{.ID}}").then(res => {
-                    if (res.code === 1){
-                        this. d= res.data
+                    if (res.code === 1) {
+                        this.d = res.data
                     }
                 })
             },
-            methods:{
-                pass(){
-                    post('/config/data_check',{type:'pass',_id:this.d._id}).then(res => {
-                        console.log(res)
+            methods: {
+                pass() {
+                    post('/config/data_check', {type: 'pass', _id: this.d._id}).then(res => {
+                        if (res.code !== 1) {
+                            this.r_message = res.message;
+                        }else{
+                            window.location.href = '?'
+                        }
+
+                    });
+                },
+                deny() {
+                    post('/config/data_check', {type: 'deny', _id: this.d._id}).then(res => {
+                        window.location.href = '?'
                     });
                 }
             }

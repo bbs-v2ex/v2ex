@@ -12,7 +12,11 @@ import (
 func dataCheckView(c *gin.Context) {
 	id, _ := primitive.ObjectIDFromHex(c.Query("id"))
 	data_check := model.DataCheck{}
-	mc.Table(data_check.Table()).Where(bson.M{"_id": id}).FindOne(&data_check)
+	where := bson.M{}
+	if id.Hex() != mc.Empty {
+		where = bson.M{"_id": id}
+	}
+	mc.Table(data_check.Table()).Where(where).FindOne(&data_check)
 
 	result_data := data_check.D
 	result_data["_id"] = data_check.ID

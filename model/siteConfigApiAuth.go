@@ -10,18 +10,24 @@ type SiteConfigApiAuth struct {
 	Register bool `json:"register" bson:"register"`
 	//爬虫签名
 	SpiderSign string `json:"spider_sign" bson:"spider_sign"`
-	//发布文章
-	SendArticle bool `json:"send_article" bson:"send_article"`
-	//文章评论Root
-	ArticleCommentRoot bool `json:"article_comment_root" bson:"article_comment_root"`
-	//文章评论Child
-	ArticleCommentChild bool `json:"article_comment_child" bson:"article_comment_child"`
-	//发布问题
-	SendQuestion bool `json:"send_question" bson:"send_question"`
-	//问题评论Root
-	QuestionCommentRoot bool `json:"question_comment_root" bson:"question_comment_root"`
-	//问题评论Child
-	QuestionCommentChild bool `json:"question_comment_child" bson:"question_comment_child"`
+
+	//文章审核
+	ArticleCheck check `json:"article_check" bson:"article_check"`
+
+	//问题审核
+	QuestionCheck check `json:"question_check" bson:"question_check"`
+}
+
+type check struct {
+	//发布
+	Send bool `json:"send" bson:"send"`
+	//编辑
+	Edit bool `json:"edit" bson:"edit"`
+
+	//评论root
+	CRoot bool `json:"c_root" bson:"c_root"`
+	//评论child
+	CChild bool `json:"c_child" bson:"c_child"`
 }
 
 func (t SiteConfig) GetApiAuth() (sc SiteConfigApiAuth) {
@@ -34,9 +40,22 @@ func (t SiteConfig) SetApiAuth(sc SiteConfigApiAuth) error {
 	return err
 }
 
-func (t SiteConfigApiAuth) WaitCheck(user Member) bool {
-	if t.SendArticle && user.MemberType != MemberTypeRoot && user.IsUser {
-		return true
+func (t SiteConfigApiAuth) WaitCheck(user Member, cint int) bool {
+
+	//如果不是注册会员或者是超级管理员则不需要审核直接写入数据库
+	if user.MemberType == MemberTypeRoot || !user.IsUser {
+		return false
+	}
+
+	switch cint {
+	case DataCheckTypeAddArticle:
+		return t.ArticleCheck.Send
+	case DataCheckTypeEditArticle:
+		return t.ArticleCheck.Edit
+	case DataCheckTypeCommentRootArticle:
+		return t.ArticleCheck.CRoot
+	case DataCheckTypeCommentChildArticle:
+		return t.ArticleCheck.CChild
 	}
 	return false
 }

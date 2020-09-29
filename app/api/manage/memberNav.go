@@ -37,23 +37,19 @@ func MemberNav(c *gin.Context) {
 		root_list = append(root_list, []gin.H{
 			{
 				"t": "SEO设置",
-				"u": u + "seo",
+				"u": u + "/seo",
 			},
 			{
 				"t": "网站权限",
-				"u": u + "api_auth",
+				"u": u + "/api_auth",
 			},
 			{
 				"t": "索引查看",
-				"u": u + "db_index",
-			},
-			{
-				"t": "数据审核",
-				"u": u + "data_check",
+				"u": u + "/db_index",
 			},
 			{
 				"t": "数据管理",
-				"u": u + "data_manage",
+				"u": u + "/data_manage",
 			},
 			{
 				"t": "数据审核",

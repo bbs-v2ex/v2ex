@@ -25,6 +25,12 @@ const (
 const (
 	//添加文章
 	DataCheckTypeAddArticle = 1
+	//编辑文章
+	DataCheckTypeEditArticle = 2
+	//评论Root
+	DataCheckTypeCommentRootArticle = 3
+	//评论Child
+	DataCheckTypeCommentChildArticle = 4
 )
 
 //会员类型 如果为负 则为异常状态 并限制操作

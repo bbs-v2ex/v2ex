@@ -6,11 +6,19 @@ import (
 	"github.com/123456/c_code/mc"
 	"github.com/gin-gonic/gin"
 	"github.com/globalsign/mgo/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
+	"time"
 	"v2ex/app/api"
+
 	"v2ex/model"
 )
 
-func editpost(c *gin.Context) {
+//判断是否数据是否允许修改允许修改
+func editAllow(mid model.MIDTYPE, did model.DIDTYPE) {
+
+}
+
+func editPost(c *gin.Context) {
 	_f := _edit_result{}
 	err := c.Bind(&_f)
 	if err != nil {
@@ -19,26 +27,56 @@ func editpost(c *gin.Context) {
 		return
 	}
 	mid := api.GetMID(c)
+	user := api.GetNowUserInfo(c)
+	api_auth := model.SiteConfig{}.GetApiAuth()
 	switch _f.Type {
 	case "article":
-		data_index := model.DataIndex{}
-		mc.Table(data_index.Table()).Where(bson.M{"did": _f.DID, "d_type": model.DTYPEArticle, "mid": mid}).FindOne(&data_index)
-		if data_index.MID != mid {
-			result_json := c_code.V1GinError(101, "请勿乱传参")
-			c.JSON(200, result_json)
-			return
-		}
-		mc.Table(data_index.Table()).Where(bson.M{"_id": data_index.ID}).UpdateOne(bson.M{"t": _f.Title})
-		content, imgs, err := api.SeparatePicture(_f.Content)
-		if err != nil {
-			result_json := c_code.V1GinError(102, "请勿乱传参")
-			c.JSON(200, result_json)
-			return
-		}
-		mc.Table(data_index.InfoArticle.Table()).Where(bson.M{"_id": data_index.ID}).UpdateOne(bson.M{"content": content, "imgs": imgs})
 
-		result_json := c_code.V1GinSuccess("修改成功", "", fmt.Sprintf("/%s/%d", model.UrlTagArticle, _f.DID))
-		c.JSON(200, result_json)
+		editAllow(user.MID, _f.DID)
+
+		//判断是否进入审核阶段
+		if api_auth.WaitCheck(user, model.DataCheckTypeEditArticle) {
+			edit_article := model.DataCheck{
+				ID:    primitive.NewObjectID(),
+				Type:  model.DataCheckTypeEditArticle,
+				MID:   user.MID,
+				DID:   _f.DID,
+				D:     gin.H{"did": _f.DID, "title": _f.Title, "content": _f.Content},
+				Itime: time.Now(),
+			}
+			//添加进审核表
+			err := mc.Table(edit_article.Table()).Insert(edit_article)
+			if err != nil {
+				result_json := c_code.V1GinError(400, "添加审核表失败")
+				c.JSON(200, result_json)
+				return
+			}
+			result_json := c_code.V1GinSuccess(200, "已进入后台审核,通过后会展示", model.UrlViewMemberConfig+"/data_check_view?id="+edit_article.ID.Hex())
+			c.JSON(200, result_json)
+			return
+		} else {
+			//nc.EditArticle(title,content,did,mid,update_time)
+			//nc.EditArticle(_f.Title,_f.Content,_f.DID,mid,update_time)
+		}
+		//
+		//data_index := model.DataIndex{}
+		//mc.Table(data_index.Table()).Where(bson.M{"did": _f.DID, "d_type": model.DTYPEArticle, "mid": mid}).FindOne(&data_index)
+		//if data_index.MID != mid {
+		//	result_json := c_code.V1GinError(101, "请勿乱传参")
+		//	c.JSON(200, result_json)
+		//	return
+		//}
+		//mc.Table(data_index.Table()).Where(bson.M{"_id": data_index.ID}).UpdateOne(bson.M{"t": _f.Title})
+		//content, imgs, err := api.SeparatePicture(_f.Content)
+		//if err != nil {
+		//	result_json := c_code.V1GinError(102, "请勿乱传参")
+		//	c.JSON(200, result_json)
+		//	return
+		//}
+		//mc.Table(data_index.InfoArticle.Table()).Where(bson.M{"_id": data_index.ID}).UpdateOne(bson.M{"content": content, "imgs": imgs})
+		//
+		//result_json := c_code.V1GinSuccess("修改成功", "", fmt.Sprintf("/%s/%d", model.UrlTagArticle, _f.DID))
+		//c.JSON(200, result_json)
 		return
 	case "question":
 		data_index := model.DataIndex{}

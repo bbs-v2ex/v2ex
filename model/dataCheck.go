@@ -12,6 +12,8 @@ type DataCheck struct {
 	Type int `json:"type" bson:"type"`
 	//MID 操作人
 	MID MIDTYPE `json:"mid" bson:"mid"`
+	//DID 数据ID
+	DID DIDTYPE `json:"did" bson:"did"`
 	//数据
 	D     gin.H     `json:"d" bson:"d"`
 	Itime time.Time `json:"itime" bson:"itime"`

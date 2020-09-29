@@ -49,7 +49,7 @@ func add(c *gin.Context) {
 	user := api.GetNowUserInfo(c)
 	//如果需要审核则进入审核
 
-	if api_auth.WaitCheck(user) {
+	if api_auth.WaitCheck(user, model.DataCheckTypeAddArticle) {
 		//添加进审核表
 		data_check := model.DataCheck{
 			ID:    primitive.NewObjectID(),
@@ -67,7 +67,7 @@ func add(c *gin.Context) {
 			c.JSON(200, result_json)
 			return
 		}
-		result_json := c_code.V1GinSuccess(200, "已进入后台审核,通过后会展示")
+		result_json := c_code.V1GinSuccess(200, "已进入后台审核,通过后会展示", model.UrlViewMemberConfig+"/data_check_view?id="+data_check.ID.Hex())
 		c.JSON(200, result_json)
 		return
 	}
