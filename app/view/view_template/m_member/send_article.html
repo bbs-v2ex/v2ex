@@ -1,6 +1,9 @@
 {{define "head"}}
+    <link href="{{st "/css/manage.css"}}" rel="stylesheet">
 {{end}}
 {{define "body"}}
+
+    {{include "m_member/_0_left"}}
     <div class="card  bg-white rounded">
         <h5 class="card-header">发布文章</h5>
         <div class="card-body col-md-12 align-self-center">
@@ -26,6 +29,8 @@
             </form>
         </div>
     </div>
+    {{include "m_member/_0_right"}}
+
 {{end}}
 {{define "js"}}
 <script type="application/javascript" src="{{st "/wangEditor-3.1.1/wangEditor.min.js"}}"></script>
@@ -36,6 +41,7 @@
         delimiters:['${','}'],
         data() {
             return {
+                view_data:{xxx:[], root:[],nav:[]},
                 ajax_message:'',
                 wait_loading:false,
                 f1:{
@@ -46,7 +52,11 @@
             }
         },
         created(){
-
+            post("/member_nav").then(res => {
+                if (res.code === 1){
+                    this.view_data = res.data;
+                }
+            })
         },
         methods: {
             submit(e) {

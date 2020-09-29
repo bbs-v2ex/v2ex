@@ -2,6 +2,7 @@
     <link href="{{st "/css/manage.css"}}" rel="stylesheet">
 {{end}}
 {{define "body"}}
+    {{include "m_member/_0_left"}}
     <div class="row member-manage">
 
         <div v-for=" (item,index) in d" :key="index">
@@ -16,22 +17,24 @@
         <div style="padding: 30px 0 ">------------ ------- -------------</div>
 
         <div class="row">
-            <div style="width: 450px">
+            <div class="col-6">
                 <div>
                     <button class="btn btn-primary m-2" style="width: 100%" @click="pass">通过</button>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div style="width: 450px">
+
+            <div class="col-6">
                 <div>
                     <button class="btn btn-danger m-2" style="width: 100%" @click="deny">拒绝</button>
                 </div>
             </div>
+
         </div>
 
     </div>
+    {{include "m_member/_0_right"}}
+
 {{end}}
 {{define "js"}}
     <script>
@@ -43,12 +46,18 @@
                 return {
                     d: [],
                     r_message: '',
+                    view_data:{xxx:[], root:[],nav:[]},
                 }
             },
             created() {
                 post("/member/data_check_view?id={{.ID}}").then(res => {
                     if (res.code === 1) {
                         this.d = res.data
+                    }
+                });
+                post("/member_nav").then(res => {
+                    if (res.code === 1){
+                        this.view_data = res.data;
                     }
                 })
             },

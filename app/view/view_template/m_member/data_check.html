@@ -2,6 +2,7 @@
     <link href="{{st "/css/manage.css"}}" rel="stylesheet">
 {{end}}
 {{define "body"}}
+    {{include "m_member/_0_left"}}
     <div class="row member-manage">
         <ul class="nav nav-tabs row">
             <li class="nav-item" v-for="item in list">
@@ -9,6 +10,7 @@
             </li>
         </ul>
     </div>
+    {{include "m_member/_0_right"}}
 {{end}}
 {{define "js"}}
     <script>
@@ -17,13 +19,19 @@
             delimiters:['${','}'],
             data() {
                 return {
-                  list : []
+                    list : [],
+                    view_data:{xxx:[], root:[],nav:[]},
                 }
             },
             created(){
                 post("/member/data_check").then(res => {
                     if (res.code === 1){
                        this.list = res.data
+                    }
+                });
+                post("/member_nav").then(res => {
+                    if (res.code === 1){
+                        this.view_data = res.data;
                     }
                 })
             }

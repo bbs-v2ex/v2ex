@@ -20,7 +20,7 @@ func dataCheck(c *gin.Context) {
 	}
 	//查询数据
 	list := []model.DataCheck{}
-	mc.Table(model.DataCheck{}.Table()).Where(where).Limit(100).Find(&list)
+	mc.Table(model.DataCheck{}.Table()).Where(where).Limit(30).Find(&list)
 	l := []gin.H{}
 	for _, v := range list {
 		_one := gin.H{
@@ -46,6 +46,24 @@ func dataCheck(c *gin.Context) {
 			break
 		case model.DataCheckTypeArticleCommentChildAdd:
 			c_title += "ArticleCommentChildAdd"
+			break
+		case model.DataCheckTypeQuestionAdd:
+			c_title += "发布提问"
+			break
+		case model.DataCheckTypeQuestionEdit:
+			c_title += "编辑提问"
+			break
+		case model.DataCheckTypeQuestionCommentRootAdd:
+			c_title += "回答回答"
+			break
+		case model.DataCheckTypeQuestionCommentRootEdit:
+			c_title += "编辑回答"
+			break
+		case model.DataCheckTypeQuestionCommentChildAdd:
+			c_title += "QuestionCommentChildAdd"
+			break
+		case model.DataCheckTypeQuestionCommentChildEdit:
+			c_title += "QuestionCommentChildEdit"
 			break
 		}
 		_one["title"] = c_title
