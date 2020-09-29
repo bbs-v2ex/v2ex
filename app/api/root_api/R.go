@@ -19,6 +19,11 @@ func R(r *gin.RouterGroup) {
 	//数据审核结果
 	r1.POST("/data_check", dataCheck)
 
+	//数据管理页面
+	r1.POST("/data_search_nav", dataSearchNav)
+	r1.POST("/data_search", dataSearch)
+	r1.POST("/data_del", dataDel)
+
 }
 
 func isRootAuth(c *gin.Context) {

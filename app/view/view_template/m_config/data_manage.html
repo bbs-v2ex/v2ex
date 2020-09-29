@@ -1,0 +1,79 @@
+{{define "head"}}
+    <link rel="stylesheet" href="{{st "/css/manage.css"}}">
+{{end}}
+{{define "body"}}
+    {{include "m_member/_0_left"}}
+
+            <form class="row g-3">
+                <div class="col-md-2">
+                    <label for="inputEmail4" class="form-label">选择类型</label>
+                    <select class="form-select" v-model="st.search.type">
+                        <option :value="item.v" v-for="item in st.s_list">${item.t}</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="inputPassword4" class="form-label">用户ID</label>
+                    <input type="text" class="form-control" id="inputPassword4" v-model="st.search.mid">
+                </div>
+                <div class="col-md-6">
+                    <label for="inputPassword4" class="form-label">标题</label>
+                    <input type="text" class="form-control" id="inputPassword4" v-model="st.search.title">
+                </div>
+                <div class="col-md-2">
+                    <label for="inputPassword4" class="form-label">@ </label>
+                    <button class="btn btn-success form-control" @click.prevent="search"> 搜索 </button>
+                </div>
+            </form>
+            <div style="min-height: 500px"></div>
+            <form class="row">
+                <div class="col-md-6">
+                    <label for="inputPassword4" class="form-label">@ID</label>
+                    <input type="text" class="form-control" id="inputPassword4" v-model="del_id">
+                </div>
+                <div class="col-md-4">
+                    <label for="inputPassword4" class="form-label">@ </label>
+                    <button class="btn btn-danger form-control" @click.prevent="delid"> 删除 </button>
+                </div>
+            </form>
+
+    {{include "m_member/_0_right"}}
+{{end}}
+{{define "js"}}
+    <script>
+        var app = new Vue({
+            el: '#vue-app',
+            delimiters:['${','}'],
+            data() {
+                return {
+                    view_data:{xxx:[], root:[],nav:[]},
+                    st:{
+                        search:{}
+                    },
+                    del_id :'',
+                }
+            },
+            created(){
+                post("/member_nav").then(res => {
+                    if (res.code === 1){
+                        this.view_data = res.data;
+                    }
+                });
+                post('/config/data_search_nav').then(res => {
+                    this.st = res.data;
+                })
+            },
+            methods:{
+                search(){
+                    post('/config/data_search',this.st.search).then(res => {
+                        console.log(res)
+                    })
+                },
+                delid(){
+                    post('/config/data_del',{id:this.del_id}).then(res => {
+                        console.log(res)
+                    })
+                }
+            }
+        })
+    </script>
+{{end}}
