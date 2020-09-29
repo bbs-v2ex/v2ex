@@ -62,22 +62,20 @@ func editPost(c *gin.Context) {
 			}
 
 			edit_article := model.DataCheck{
-				ID:    primitive.NewObjectID(),
-				Type:  model.DataCheckTypeArticleEdit,
-				MID:   user.MID,
-				DID:   _f.DID,
-				D:     gin.H{"did": _f.DID, "title": _f.Title, "content": _f.Content},
+				ID:   primitive.NewObjectID(),
+				Type: model.DataCheckTypeArticleEdit,
+				MID:  user.MID,
+				DID:  _f.DID,
+				D: gin.H{
+					"title":   _f.Title,
+					"content": _f.Content,
+				},
 				Itime: time.Now(),
 			}
-			//添加进审核表
-			err := mc.Table(edit_article.Table()).Insert(edit_article)
-			if err != nil {
-				result_json := c_code.V1GinError(400, "添加审核表失败")
-				c.JSON(200, result_json)
-				return
-			}
-			result_json := c_code.V1GinSuccess(200, "已进入后台审核,通过后会展示", model.UrlViewMemberConfig+"/data_check_view?id="+edit_article.ID.Hex())
-			c.JSON(200, result_json)
+
+			result := model.AddDataCheck(edit_article)
+
+			c.JSON(200, result)
 			return
 		} else {
 			//不需要审核 直接修改数据库
@@ -92,24 +90,48 @@ func editPost(c *gin.Context) {
 			return
 		}
 	case "question":
-		data_index := model.DataIndex{}
-		mc.Table(data_index.Table()).Where(bson.M{"did": _f.DID, "d_type": model.DTYPEQuestion, "mid": mid}).FindOne(&data_index)
-		if data_index.MID != mid {
-			result_json := c_code.V1GinError(101, "请勿乱传参")
-			c.JSON(200, result_json)
-			return
-		}
-		mc.Table(data_index.Table()).Where(bson.M{"_id": data_index.ID}).UpdateOne(bson.M{"t": _f.Title})
-		content, imgs, err := api.SeparatePicture(_f.Content)
+		//先判断是否可编辑
+		err := editAllow(bson.M{"did": _f.DID, "d_type": model.DTYPEQuestion, "mid": mid}, user.MID)
 		if err != nil {
-			result_json := c_code.V1GinError(102, "请勿乱传参")
+			result_json := c_code.V1GinError(10000, err.Error())
 			c.JSON(200, result_json)
 			return
 		}
-		mc.Table(data_index.InfoQuestion.Table()).Where(bson.M{"_id": data_index.ID}).UpdateOne(bson.M{"content": content, "imgs": imgs})
 
-		result_json := c_code.V1GinSuccess("修改成功", "", fmt.Sprintf("/%s/%d", model.UrlTagQuestion, _f.DID))
-		c.JSON(200, result_json)
+		//判断是否需要审核
+		if api_auth.WaitCheck(user, model.DataCheckTypeQuestionEdit) {
+			//判断标题是否重复
+			//检测是否已存在提交但是未审核的
+			cwhere := bson.M{"type": model.DataCheckTypeQuestionEdit, "mid": user.MID, "did": _f.DID}
+
+			_check := model.DataCheck{}
+			mc.Table(_check.Table()).Where(cwhere).FindOne(&_check)
+			if _check.ID.Hex() != mc.Empty {
+				result_json := c_code.V1GinError(20000, "切勿重复提交数据")
+				c.JSON(200, result_json)
+				return
+			}
+			edit := model.DataCheck{
+				ID:   primitive.NewObjectID(),
+				Type: model.DataCheckTypeQuestionEdit,
+				MID:  user.MID,
+				DID:  _f.DID,
+				D: gin.H{
+					"title":   _f.Title,
+					"content": _f.Content,
+				},
+				Itime: time.Now(),
+			}
+			result := model.AddDataCheck(edit)
+			c.JSON(200, result)
+			return
+		}
+		err = nc.QuestionEdit(_f.Title, _f.Content, _f.DID, user.MID, time.Now(), true)
+		if err != nil {
+			c.JSON(200, c_code.V1GinError(10000, err.Error()))
+			return
+		}
+		c.JSON(200, c_code.V1GinSuccess("ok"))
 		return
 
 	case "question_answer":

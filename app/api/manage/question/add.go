@@ -1,13 +1,11 @@
 package question
 
 import (
-	"fmt"
 	"github.com/123456/c_code"
-	"github.com/123456/c_code/mc"
 	"github.com/gin-gonic/gin"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	"time"
 	"v2ex/app/api"
+	"v2ex/app/nc"
 	"v2ex/model"
 )
 
@@ -32,65 +30,29 @@ func add(c *gin.Context) {
 		c.JSON(200, result_json)
 		return
 	}
-	//插入数据表
-	did, err := model.AutoID{}.QAID()
-	if err != nil && did == 0 {
-		result_json := c_code.V1GinError(102, "ID 生成失败")
-		c.JSON(200, result_json)
-		return
-	}
-
-	//分离图片
-	html, imgs, err := api.SeparatePicture(_f.Html)
-	_f.Html = html
-	if err != nil {
-		result_json := c_code.V1GinError(102, "处理html错误")
-		c.JSON(200, result_json)
-		return
-	}
-
 	user := api.GetNowUserInfo(c)
+	api_auth := model.SiteConfig{}.GetApiAuth()
+	//判断是否要审核
+	if api_auth.WaitCheck(user, model.DataCheckTypeQuestionAdd) {
+		_check := model.DataCheck{
 
-	//定义索引数据
-	index := model.DataIndex{
-		ID:    primitive.NewObjectID(),
-		DID:   model.DIDTYPE(did),
-		DTYPE: model.DTYPEQuestion,
-		MID:   user.MID,
-		T:     _f.Title,
-		RC:    0,
-		CT:    time.Now().Unix(),
-	}
-	err = mc.Table(index.Table()).Insert(index)
-	if err != nil {
-		result_json := c_code.V1GinError(103, "写入索引表失败")
-		c.JSON(200, result_json)
+			Type: model.DataCheckTypeQuestionAdd,
+			MID:  user.MID,
+			DID:  0,
+			D: gin.H{
+				"title":   _f.Title,
+				"content": _f.Html,
+			},
+		}
+		result := model.AddDataCheck(_check)
+		c.JSON(200, result)
 		return
 	}
 
-	//定义Article 文章表数据
-	d_article := model.DataQuestion{
-		ID:            index.ID,
-		Content:       _f.Html,
-		Imgs:          imgs,
-		ReleaseTime:   time.Now(),
-		ModifyTime:    time.Now(),
-		LastReplyTime: time.Time{},
-		LastReplyMID:  0,
-		CommentSum:    0,
-		CommentRoot:   0,
-		RelatedTime:   time.Time{},
-		RelatedList:   nil,
-	}
-	err = mc.Table(d_article.Table()).Insert(d_article)
+	err, q_index := nc.QuestionAdd(_f.Title, _f.Html, user.MID, time.Now(), true)
 	if err != nil {
-		result_json := c_code.V1GinError(104, "写入文件表失败")
-		c.JSON(200, result_json)
+		c.JSON(200, c_code.V1GinError(101, err.Error()))
 		return
 	}
-	result_json := c_code.V1GinSuccess("", "添加成功", fmt.Sprintf("/q/%d", did))
-	model.AutoID{}.QAAdd()
-	model.Movement(user.MID, 0).AddQuestionSend(index)
-	c.JSON(200, result_json)
-	return
+	c.JSON(200, c_code.V1GinSuccess("", "", model.UrlQuestion(q_index)))
 }

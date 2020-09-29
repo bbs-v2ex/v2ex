@@ -62,6 +62,21 @@ func (t SiteConfigApiAuth) WaitCheck(user Member, cint int) bool {
 		return t.ArticleCheck.CChildAdd
 	case DataCheckTypeArticleCommentChildEdit:
 		return t.ArticleCheck.CChildEdit
+
+	//问题类
+	case DataCheckTypeQuestionAdd:
+		return t.QuestionCheck.Send
+	case DataCheckTypeQuestionEdit:
+		return t.QuestionCheck.Edit
+	case DataCheckTypeQuestionCommentRootAdd:
+		return t.QuestionCheck.CRootAdd
+	case DataCheckTypeQuestionCommentRootEdit:
+		return t.QuestionCheck.CRootAdd
+	case DataCheckTypeQuestionCommentChildAdd:
+		return t.QuestionCheck.CChildAdd
+	case DataCheckTypeQuestionCommentChildEdit:
+		return t.QuestionCheck.CChildEdit
+
 	}
 	return false
 }

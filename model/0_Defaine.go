@@ -33,6 +33,15 @@ const (
 	DataCheckTypeArticleCommentRootEdit  = 4
 	DataCheckTypeArticleCommentChildAdd  = 5
 	DataCheckTypeArticleCommentChildEdit = 6
+
+	//问题类
+	//添加提问
+	DataCheckTypeQuestionAdd              = 100
+	DataCheckTypeQuestionEdit             = 101
+	DataCheckTypeQuestionCommentRootAdd   = 103
+	DataCheckTypeQuestionCommentRootEdit  = 104
+	DataCheckTypeQuestionCommentChildAdd  = 105
+	DataCheckTypeQuestionCommentChildEdit = 106
 )
 
 //会员类型 如果为负 则为异常状态 并限制操作

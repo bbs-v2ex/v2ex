@@ -5,7 +5,7 @@ import (
 	"github.com/globalsign/mgo/bson"
 )
 
-func (t AutoID) QAID() (id int64, e error) {
+func (t AutoID) QAID() (id DIDTYPE, e error) {
 	_a := &AutoID{}
 	mc.Table(t.Table()).Where(bson.M{"t_id": AutoIDQA}).FindOne(_a)
 	//如果数据没有
@@ -22,7 +22,7 @@ func (t AutoID) QAID() (id int64, e error) {
 		id = 1
 		return
 	}
-	id = _a.ValID
+	id = DIDTYPE(_a.ValID)
 	return
 }
 func (t AutoID) QAAdd() (e error) {
