@@ -13,7 +13,7 @@ import (
 )
 
 //添加文章
-func AddArticle(mid model.MIDTYPE, title, content string, insert_time time.Time, find_title_uniqure bool) gin.H {
+func ArticleAdd(mid model.MIDTYPE, title, content string, insert_time time.Time, find_title_uniqure bool) gin.H {
 
 	if find_title_uniqure {
 		//检测title 是否重复

@@ -1,6 +1,7 @@
 package member
 
 import (
+	"fmt"
 	"github.com/123456/c_code"
 	"github.com/123456/c_code/mc"
 	"github.com/gin-gonic/gin"
@@ -32,12 +33,16 @@ func dataCheck(c *gin.Context) {
 				"ajax": false,
 			},
 		}
+		c_title := ""
 		switch v.Type {
 		case model.DataCheckTypeAddArticle:
-			_one["tip"] = "发布文章"
-			_one["title"] = v.D["title"]
+			c_title += "发布文章"
+			break
+		case model.DataCheckTypeEditArticle:
+			c_title += "修改文章 " + fmt.Sprintf("[%d]", v.DID)
 			break
 		}
+		_one["title"] = c_title
 		_one["cz"] = _cz
 		l = append(l, _one)
 	}

@@ -71,6 +71,6 @@ func add(c *gin.Context) {
 		c.JSON(200, result_json)
 		return
 	}
-	c.JSON(200, nc.AddArticle(user.MID, _f.Title, _f.Html, time.Now(), false))
+	c.JSON(200, nc.ArticleAdd(user.MID, _f.Title, _f.Html, time.Now(), false))
 	return
 }

@@ -1,6 +1,7 @@
 package edit
 
 import (
+	"errors"
 	"fmt"
 	"github.com/123456/c_code"
 	"github.com/123456/c_code/mc"
@@ -9,13 +10,21 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"time"
 	"v2ex/app/api"
+	"v2ex/app/nc"
 
 	"v2ex/model"
 )
 
 //判断是否数据是否允许修改允许修改
-func editAllow(mid model.MIDTYPE, did model.DIDTYPE) {
-
+func editAllow(where bson.M, mid model.MIDTYPE) (err error) {
+	//先判断数据库数据是否存在
+	data_index := model.DataIndex{}
+	mc.Table(data_index.Table()).Where(where).FindOne(&data_index)
+	if data_index.MID != mid {
+		err = errors.New("请勿乱传参")
+		return
+	}
+	return nil
 }
 
 func editPost(c *gin.Context) {
@@ -30,12 +39,28 @@ func editPost(c *gin.Context) {
 	user := api.GetNowUserInfo(c)
 	api_auth := model.SiteConfig{}.GetApiAuth()
 	switch _f.Type {
+	//修改文章
 	case "article":
-
-		editAllow(user.MID, _f.DID)
-
+		err := editAllow(bson.M{"did": _f.DID, "d_type": model.DTYPEArticle, "mid": mid}, user.MID)
+		if err != nil {
+			result_json := c_code.V1GinError(10000, err.Error())
+			c.JSON(200, result_json)
+			return
+		}
 		//判断是否进入审核阶段
 		if api_auth.WaitCheck(user, model.DataCheckTypeEditArticle) {
+
+			//检测是否已存在提交但是未审核的
+			cwhere := bson.M{"type": model.DataCheckTypeEditArticle, "mid": user.MID, "did": _f.DID}
+
+			_check := model.DataCheck{}
+			mc.Table(_check.Table()).Where(cwhere).FindOne(&_check)
+			if _check.ID.Hex() != mc.Empty {
+				result_json := c_code.V1GinError(20000, "切勿重复提交数据")
+				c.JSON(200, result_json)
+				return
+			}
+
 			edit_article := model.DataCheck{
 				ID:    primitive.NewObjectID(),
 				Type:  model.DataCheckTypeEditArticle,
@@ -55,29 +80,17 @@ func editPost(c *gin.Context) {
 			c.JSON(200, result_json)
 			return
 		} else {
-			//nc.EditArticle(title,content,did,mid,update_time)
-			//nc.EditArticle(_f.Title,_f.Content,_f.DID,mid,update_time)
+			//不需要审核 直接修改数据库
+			err := nc.ArticleEdit(_f.Title, _f.Content, _f.DID, user.MID, time.Now(), true)
+			if err != nil {
+				result_json := c_code.V1GinError(108, err.Error())
+				c.JSON(200, result_json)
+				return
+			}
+			result_json := c_code.V1GinSuccess("修改成功", "", fmt.Sprintf("/%s/%d", model.UrlTagArticle, _f.DID))
+			c.JSON(200, result_json)
+			return
 		}
-		//
-		//data_index := model.DataIndex{}
-		//mc.Table(data_index.Table()).Where(bson.M{"did": _f.DID, "d_type": model.DTYPEArticle, "mid": mid}).FindOne(&data_index)
-		//if data_index.MID != mid {
-		//	result_json := c_code.V1GinError(101, "请勿乱传参")
-		//	c.JSON(200, result_json)
-		//	return
-		//}
-		//mc.Table(data_index.Table()).Where(bson.M{"_id": data_index.ID}).UpdateOne(bson.M{"t": _f.Title})
-		//content, imgs, err := api.SeparatePicture(_f.Content)
-		//if err != nil {
-		//	result_json := c_code.V1GinError(102, "请勿乱传参")
-		//	c.JSON(200, result_json)
-		//	return
-		//}
-		//mc.Table(data_index.InfoArticle.Table()).Where(bson.M{"_id": data_index.ID}).UpdateOne(bson.M{"content": content, "imgs": imgs})
-		//
-		//result_json := c_code.V1GinSuccess("修改成功", "", fmt.Sprintf("/%s/%d", model.UrlTagArticle, _f.DID))
-		//c.JSON(200, result_json)
-		return
 	case "question":
 		data_index := model.DataIndex{}
 		mc.Table(data_index.Table()).Where(bson.M{"did": _f.DID, "d_type": model.DTYPEQuestion, "mid": mid}).FindOne(&data_index)
