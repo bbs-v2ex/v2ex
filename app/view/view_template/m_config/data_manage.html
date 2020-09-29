@@ -24,7 +24,17 @@
                     <button class="btn btn-success form-control" @click.prevent="search"> 搜索 </button>
                 </div>
             </form>
-            <div style="min-height: 500px"></div>
+            <div style="min-height: 500px">
+                <ul>
+                    <li v-for="item in list" class="row">
+                        <div class="col-8"> <span style="color: red">[${item.time}]</span> _ ${item.title}</div>
+                        <div class="col-4">
+                            <a :href="item.u" target="_blank">查看</a>
+                            <a href="" @click.prevent="del_id = item._id">删除</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
             <form class="row">
                 <div class="col-md-6">
                     <label for="inputPassword4" class="form-label">@ID</label>
@@ -50,6 +60,7 @@
                         search:{}
                     },
                     del_id :'',
+                    list:[],
                 }
             },
             created(){
@@ -60,18 +71,31 @@
                 });
                 post('/config/data_search_nav').then(res => {
                     this.st = res.data;
-                })
+                });
+                this.search();
             },
             methods:{
                 search(){
+                    try {
+                        this.st.search.mid = JSON.parse(this.st.search.mid );
+                    }catch (e) {
+
+                    }
+
                     post('/config/data_search',this.st.search).then(res => {
-                        console.log(res)
+                        this.list = res.data;
                     })
                 },
                 delid(){
                     post('/config/data_del',{id:this.del_id}).then(res => {
                         console.log(res)
+                        this.search()
                     })
+                }
+            },
+            watch:{
+                del_id(){
+                    this.delid()
                 }
             }
         })

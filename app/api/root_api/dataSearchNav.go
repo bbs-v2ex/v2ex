@@ -23,7 +23,7 @@ func dataSearchNav(c *gin.Context) {
 			},
 		},
 		"search": gin.H{
-			"mid":   "",
+			"mid":   0,
 			"title": "",
 			"type":  "",
 		},
