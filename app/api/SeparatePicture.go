@@ -34,6 +34,7 @@ func RestorePicture(s string, t string, img []string, size ...string) string {
 func SeparatePicture(_html string) (html string, imgs []string, err error) {
 
 	_html = fmt.Sprintf("<%s>%s</%s>", SelfLoadTag, _html, SelfLoadTag)
+
 	_con := config.GetConfig()
 	doc, err := goquery.NewDocumentFromReader(strings.NewReader(_html))
 	if err != nil {

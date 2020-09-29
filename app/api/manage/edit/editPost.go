@@ -90,6 +90,7 @@ func editPost(c *gin.Context) {
 			return
 		}
 	case "question":
+		//_f.Content = c_code.RemoveHtmlTag(_f.Content)
 		//先判断是否可编辑
 		err := editAllow(bson.M{"did": _f.DID, "d_type": model.DTYPEQuestion, "mid": mid}, user.MID)
 		if err != nil {
@@ -100,7 +101,6 @@ func editPost(c *gin.Context) {
 
 		//判断是否需要审核
 		if api_auth.WaitCheck(user, model.DataCheckTypeQuestionEdit) {
-			//判断标题是否重复
 			//检测是否已存在提交但是未审核的
 			cwhere := bson.M{"type": model.DataCheckTypeQuestionEdit, "mid": user.MID, "did": _f.DID}
 
@@ -135,33 +135,57 @@ func editPost(c *gin.Context) {
 		return
 
 	case "question_answer":
-		_html, _imgs, err2 := api.SeparatePicture(_f.Content)
-		if err2 != nil {
-			result_json := c_code.V1GinError(102, "html解析错误")
-			c.JSON(200, result_json)
+		//_f.Content = c_code.RemoveHtmlTag(_f.Content)
+		//查询是否存在
+		answer := model.CommentQuestionRoot{}
+		err := mc.Table(answer.Table()).Where(bson.M{"mid": mid, "did": _f.DID}).FindOne(&answer)
+
+		if err != nil {
+			c.JSON(200, c_code.V1GinError(103, "查询失败"))
+			return
+		}
+		if answer.ID.Hex() == mc.Empty {
+			c.JSON(200, c_code.V1GinError(104, "查询失败"))
 			return
 		}
 
-		mid := api.GetMID(c)
-		answer := model.CommentQuestionRoot{}
-		err := mc.Table(answer.Table()).Where(bson.M{"mid": mid, "did": _f.DID}).FindOne(&answer)
-		if err != nil || answer.ID.Hex() == mc.Empty {
-			result_json := c_code.V1GinError(103, "查询失败")
-			c.JSON(200, result_json)
+		//检测是否需要审核
+		if api_auth.WaitCheck(user, model.DataCheckTypeQuestionCommentRootEdit) {
+			//检测是否已存在提交但是未审核的
+			cwhere := bson.M{"type": model.DataCheckTypeQuestionCommentRootEdit, "mid": user.MID, "did": _f.DID}
+
+			_check := model.DataCheck{}
+			mc.Table(_check.Table()).Where(cwhere).FindOne(&_check)
+			if _check.ID.Hex() != mc.Empty {
+				result_json := c_code.V1GinError(20000, "切勿重复提交数据")
+				c.JSON(200, result_json)
+				return
+			}
+
+			_check = model.DataCheck{
+				Type: model.DataCheckTypeQuestionCommentRootEdit,
+				MID:  user.MID,
+				DID:  _f.DID,
+				D: gin.H{
+					"txt": _f.Content,
+				},
+			}
+			result := model.AddDataCheck(_check)
+			c.JSON(200, result)
+
 			return
 		}
-		update := bson.M{
-			"text": _html,
-			"img":  _imgs,
-		}
-		err = mc.Table(answer.Text.Table()).Where(bson.M{"_id": answer.ID}).UpdateOne(update)
+
+		index := model.DataIndex{}
+		mc.Table(index.Table()).Where(bson.M{"d_type": model.DTYPEQuestion, "did": answer.DID}).FindOne(&index)
+
+		err = nc.QuestionCommentRootEdit(_f.Content, _f.DID, user.MID, answer)
 		if err != nil {
-			result_json := c_code.V1GinError(104, "修改失败")
-			c.JSON(200, result_json)
+			c.JSON(200, c_code.V1GinError(105, err.Error()))
 			return
 		}
-		result_json := c_code.V1GinSuccess("修改成功", "", fmt.Sprintf("/%s/%d/%s/%s", model.UrlTagQuestion, _f.DID, model.UrlTagQuestionReply, answer.ID.Hex()))
-		c.JSON(200, result_json)
+		u := model.UrlQuestionAnswer(index, answer)
+		c.JSON(200, c_code.V1GinSuccess("修改成功", "", u))
 		return
 	}
 

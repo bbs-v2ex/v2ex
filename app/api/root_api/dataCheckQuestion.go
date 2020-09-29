@@ -47,7 +47,14 @@ func _question_comment_root_add(c *gin.Context, _f *_dataCheck, _data *model.Dat
 }
 func _question_comment_root_edit(c *gin.Context, _f *_dataCheck, _data *model.DataCheck) {
 
-	err := nc.QuestionCommentRootAdd(_data.D["txt"].(string), _data.DID, _data.MID, primitive.NewObjectID())
+	anwer := model.CommentQuestionRoot{}
+	mc.Table(anwer.Table()).Where(bson.M{"mid": _data.MID, "did": _data.DID}).FindOne(&anwer)
+	if anwer.ID.Hex() == mc.Empty {
+		c.JSON(200, c_code.V1GinError(101, "数据丢失"))
+		return
+	}
+
+	err := nc.QuestionCommentRootEdit(_data.D["txt"].(string), _data.DID, _data.MID, anwer)
 	if err != nil {
 		c.JSON(200, c_code.V1GinError(10000, err.Error()))
 		return
